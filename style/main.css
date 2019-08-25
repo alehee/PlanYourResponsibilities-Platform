@@ -1,0 +1,94 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+header{
+    min-height: 50px;
+    width: 100%;
+    background-color: dodgerblue;
+    color: white;
+    font-size: 100%;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+p{
+    text-align: center;
+}
+
+#div_login{
+    min-height: 50px;
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: lightblue;
+    text-align: center;
+}
+
+
+
+#div_jobs{
+    min-height: 100px;
+    width: 95%;
+    margin: 10px auto;
+    color:dodgerblue;
+    padding: 20px;
+
+}
+
+#div_jobs > div >h2{ 
+    padding: 10px;
+}
+
+#job{
+    float: left;
+    margin: 0 auto;
+    width: 31%;
+    height: auto;
+    margin: 1%;
+    padding: 20px;
+    color: black;
+    border: dashed 1px dodgerblue;
+    font-size: 80%;
+}
+
+#job:nth-child(3n+2)
+{
+    clear: both;
+}
+
+
+
+#div_done, #done{
+    clear: both;
+    border: dashed 1px dodgerblue;
+    width: 92%;
+    height: 50px;
+    margin: 0 auto;
+}
+
+#div_done{
+    cursor: pointer;
+}
+
+#done{
+    display: none;
+}
+
+
+
+#alert{
+    clear: both;
+    color: red;
+}
+
+#logout{
+    font-size: 20px;
+    text-decoration: none;
+    color: red;
+    margin: 0 auto;
+}
