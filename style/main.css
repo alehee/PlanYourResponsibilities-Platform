@@ -42,10 +42,10 @@ p{
 #okno_job{
     position: fixed;
     width: 50%;
-    min-height: 500px;
+    min-height: 300px;
     background-color: white;
     left: 25%;
-    top: 25%;
+    top: 10%;
     scroll-behavior: smooth;
 }
 
@@ -107,6 +107,14 @@ p{
 
 
 
+#new_job_forwho{
+    width: 400px;
+    height: 150px;
+    background-color: lightsteelblue;
+}
+
+
+
 #alert{
     clear: both;
     color: red;
@@ -121,4 +129,9 @@ p{
 
 #thrash{
     display: none;
+}
+
+#new_job{
+    color: green;
+    cursor: pointer;
 }

@@ -20,10 +20,6 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
         <!-- Popup okienko zadań -->
         <div id="okno_background" onclick="job_popup()">
             <div id="okno_job" onclick="job_okno()">
-                <?php
-                    if(isset($_GET["the_id"]))
-                        echo $_GET["the_id"];
-                ?>
             </div>
         </div>
 
@@ -32,7 +28,8 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
             <h2>Konto: <?php echo $_SESSION["log"]." ID: ".$_SESSION["id"]; ?></h2>
         </header>
 
-        <p><a href="logout.php" id="logout">WYLOGUJ</a></p>
+        <p><a href="logout.php" id="logout">WYLOGUJ</a></p><br>
+        <p onclick="new_job()" id="new_job">DODAJ ZADANIE</p>
 
         <!-- Wszystkie zadania wyświetlane -->
         <form id="div_jobs" method="GET" action="user.php">
@@ -159,6 +156,26 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
             $.get("additional/undone.php", {id: id}, function(data){
                 $("#thrash").html(data);
             })
+        }
+
+        // -----
+        // Skrypty dodawania zadania
+
+        function new_job(){
+            var the_job = 1;
+
+            if(document.getElementById("okno_background").style.display=="none"){
+                document.getElementById("okno_background").style.display="inline";
+                $.get("additional/processor.php", {the_job: the_job}, function(data){
+                    $('#okno_job').html(data);
+                });
+            }
+            else if(okno==0){
+                document.getElementById("okno_background").style.display="none";
+                document.getElementById("new_job_div_1").style.display="none";
+            }
+            
+            okno=0;
         }
 
         // -----
