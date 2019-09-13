@@ -56,7 +56,13 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
                         echo $div_job_top;
                         echo $res["The_ID"]."<br>";
                         echo "Deadline: ".$res["End"]."<br>";
-                        echo "Dodano przez ID: ".$res["WhoAdd"]."<br><br>";
+
+                        $temp = $res["WhoAdd"];
+                        $temp_sql = "SELECT Login FROM users WHERE ID='$temp'";
+                        $temp_que = mysqli_query($conn, $temp_sql);
+                        $temp = mysqli_fetch_array($temp_que);
+
+                        echo "Dodano przez: ".$temp["Login"]."<br><br>";
                         $topic = $res["Topic"];
                         $bufor = "";
                         if(strlen($topic)>150)
@@ -83,6 +89,35 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
             ?>
         </form>  
 
+        <!-- Zadania nadane -->
+        <div id="div_nadane">
+        <div><h2>Zadania nadane</h2></div>
+        <?php
+            $my_id_nadane = $_SESSION["id"];
+            $exist = 1;
+
+            require_once("connection.php");
+            $conn = @new mysqli($host, $user_db, $password_db, $db_name);
+            $sql = "SELECT * FROM job WHERE WhoAdd='$my_id_nadane' AND ForWho!='$my_id_nadane'";
+            $que = $conn -> query($sql);
+            while($res = mysqli_fetch_array($que)){
+                $the_id=$res["The_ID"];
+                $temp_sql = "SELECT ID FROM job WHERE The_ID='$the_id' AND ForWho='$my_id_nadane'";
+                $temp_que = $conn -> query($temp_sql);
+                while($temp = mysqli_fetch_array($temp_que))
+                    $exist=0;
+
+                if($exist==1){
+                    echo $the_id."<br>";
+                }
+
+                $exist=1;
+            }
+
+            $conn -> close();
+        ?>
+        </div>
+
         <!-- Zadania ukończone -->
         <div id="div_done"><p>Pokaż wypełnione zadania</p></div>
         <div id="done">
@@ -98,7 +133,16 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
                     $sql="SELECT * FROM done WHERE ForWho=$my_id";
                     $que = $conn -> query($sql);
                     while($res = mysqli_fetch_array($que)){
-                        echo "<input type='button' id='".$res["The_ID"]."' value='Przywróć zadanie' onclick='job_undone(this.id)'> ID:".$res["The_ID"]." - ".$res["Topic"]." - ".$res["WhoAdd"]." - ".$res["ForWho"]." - ".$res["End"]."<br>";
+                        echo "<b>".$res["Topic"]."</b><br>";
+
+                        $temp = $res["WhoAdd"];
+                        $temp_sql = "SELECT Login FROM users WHERE ID='$temp'";
+                        $temp_que = mysqli_query($conn, $temp_sql);
+                        $temp = mysqli_fetch_array($temp_que);
+
+                        echo "Dodano przez: ".$temp["Login"]."<br>";
+                        echo "Planowany koniec: ".$res["End"]."<br>";
+                        echo "ID:".$res["The_ID"]." <input type='button' id='".$res["The_ID"]."' value='Przywróć zadanie' onclick='job_undone(this.id)'><br><br>";
                     }
 
                     $conn -> close();
@@ -162,10 +206,11 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
         // Skrypty dodawania zadania
 
         function new_job(){
-            var the_job = 1;
+            var the_job = "";
 
             if(document.getElementById("okno_background").style.display=="none"){
                 document.getElementById("okno_background").style.display="inline";
+
                 $.get("additional/processor.php", {the_job: the_job}, function(data){
                     $('#okno_job').html(data);
                 });

@@ -1,8 +1,9 @@
 <?php
 session_start();
 
-if(isset($_POST['new_title']) && isset($_POST['new_forwho'])){
+if(isset($_POST['new_title'])){
 
+    $new_forwho_list = implode(',', $_POST['new_forwho']);
     $the_id = 1;
 
     require_once("../connection.php");
@@ -30,8 +31,12 @@ if(isset($_POST['new_title']) && isset($_POST['new_forwho'])){
     $new_deadline = $_POST['new_deadline'];
     $new_whoadd = $_SESSION['id'];
 
-    $sql = "INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Start, End) VALUES (NULL, '$the_id', '$new_title', '$new_info', '$new_whoadd', '$new_forwho', CURRENT_TIMESTAMP, '$new_deadline')";
-    mysqli_query($conn, $sql);
+    for($i=0; $i<strlen($new_forwho_list); $i=$i+2){
+        if($new_forwho_list[$i]!=','){
+            $sql = "INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Start, End) VALUES (NULL, '$the_id', '$new_title', '$new_info', '$new_whoadd', '$new_forwho_list[$i]', CURRENT_TIMESTAMP, '$new_deadline')";
+            mysqli_query($conn, $sql);
+        }
+    }
 
     unset($_POST["new_title"]);
     header("location:../user.php");
