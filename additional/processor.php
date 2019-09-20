@@ -44,7 +44,7 @@
         mysqli_query($conn, "SET CHARSET utf8");
         mysqli_query($conn, "SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
 
-        $sql = "SELECT * FROM job WHERE The_ID=$the_id_processor AND ForWho=$user_id_processor";
+        $sql = "SELECT * FROM job WHERE The_ID=$the_id_processor LIMIT 1";
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
             echo "Deadline: ".$res["End"]."<br><br>";

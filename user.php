@@ -95,9 +95,21 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
         <?php
             $my_id_nadane = $_SESSION["id"];
             $exist = 1;
+            $is_needed = 0;
+
+            /*
+                JAK DZIAŁA KOD?
+                Sprawdza czy istnieje zadanie, które nadaliśmy my.
+                Jeżeli tak to te zadania są filtrowane czy to my jesteśmy dodani jako wykonawcy. 
+                Jeżeli jest przynajmniej jedno to wtedy ukazuje się sekcja.
+            */
 
             require_once("connection.php");
             $conn = @new mysqli($host, $user_db, $password_db, $db_name);
+
+            $conn->query("SET CHARSET utf8");
+            $conn->query("SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
+
             $sql = "SELECT * FROM job WHERE WhoAdd='$my_id_nadane' AND ForWho!='$my_id_nadane'";
             $que = $conn -> query($sql);
             while($res = mysqli_fetch_array($que)){
@@ -108,7 +120,42 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
                     $exist=0;
 
                 if($exist==1){
+                    $div_job_top='<div class="job" id="'.$the_id.'"><div class="job_topic" id="'.$the_id.'" onclick="job_popup(this.id)">';
+
+                    $div_job_bottom='</div></div>';
+
+                    echo $div_job_top;
                     echo $the_id."<br>";
+                    echo "Deadline: ".$res["End"]."<br>";
+
+                    $temp = $res["WhoAdd"];
+                    $temp_sql = "SELECT Login FROM users WHERE ID='$temp'";
+                    $temp_que = mysqli_query($conn, $temp_sql);
+                    $temp = mysqli_fetch_array($temp_que);
+
+                    echo "Dodano przez: ".$temp["Login"]."<br><br>";
+                    $topic = $res["Topic"];
+                    $bufor = "";
+                    if(strlen($topic)>150)
+                    {
+                            for($i=0; $i<150; $i++)
+                            {
+                                if($i>130 && $topic[$i]==" ")
+                                {
+                                    echo "...";
+                                    $i=149;
+                                }
+                                else 
+                                    echo $topic[$i];
+                            }
+                    }
+                    else
+                        $bufor=$topic;
+
+                    echo $bufor."<br>";
+                    echo $div_job_bottom;
+
+                    $is_needed=1;
                 }
 
                 $exist=1;
