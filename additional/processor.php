@@ -67,15 +67,62 @@
                     $temp_temp = mysqli_fetch_array($temp_temp_que);
                     echo " - ".$temp_temp["Login"]."<br>";
                 }
-            echo "<br><br>";
+			echo '<input type="button" id="'.$the_id_processor.'" value="Dodaj osobę" onclick="job_addperson(this.id)"/>';
+			echo "<br><br>";
 
             echo "Dodano przez: ".$temp["Login"]."<br>";
             echo "Data: ".$res["Start"]."<br>";
-            echo "ID:".$the_id_processor;
+            echo "ID:".$the_id_processor."<br><br>";
+			
+			echo '<input type="button" id="'.$the_id_processor.'" value="Wykonano" onclick="job_done(this.id)"/>';
         }
 
         unset($_GET['elem']);
-        mysqli_close($conn);
     }
+	
+	// OKNO DODANIA NOWEJ OSOBY DO ZADANIA
+	else if(isset($_GET["addperson_id"])){
+		$addperson_id = $_GET['addperson_id'];
+		$_SESSION["the_job"]=$addperson_id;
+		$addperson_user_id = $_SESSION["id"];
+		$is_in = array();
+		
+		$sql="SELECT ForWho FROM job WHERE The_ID='$addperson_id'";
+		$que= mysqli_query($conn, $sql);
+		while($res=mysqli_fetch_array($que)){
+			$temp=$res["ForWho"];
+			$temp_sql="SELECT Login FROM users WHERE ID='$temp'";
+			$temp_que=mysqli_query($conn, $temp_sql);
+			while($temp=mysqli_fetch_array($temp_que)){
+				array_push($is_in, $temp["Login"]);
+			}
+		}
+		echo '<form action="additional/addperson.php" method="POST">';
+		echo '<div id="new_job_forwho">';
+		echo 'DODAJ NOWĄ OSOBĘ DO ZADANIA<br>';
+        $sql = "SELECT users.ID, users.Login FROM users";
+        $que = mysqli_query($conn, $sql);
+        while($res = mysqli_fetch_array($que)){
+			$is_out=1;
+			
+			foreach($is_in as $user){
+				if($user == $res["Login"]){
+					$is_out=0;
+				}
+			}
+			
+			if($is_out==1){
+				echo '<input type="radio" name="addperson_who" value="'.$res["ID"].'"/> '.$res["Login"].' | ';
+				array_push($is_in, $res["Login"]);
+			}
+        }
+		echo '<input type="submit" value="Dodaj osobę"/>';
+        echo '</div>';
+		echo '</form>';
+		
+		unset($_GET['addperson_id']);
+	}
+	
+	mysqli_close($conn);
 ?>
 

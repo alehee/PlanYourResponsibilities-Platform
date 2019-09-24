@@ -49,6 +49,10 @@ p{
     scroll-behavior: smooth;
 }
 
+#okno_dodajosobe{
+	display: none;
+}
+
 
 
 #div_jobs{
@@ -127,6 +131,15 @@ p{
 }
 
 
+
+#sort{
+	clear: both;
+	color: orange;
+}
+
+#sort:hover{
+	cursor: pointer;
+}
 
 #alert{
     clear: both;

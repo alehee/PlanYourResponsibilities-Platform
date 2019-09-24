@@ -6,13 +6,16 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
     header("location:index.php");
     exit();
 }
+
+if(!isset($_SESSION["sort"]))
+	$_SESSION["sort"]='Deadline';
 ?>
 
 <!DOCTYPE html>
 <html lang="pl">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
-        <title>user - PYR</title>
+        <title>PlanYourResponsibilities - Platform</title>
         <link rel="stylesheet" href="style/main.css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
@@ -29,7 +32,8 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
         </header>
 
         <p><a href="logout.php" id="logout">WYLOGUJ</a></p><br>
-        <p onclick="new_job()" id="new_job">DODAJ ZADANIE</p>
+		<p onclick="new_job()" id="new_job">DODAJ ZADANIE</p><br>
+		<p onclick="okno_sort()" id="sort">SORTOWANIE: <?php echo $_SESSION["sort"] ?></p>
 
         <!-- Wszystkie zadania wyświetlane -->
         <form id="div_jobs" method="GET" action="user.php">
@@ -45,7 +49,14 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
 
                 if(isset($conn))
                 {
-                    $sql="SELECT * FROM job WHERE ForWho=$id";
+					$sort = $_SESSION["sort"];
+					
+					if($sort=="Deadline")
+						$sql="SELECT * FROM job WHERE ForWho=$id ORDER BY End ASC";
+					
+					else
+						$sql="SELECT * FROM job WHERE ForWho=$id ORDER BY The_ID ASC";
+					
                     $que=mysqli_query($conn, $sql);
 
                     while($res=mysqli_fetch_array($que))
@@ -90,12 +101,12 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
         </form>  
 
         <!-- Zadania nadane -->
-        <div id="div_nadane">
-        <div><h2>Zadania nadane</h2></div>
         <?php
             $my_id_nadane = $_SESSION["id"];
+			// Czy istnieje takie zadanie
             $exist = 1;
-            $is_needed = 0;
+			// Czy ten panel jest wymagany
+            $already = 0;
 
             /*
                 JAK DZIAŁA KOD?
@@ -110,7 +121,12 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
             $conn->query("SET CHARSET utf8");
             $conn->query("SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
 
-            $sql = "SELECT * FROM job WHERE WhoAdd='$my_id_nadane' AND ForWho!='$my_id_nadane'";
+			if($_SESSION["sort"]=="Deadline")
+            $sql = "SELECT * FROM job WHERE WhoAdd='$my_id_nadane' AND ForWho!='$my_id_nadane' ORDER BY End ASC";
+		
+			else
+				$sql = "SELECT * FROM job WHERE WhoAdd='$my_id_nadane' AND ForWho!='$my_id_nadane' ORDER BY The_ID ASC";
+		
             $que = $conn -> query($sql);
             while($res = mysqli_fetch_array($que)){
                 $the_id=$res["The_ID"];
@@ -120,6 +136,11 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
                     $exist=0;
 
                 if($exist==1){
+					if($already==0){
+						echo '<div id="div_nadane">';
+						echo '<div><h2>Zadania nadane</h2></div>';
+						$already=1;
+					}
                     $div_job_top='<div class="job" id="'.$the_id.'"><div class="job_topic" id="'.$the_id.'" onclick="job_popup(this.id)">';
 
                     $div_job_bottom='</div></div>';
@@ -154,16 +175,16 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
 
                     echo $bufor."<br>";
                     echo $div_job_bottom;
-
-                    $is_needed=1;
                 }
 
                 $exist=1;
             }
+			
+			if($already==1)
+				echo '</div>';
 
             $conn -> close();
         ?>
-        </div>
 
         <!-- Zadania ukończone -->
         <div id="div_done"><p>Pokaż wypełnione zadania</p></div>
@@ -232,7 +253,14 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
                 document.getElementById("okno_background").style.display="none";
             
             okno=0;
-        };
+        }
+		
+		//Funkcja dodaje osoby do zadania
+		function job_addperson(addperson_id){
+			$.get("additional/processor.php", {addperson_id: addperson_id}, function(data){
+                    $('#okno_job').html(data);
+                });
+		}
 
         // -----
         // Skrypty zakończonych zadań
@@ -271,6 +299,16 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
         }
 
         // -----
+		// Skrypty sortowania
+		
+		function okno_sort(){
+        var sort = "";
+			$.get("additional/sort.php", {sort: sort}, function(data){
+				$('#thrash').html(data);
+			});
+        }
+		
+		// -----
 
     </script>
 </html>
