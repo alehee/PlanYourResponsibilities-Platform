@@ -47,6 +47,8 @@
         $sql = "SELECT * FROM job WHERE The_ID=$the_id_processor LIMIT 1";
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
+			$processor_forwho_array = array();
+			
             echo "Deadline: ".$res["End"]."<br><br>";
             echo $res["Topic"]."<br><br>";
             echo "Dodatkowe informacje:<br>".$res["Info"]."<br><br>";
@@ -66,6 +68,7 @@
                     $temp_temp_que = mysqli_query($conn, $temp_sql);
                     $temp_temp = mysqli_fetch_array($temp_temp_que);
                     echo " - ".$temp_temp["Login"]."<br>";
+					array_push($processor_forwho_array, $other_forwho);
                 }
 			echo '<input type="button" id="'.$the_id_processor.'" value="Dodaj osobę" onclick="job_addperson(this.id)"/>';
 			echo "<br><br>";
@@ -74,8 +77,46 @@
             echo "Data: ".$res["Start"]."<br>";
             echo "ID:".$the_id_processor."<br><br>";
 			
+			$processor_forme=0;
+			foreach($processor_forwho_array as $x){
+				if($x == $_SESSION['id'])
+					$processor_forme=1;
+			}
+			if($processor_forme==1){
 			echo '<input type="button" id="'.$the_id_processor.'" value="Wykonano" onclick="job_done(this.id)"/>';
+			}
         }
+		echo "<br><br>";
+		
+		// CHAT
+		
+		$sql="SELECT * FROM chat WHERE The_ID=$the_id_processor ORDER BY Date ASC";
+		$que = mysqli_query($conn, $sql);
+		while($res = mysqli_fetch_array($que)){
+		echo '<div id="okno_chat_message">';
+		
+		//echo $res['Message'].', '.$res['SentFrom'].', '.$res['Date'];
+		
+		// KONWERTER LINKÓW, DZIĘKI STACKOVERFLOW!
+		$string = $res['Message'];
+		$url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
+		$string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
+		echo $string.'<br>';
+		
+		$processor_chat_login=$res['SentFrom'];
+		
+			$temp_sql = "SELECT Login FROM users WHERE ID='$processor_chat_login'";
+            $temp_que = mysqli_query($conn, $temp_sql);
+            while($temp = mysqli_fetch_array($temp_que)){
+                $processor_chat_login = $temp['Login'];
+            }
+		
+		echo '<span style="float:right;">'.$processor_chat_login.', '.$res['Date'].'</span>';
+		echo '<div style="clear:both;"></div>';
+		echo '</div>';
+		}
+		echo '<textarea style="width:80%; height:40px;" id="okno_chat_chatbox"/><br>';
+		echo '<input type="button" id="'.$the_id_processor.'" value="Wyślij wiadomość" onclick="okno_sentmessage(this.id)">';
 
         unset($_GET['elem']);
     }

@@ -41,16 +41,22 @@ p{
 
 #okno_job{
     position: fixed;
-    width: 50%;
+    width: 70%;
     min-height: 300px;
     background-color: white;
-    left: 25%;
+    left: 15%;
     top: 10%;
     scroll-behavior: smooth;
 }
 
 #okno_dodajosobe{
 	display: none;
+}
+
+#okno_chat_message{
+	border: dotted dodgerblue 2px;
+	width: 90%;
+	margin: 10px;
 }
 
 

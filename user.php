@@ -259,7 +259,20 @@ if(!isset($_SESSION["sort"]))
 		function job_addperson(addperson_id){
 			$.get("additional/processor.php", {addperson_id: addperson_id}, function(data){
                     $('#okno_job').html(data);
-                });
+            });
+		}
+		
+		//Funkcja wysyła wiadomość na chat
+		function okno_sentmessage(id){
+			var message = id+"~"+document.getElementById("okno_chat_chatbox").value;
+			
+			//$.get("additional/chat.php", {message: message}, function(data){
+			//	$("#thrash").html(data);
+			//});
+			
+			$.get("additional/chat.php", {message: message}, function(data){
+                    $('#thrash').html(data);
+            });
 		}
 
         // -----
