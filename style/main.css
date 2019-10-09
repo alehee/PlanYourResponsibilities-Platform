@@ -138,6 +138,13 @@ p{
 
 
 
+#div_panel{
+    float: left;
+    width: 50%;
+    height: 150px;
+    text-align: center;
+}
+
 #sort{
 	clear: both;
 	color: orange;

@@ -19,7 +19,7 @@ if(!isset($_SESSION["sort"]))
         <link rel="stylesheet" href="style/main.css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
-    <body>
+    <body onload="time()">
         <!-- Popup okienko zadań -->
         <div id="okno_background" onclick="job_popup()">
             <div id="okno_job" onclick="job_okno()">
@@ -31,9 +31,15 @@ if(!isset($_SESSION["sort"]))
             <h2>Konto: <?php echo $_SESSION["log"]." ID: ".$_SESSION["id"]; ?></h2>
         </header>
 
+        <div id="div_panel">
         <p><a href="logout.php" id="logout">WYLOGUJ</a></p><br>
 		<p onclick="new_job()" id="new_job">DODAJ ZADANIE</p><br>
 		<p onclick="okno_sort()" id="sort">SORTOWANIE: <?php echo $_SESSION["sort"] ?></p>
+        </div>
+
+        <div id="div_panel">
+            <p id="p_timer"></p>
+        </div>
 
         <!-- Wszystkie zadania wyświetlane -->
         <form id="div_jobs" method="GET" action="user.php">
@@ -224,6 +230,59 @@ if(!isset($_SESSION["sort"]))
     <script>
         // Musi tu być bo nie działa skrypt
         document.getElementById("okno_background").style.display="none";
+
+        // Skrypty timera
+
+        function time(){
+            var timer = document.getElementById("p_timer");
+            var data = new Date();
+            var full_day = data.getDay();
+            switch(full_day){
+                case 0:{
+                    full_day = "Niedziela";
+                } break;
+                case 1:{
+                    full_day = "Poniedziałek";
+                } break;
+                case 2:{
+                    full_day = "Wtorek";
+                } break;
+                case 3:{
+                    full_day = "Środa";
+                } break;    
+                case 4:{
+                    full_day = "Czwartek";
+                } break;    
+                case 5:{
+                    full_day = "Piątek";
+                } break;  
+                case 6:{
+                    full_day = "Sobota";
+                } break;      
+            }
+
+            var full_date = data.getFullYear()+"-"+(data.getMonth()+1)+"-"+data.getDate();
+
+            setInterval(function(){
+                var data = new Date();
+
+                var time_h = data.getHours();
+                if(time_h<10)
+                    time_h="0"+time_h;
+                var time_m = data.getMinutes();
+                if(time_m<10)
+                    time_m="0"+time_m;
+                var time_s = data.getSeconds();
+                if(time_s<10)
+                    time_s="0"+time_s;
+
+                var full_time=time_h+":"+time_m+":"+time_s;
+
+                timer.innerHTML=full_day+"<br>"+full_date+"<br>"+full_time;
+            }, 1000, 1000)
+        }
+
+        // -----
 
         // Skrypty dla wypełnionych zadań
         $(document).ready(function(){
