@@ -14,6 +14,7 @@ if(!isset($_SESSION["sort"]))
 <!DOCTYPE html>
 <html lang="pl">
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
         <title>PlanYourResponsibilities - Platform</title>
         <link rel="stylesheet" href="style/main.css"/>
@@ -68,18 +69,16 @@ if(!isset($_SESSION["sort"]))
                     while($res=mysqli_fetch_array($que))
                     {
                         $div_job_top='<div class="job" id="'.$res["The_ID"].'"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
-                        $div_job_bottom='</div><input type="button" id="'.$res["The_ID"].'" value="Wykonano" onclick="job_done(this.id)"/></div>';
+                        $div_job_bottom='</div><input type="button" class="job_button" id="'.$res["The_ID"].'" value="Wykonano" onclick="job_done(this.id)"/></div>';
 
                         echo $div_job_top;
-                        echo $res["The_ID"]."<br>";
-                        echo "Deadline: ".$res["End"]."<br>";
-
+                        echo "Deadline: ".$res["End"]."<br><br>";
+                        
                         $temp = $res["WhoAdd"];
                         $temp_sql = "SELECT Login FROM users WHERE ID='$temp'";
                         $temp_que = mysqli_query($conn, $temp_sql);
                         $temp = mysqli_fetch_array($temp_que);
 
-                        echo "Dodano przez: ".$temp["Login"]."<br><br>";
                         $topic = $res["Topic"];
                         $bufor = "";
                         if(strlen($topic)>150)
@@ -97,8 +96,59 @@ if(!isset($_SESSION["sort"]))
                         }
                         else
                             $bufor=$topic;
-                        echo $bufor."<br>";
+
+                        echo $bufor."<br><br>";
+                        echo "Dodano przez: ".$temp["Login"]."<br>";
+                        echo "<span id='job_span_nonim'>ID:".$res["The_ID"]."</span><br>";
                         echo $div_job_bottom;
+
+                        // Przetwarzanie zadania
+                        $date_curr = date("Y-m-d");
+                        $date_job = $res["End"];
+                        $job_important=0;
+
+                        $date_curr_buf="";
+                        $date_job_buf="";
+
+                        for($i=0; $i<4; $i++){
+                            $date_curr_buf = $date_curr_buf.$date_curr[$i];
+                            $date_job_buf = $date_job_buf.$date_job[$i];
+                        }
+
+                        $date_curr_var_y=intval($date_curr_buf);
+                        $date_job_var_y=intval($date_job_buf);
+
+                        $date_curr_buf="";
+                        $date_job_buf="";
+
+                        for($i=5; $i<7; $i++){
+                            $date_curr_buf = $date_curr_buf.$date_curr[$i];
+                            $date_job_buf = $date_job_buf.$date_job[$i];
+                        }
+
+                        $date_curr_var_m=intval($date_curr_buf);
+                        $date_job_var_m=intval($date_job_buf);
+
+                        $date_curr_buf="";
+                        $date_job_buf="";
+
+                        for($i=8; $i<10; $i++){
+                            $date_curr_buf = $date_curr_buf.$date_curr[$i];
+                            $date_job_buf = $date_job_buf.$date_job[$i];
+                        }
+
+                        $date_curr_var_d=intval($date_curr_buf);
+                        $date_job_var_d=intval($date_job_buf);
+
+                        // PRZEBUDOWAĆ MIESIĄCE NA DNI *30!
+                        if($date_curr_var_y!=$date_job_var_y)
+                            $job_important=2;
+                        else if($date_job_var_m>$date_curr_var_m)
+                            $job_important=2;
+                        else if($date_job_var_d<=$date_curr_var_d+1)
+                            $job_important=2;
+                        else if($date_job_var_d<=$date_curr_var_d+6)
+                            $job_important=1;
                     }
                 }
 
@@ -278,7 +328,7 @@ if(!isset($_SESSION["sort"]))
 
                 var full_time=time_h+":"+time_m+":"+time_s;
 
-                timer.innerHTML=full_day+"<br>"+full_date+"<br>"+full_time;
+                timer.innerHTML="<span id='time_day'>"+full_day+"</span><br>"+full_date+"<br><br><span id='time_time'>"+full_time+"</span>";
             }, 1000, 1000)
         }
 

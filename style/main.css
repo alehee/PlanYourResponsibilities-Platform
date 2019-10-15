@@ -77,15 +77,15 @@ p{
 .job{
     float: left;
     margin: 0 auto;
-    width: 31%;
+    width: 23%;
     height: auto;
     margin: 1%;
     color: black;
-    border: dashed 1px dodgerblue;
+    border: solid 2px dodgerblue;
     font-size: 80%;
 }
 
-.job:nth-child(3n+2)
+.job:nth-child(4n+2)
 {
     clear: both;
 }
@@ -94,6 +94,19 @@ p{
     padding: 20px;
     background-color: lightblue;
     cursor: pointer;
+}
+
+.job_button{
+    width: 100%;
+}
+
+#job_span_im{
+
+}
+
+#job_span_nonim{
+    font-size: 10px;
+    color: gray;
 }
 
 
@@ -138,11 +151,24 @@ p{
 
 
 
+#time_day{
+    font-weight: 800;
+    font-size: 35px;
+    color: darkblue;
+}
+
+#time_time{
+    font-size: 25px;
+    font-weight: 800;
+    color: darkblue;
+}
+
 #div_panel{
     float: left;
     width: 50%;
     height: 150px;
     text-align: center;
+    padding-top: 20px;
 }
 
 #sort{
@@ -173,4 +199,20 @@ p{
 #new_job{
     color: green;
     cursor: pointer;
+}
+
+
+
+
+
+@media screen and (max-width: 800px){
+
+.job:nth-child(2n+2){
+    clear: both;
+}
+
+.job{
+    width: 48%;
+}
+
 }
