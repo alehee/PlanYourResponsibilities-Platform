@@ -68,11 +68,42 @@ if(!isset($_SESSION["sort"]))
 
                     while($res=mysqli_fetch_array($que))
                     {
-                        $div_job_top='<div class="job" id="'.$res["The_ID"].'"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
+                        $days_left = how_many_days_left($res["End"]);
+                        $div_job_top="";
+
+                        if($days_left<=1){
+                            $div_job_top='<div class="job" id="'.$res["The_ID"].'"
+                            style="
+                                border: solid 2px red;
+                            "
+                            >
+                            <div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)"
+                            style="
+                                background-color: lightcoral;
+                            "
+                            >';
+                        }
+                        else if($days_left<7){
+                            $div_job_top='<div class="job" id="'.$res["The_ID"].'"
+                            style="
+                                border: solid 2px yellow;
+                            "
+                            >
+                            <div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)"
+                            style="
+                                background-color: beige;
+                            "
+                            >';
+                        }
+                        else{
+                            $div_job_top='<div class="job" id="'.$res["The_ID"].'"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
+                        }
+
                         $div_job_bottom='</div><input type="button" class="job_button" id="'.$res["The_ID"].'" value="Wykonano" onclick="job_done(this.id)"/></div>';
 
                         echo $div_job_top;
-                        echo "Deadline: ".$res["End"]."<br><br>";
+                        echo "Dni do końca: ".$days_left."<br>";
+                        echo "Koniec: ".$res["End"]."<br><br>";
                         
                         $temp = $res["WhoAdd"];
                         $temp_sql = "SELECT Login FROM users WHERE ID='$temp'";
@@ -101,54 +132,6 @@ if(!isset($_SESSION["sort"]))
                         echo "Dodano przez: ".$temp["Login"]."<br>";
                         echo "<span id='job_span_nonim'>ID:".$res["The_ID"]."</span><br>";
                         echo $div_job_bottom;
-
-                        // Przetwarzanie zadania
-                        $date_curr = date("Y-m-d");
-                        $date_job = $res["End"];
-                        $job_important=0;
-
-                        $date_curr_buf="";
-                        $date_job_buf="";
-
-                        for($i=0; $i<4; $i++){
-                            $date_curr_buf = $date_curr_buf.$date_curr[$i];
-                            $date_job_buf = $date_job_buf.$date_job[$i];
-                        }
-
-                        $date_curr_var_y=intval($date_curr_buf);
-                        $date_job_var_y=intval($date_job_buf);
-
-                        $date_curr_buf="";
-                        $date_job_buf="";
-
-                        for($i=5; $i<7; $i++){
-                            $date_curr_buf = $date_curr_buf.$date_curr[$i];
-                            $date_job_buf = $date_job_buf.$date_job[$i];
-                        }
-
-                        $date_curr_var_m=intval($date_curr_buf);
-                        $date_job_var_m=intval($date_job_buf);
-
-                        $date_curr_buf="";
-                        $date_job_buf="";
-
-                        for($i=8; $i<10; $i++){
-                            $date_curr_buf = $date_curr_buf.$date_curr[$i];
-                            $date_job_buf = $date_job_buf.$date_job[$i];
-                        }
-
-                        $date_curr_var_d=intval($date_curr_buf);
-                        $date_job_var_d=intval($date_job_buf);
-
-                        // PRZEBUDOWAĆ MIESIĄCE NA DNI *30!
-                        if($date_curr_var_y!=$date_job_var_y)
-                            $job_important=2;
-                        else if($date_job_var_m>$date_curr_var_m)
-                            $job_important=2;
-                        else if($date_job_var_d<=$date_curr_var_d+1)
-                            $job_important=2;
-                        else if($date_job_var_d<=$date_curr_var_d+6)
-                            $job_important=1;
                     }
                 }
 
@@ -202,15 +185,13 @@ if(!isset($_SESSION["sort"]))
                     $div_job_bottom='</div></div>';
 
                     echo $div_job_top;
-                    echo $the_id."<br>";
-                    echo "Deadline: ".$res["End"]."<br>";
+                    echo "Koniec: ".$res["End"]."<br><br>";
 
                     $temp = $res["WhoAdd"];
                     $temp_sql = "SELECT Login FROM users WHERE ID='$temp'";
                     $temp_que = mysqli_query($conn, $temp_sql);
                     $temp = mysqli_fetch_array($temp_que);
 
-                    echo "Dodano przez: ".$temp["Login"]."<br><br>";
                     $topic = $res["Topic"];
                     $bufor = "";
                     if(strlen($topic)>150)
@@ -229,7 +210,9 @@ if(!isset($_SESSION["sort"]))
                     else
                         $bufor=$topic;
 
-                    echo $bufor."<br>";
+                    echo $bufor."<br><br>";
+                    echo "Dodano przez: ".$temp["Login"]."<br>";
+                    echo "<span id='job_span_nonim'>ID:".$res["The_ID"]."</span><br>";
                     echo $div_job_bottom;
                 }
 
@@ -434,3 +417,52 @@ if(!isset($_SESSION["sort"]))
 
     </script>
 </html>
+
+<?php
+
+    // FUNKCJA WYŚWIETLAJĄCA ILE DNI ZOSTAŁO DO WYKONANIA ZADANIA
+    function how_many_days_left($date_job){
+
+        $date_curr = date("Y-m-d");
+        $job_important=0;
+
+        $date_curr_buf="";
+        $date_job_buf="";
+
+        for($i=0; $i<4; $i++){
+            $date_curr_buf = $date_curr_buf.$date_curr[$i];
+            $date_job_buf = $date_job_buf.$date_job[$i];
+        }
+
+        // YEAR
+        $date_curr_var=(intval($date_curr_buf)-1970)*365;
+        $date_job_var=(intval($date_job_buf)-1970)*365;
+
+        $date_curr_buf="";
+        $date_job_buf="";
+
+        for($i=5; $i<7; $i++){
+            $date_curr_buf = $date_curr_buf.$date_curr[$i];
+            $date_job_buf = $date_job_buf.$date_job[$i];
+        }
+
+        // MONTH
+        $date_curr_var=$date_curr_var+(intval($date_curr_buf))*30;
+        $date_job_var=$date_job_var+(intval($date_job_buf))*30;
+
+        $date_curr_buf="";
+        $date_job_buf="";
+
+        for($i=8; $i<10; $i++){
+            $date_curr_buf = $date_curr_buf.$date_curr[$i];
+            $date_job_buf = $date_job_buf.$date_job[$i];
+        }
+
+        // DAY
+        $date_curr_var=$date_curr_var+(intval($date_curr_buf));
+        $date_job_var=$date_job_var+(intval($date_job_buf));
+
+        return $date_job_var-$date_curr_var;
+    }
+
+?>
