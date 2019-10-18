@@ -40,13 +40,15 @@ p{
 }
 
 #okno_job{
+    text-align: center;
     position: fixed;
     width: 70%;
-    min-height: 300px;
+    min-height: 30%;
+    max-height: 80%;
     background-color: white;
     left: 15%;
     top: 10%;
-    scroll-behavior: smooth;
+    overflow-y: auto;
 }
 
 #okno_dodajosobe{
@@ -54,9 +56,10 @@ p{
 }
 
 #okno_chat_message{
-	border: dotted dodgerblue 2px;
+	border: solid dodgerblue 2px;
 	width: 90%;
-	margin: 10px;
+    margin: 10px auto;
+    padding: 1%;
 }
 
 
@@ -126,7 +129,7 @@ p{
 
 #div_done, #done{
     clear: both;
-    border: dashed 1px dodgerblue;
+    border: solid 2px dodgerblue;
     width: 92%;
     min-height: 50px;
     margin: 0 auto;

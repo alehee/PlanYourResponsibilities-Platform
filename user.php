@@ -29,7 +29,6 @@ if(!isset($_SESSION["sort"]))
 
         <header>
             <h1>.:Plan Your Responsibilities:.</h1><br>
-            <h2>Konto: <?php echo $_SESSION["log"]." ID: ".$_SESSION["id"]; ?></h2>
         </header>
 
         <div id="div_panel">
@@ -102,7 +101,6 @@ if(!isset($_SESSION["sort"]))
                         $div_job_bottom='</div><input type="button" class="job_button" id="'.$res["The_ID"].'" value="Wykonano" onclick="job_done(this.id)"/></div>';
 
                         echo $div_job_top;
-                        echo "Dni do końca: ".$days_left."<br>";
                         echo "Koniec: ".$res["End"]."<br><br>";
                         
                         $temp = $res["WhoAdd"];
@@ -112,14 +110,14 @@ if(!isset($_SESSION["sort"]))
 
                         $topic = $res["Topic"];
                         $bufor = "";
-                        if(strlen($topic)>150)
+                        if(strlen($topic)>100)
                         {
-                            for($i=0; $i<150; $i++)
+                            for($i=0; $i<100; $i++)
                             {
-                                if($i>130 && $topic[$i]==" ")
+                                if($i>80 && $topic[$i]==" ")
                                 {
                                     echo "...";
-                                    $i=149;
+                                    $i=99;
                                 }
                                 else 
                                     echo $topic[$i];
@@ -146,6 +144,8 @@ if(!isset($_SESSION["sort"]))
             $exist = 1;
 			// Czy ten panel jest wymagany
             $already = 0;
+            // Tablica istniejących zadań
+            $nadane_tab = array();
 
             /*
                 JAK DZIAŁA KOD?
@@ -174,13 +174,50 @@ if(!isset($_SESSION["sort"]))
                 while($temp = mysqli_fetch_array($temp_que))
                     $exist=0;
 
+                foreach($nadane_tab as $nadane_id){
+                    if($nadane_id == $the_id)
+                        $exist=0;
+                }
+
                 if($exist==1){
+                    array_push($nadane_tab, $the_id);
+
 					if($already==0){
 						echo '<div id="div_nadane">';
 						echo '<div><h2>Zadania nadane</h2></div>';
 						$already=1;
-					}
-                    $div_job_top='<div class="job" id="'.$the_id.'"><div class="job_topic" id="'.$the_id.'" onclick="job_popup(this.id)">';
+                    }
+
+                    $days_left = how_many_days_left($res["End"]);
+                    $div_job_top="";
+
+                    if($days_left<=1){
+                        $div_job_top='<div class="job" id="'.$the_id.'"
+                            style="
+                            border: solid 2px red;
+                        "
+                        >
+                        <div class="job_topic" id="'.$the_id.'" onclick="job_popup(this.id)"
+                        style="
+                            background-color: lightcoral;
+                        "
+                        >';
+                    }
+                    else if($days_left<7){
+                        $div_job_top='<div class="job" id="'.$the_id.'"
+                            style="
+                                border: solid 2px yellow;
+                            "
+                            >
+                            <div class="job_topic" id="'.$the_id.'" onclick="job_popup(this.id)"
+                            style="
+                                background-color: beige;
+                            "
+                            >';
+                    }
+                    else{
+                        $div_job_top='<div class="job" id="'.$the_id.'"><div class="job_topic" id="'.$the_id.'" onclick="job_popup(this.id)">';
+                    }
 
                     $div_job_bottom='</div></div>';
 
@@ -194,14 +231,14 @@ if(!isset($_SESSION["sort"]))
 
                     $topic = $res["Topic"];
                     $bufor = "";
-                    if(strlen($topic)>150)
+                    if(strlen($topic)>100)
                     {
-                            for($i=0; $i<150; $i++)
+                            for($i=0; $i<100; $i++)
                             {
-                                if($i>130 && $topic[$i]==" ")
+                                if($i>80 && $topic[$i]==" ")
                                 {
                                     echo "...";
-                                    $i=149;
+                                    $i=99;
                                 }
                                 else 
                                     echo $topic[$i];
