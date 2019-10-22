@@ -41,8 +41,8 @@ if(!isset($_SESSION["sort"]))
             <p id="p_timer"></p>
         </div>
 
-        <!-- Wszystkie zadania wyświetlane -->
-        <form id="div_jobs" method="GET" action="user.php">
+        <!-- Zadania -->
+        <div id="div_aktualne">
             <div><h2>Zadania</h2></div>
             <?php
                 require_once("connection.php");
@@ -112,11 +112,12 @@ if(!isset($_SESSION["sort"]))
                         $bufor = "";
                         if(strlen($topic)>100)
                         {
+                            echo "<b>";
                             for($i=0; $i<100; $i++)
                             {
                                 if($i>80 && $topic[$i]==" ")
                                 {
-                                    echo "...";
+                                    echo "...</b>";
                                     $i=99;
                                 }
                                 else 
@@ -126,7 +127,7 @@ if(!isset($_SESSION["sort"]))
                         else
                             $bufor=$topic;
 
-                        echo $bufor."<br><br>";
+                        echo "<b>".$bufor."</b><br><br>";
                         echo "Dodano przez: ".$temp["Login"]."<br>";
                         echo "<span id='job_span_nonim'>ID:".$res["The_ID"]."</span><br>";
                         echo $div_job_bottom;
@@ -135,7 +136,7 @@ if(!isset($_SESSION["sort"]))
 
                 mysqli_close($conn);
             ?>
-        </form>  
+        </div>
 
         <!-- Zadania nadane -->
         <?php
@@ -247,7 +248,7 @@ if(!isset($_SESSION["sort"]))
                     else
                         $bufor=$topic;
 
-                    echo $bufor."<br><br>";
+                    echo "<b>".$bufor."</b><br><br>";
                     echo "Dodano przez: ".$temp["Login"]."<br>";
                     echo "<span id='job_span_nonim'>ID:".$res["The_ID"]."</span><br>";
                     echo $div_job_bottom;
@@ -403,6 +404,24 @@ if(!isset($_SESSION["sort"]))
                     $('#thrash').html(data);
             });
 		}
+
+        //Funkcja usuwa wiadomość z chatu
+        function job_chatmsqdelete(msg_id){
+            var can_delete = confirm("Czy na pewno chcesz usunąć tę wiadomość z chatu?");
+            
+            if(can_delete==true){
+                $.get("additional/deletemsg.php", {msg_id:msg_id}, function(data){
+                    $('#thrash').html(data);
+                });
+            }
+        }
+
+        //Funkcja edytuje zadanie
+        function job_edit(edit_id){
+            $.get("additional/processor.php", {edit_id:edit_id}, function(data){
+                $('#okno_job').html(data);
+            });
+        }
 
         // -----
         // Skrypty zakończonych zadań

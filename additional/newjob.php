@@ -35,6 +35,39 @@ if(isset($_POST['new_title'])){
         if($new_forwho_list[$i]!=','){
             $sql = "INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Start, End) VALUES (NULL, '$the_id', '$new_title', '$new_info', '$new_whoadd', '$new_forwho_list[$i]', CURRENT_TIMESTAMP, '$new_deadline')";
             mysqli_query($conn, $sql);
+
+        $sql = "SELECT Email FROM users WHERE ID='$new_forwho_list[$i]' LIMIT 1";
+        $que = mysqli_query($conn, $sql);
+        while($res = mysqli_fetch_array($que)){
+            require_once("additional/mail_processor/Mail.php");
+
+            $from = '<fromaddress@gmail.com>';
+            $to = '<toaddress@yahoo.com>';
+            $subject = 'Hi!';
+            $body = "Hi,\n\nHow are you?";
+
+            $headers = array(
+                'From' => $from,
+                'To' => $to,
+                'Subject' => $subject
+            );
+
+            $smtp = Mail::factory('smtp', array(
+                    'host' => 'ssl://smtp.gmail.com',
+                    'port' => '465',
+                    'auth' => false,
+                    'username' => 'johndoe@gmail.com',
+                    'password' => 'passwordxxx'
+                ));
+
+            $mail = $smtp->send($to, $headers, $body);
+
+            if (PEAR::isError($mail)) {
+                echo('<p>' . $mail->getMessage() . '</p>');
+            } else {
+                echo('<p>Message successfully sent!</p>');
+            }
+        }
         }
     }
 

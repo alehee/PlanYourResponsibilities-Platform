@@ -40,15 +40,15 @@ p{
 }
 
 #okno_job{
-    text-align: center;
     position: fixed;
-    width: 70%;
+    width: 80%;
     min-height: 30%;
     max-height: 80%;
     background-color: white;
-    left: 15%;
+    left: 10%;
     top: 10%;
     overflow-y: auto;
+    padding: 10px;
 }
 
 #okno_dodajosobe{
@@ -64,17 +64,11 @@ p{
 
 
 
-#div_jobs{
-    min-height: 100px;
-    width: 95%;
+#div_aktualne{
+    clear: both;
+    width: 100%;
+    min-height: 50px;
     margin: 10px auto;
-    color:dodgerblue;
-    padding: 20px;
-
-}
-
-#div_jobs > div >h2{ 
-    padding: 10px;
 }
 
 .job{
@@ -116,13 +110,9 @@ p{
 
 #div_nadane{
     clear: both;
-    width: 92%;
+    width: 100%;
     min-height: 50px;
     margin: 10px auto;
-}
-
-#div_nadane > div > h2{
-    color: dodgerblue;
 }
 
 
@@ -147,9 +137,9 @@ p{
 
 
 #new_job_forwho{
-    width: 400px;
+    width: 98%;
+    margin: 10px auto;
     min-height: 10px;
-    background-color: lightsteelblue;
 }
 
 
@@ -202,6 +192,12 @@ p{
 #new_job{
     color: green;
     cursor: pointer;
+}
+
+h2{ 
+    padding: 10px;
+    padding-left: 30px;
+    color: dodgerblue;
 }
 
 
