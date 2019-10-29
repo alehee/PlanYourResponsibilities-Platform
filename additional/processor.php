@@ -51,7 +51,12 @@
 			
             echo "<b>Koniec:</b> ".$res["End"]."<br><br>";
             echo $res["Topic"]."<br><br>";
-            echo "<b>Dodatkowe informacje:</b><br>".$res["Info"];
+            echo "<b>Dodatkowe informacje:</b><br>";
+            
+            $string = $res["Info"];
+		    $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
+		    $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
+		    echo $string.'<br>';
 
             $temp = $res["WhoAdd"];
             $temp_sql = "SELECT Login FROM users WHERE ID='$temp'";

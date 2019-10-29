@@ -31,6 +31,25 @@ if(isset($_POST['new_title'])){
     $new_deadline = $_POST['new_deadline'];
     $new_whoadd = $_SESSION['id'];
 
+    $sql="SELECT Imie, Nazwisko FROM users WHERE ID=$new_whoadd";
+    $que = mysqli_query($conn, $sql);
+    $res = mysqli_fetch_array($que);
+
+    $mail_whoadd = $res["Imie"]." ".$res["Nazwisko"];
+
+    $from = "PYR@riverlakestudios.pl";
+    $subject = "Nowe zadanie na platformie PYR!";
+$message = "
+Zadanie od: ".$mail_whoadd."
+
+Tytuł: ".$new_title."
+
+Informacje: ".$new_info."
+
+Zaloguj się na riverlakestudios.pl/pyr i sprawdź szczegóły!
+Wygenerowano: ".date("Y-m-d G:i:s");
+    $headers = "From: ".$from;
+
     for($i=0; $i<strlen($new_forwho_list); $i=$i+2){
         if($new_forwho_list[$i]!=','){
             $sql = "INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Start, End) VALUES (NULL, '$the_id', '$new_title', '$new_info', '$new_whoadd', '$new_forwho_list[$i]', CURRENT_TIMESTAMP, '$new_deadline')";
@@ -39,40 +58,13 @@ if(isset($_POST['new_title'])){
         $sql = "SELECT Email FROM users WHERE ID='$new_forwho_list[$i]' LIMIT 1";
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
-            require_once("additional/mail_processor/Mail.php");
-
-            $from = '<fromaddress@gmail.com>';
-            $to = '<toaddress@yahoo.com>';
-            $subject = 'Hi!';
-            $body = "Hi,\n\nHow are you?";
-
-            $headers = array(
-                'From' => $from,
-                'To' => $to,
-                'Subject' => $subject
-            );
-
-            $smtp = Mail::factory('smtp', array(
-                    'host' => 'ssl://smtp.gmail.com',
-                    'port' => '465',
-                    'auth' => false,
-                    'username' => 'johndoe@gmail.com',
-                    'password' => 'passwordxxx'
-                ));
-
-            $mail = $smtp->send($to, $headers, $body);
-
-            if (PEAR::isError($mail)) {
-                echo('<p>' . $mail->getMessage() . '</p>');
-            } else {
-                echo('<p>Message successfully sent!</p>');
-            }
-        }
+            $to = $res["Email"];
+            mail($to, $subject, $message, $headers);
         }
     }
-
     unset($_POST["new_title"]);
     header("location:../user.php");
+}
 }
 
 else

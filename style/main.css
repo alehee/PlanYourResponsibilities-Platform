@@ -144,18 +144,6 @@ p{
 
 
 
-#time_day{
-    font-weight: 800;
-    font-size: 35px;
-    color: darkblue;
-}
-
-#time_time{
-    font-size: 25px;
-    font-weight: 800;
-    color: darkblue;
-}
-
 #div_panel{
     float: left;
     width: 50%;
@@ -213,5 +201,15 @@ h2{
 .job{
     width: 48%;
 }
+}
 
+@media screen and (max-width: 400px){
+
+.job:nth-child(n){
+     clear: both;
+}
+
+.job{
+    width: 98%;
+}
 }
