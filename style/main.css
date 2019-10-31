@@ -74,17 +74,12 @@ p{
 .job{
     float: left;
     margin: 0 auto;
-    width: 23%;
+    width: 19%;
     height: auto;
-    margin: 1%;
+    margin: 0.5%;
     color: black;
-    border: solid 2px dodgerblue;
+    border: solid 1px dodgerblue;
     font-size: 80%;
-}
-
-.job:nth-child(4n+2)
-{
-    clear: both;
 }
 
 .job_topic{
@@ -95,10 +90,6 @@ p{
 
 .job_button{
     width: 100%;
-}
-
-#job_span_im{
-
 }
 
 #job_span_nonim{
@@ -192,24 +183,40 @@ h2{
 
 
 
-@media screen and (max-width: 800px){
+@media screen and (min-width: 1001px){
+.job:nth-child(5n+2)
+{
+    clear: both;
+}
 
+}
+
+@media screen and (min-width: 701px) and (max-width: 1000px){
+.job:nth-child(3n+2){
+    clear: both;
+}
+    
+.job{
+    width: 32%;
+}
+}
+
+@media screen and (min-width: 401px) and (max-width: 700px){
 .job:nth-child(2n+2){
     clear: both;
 }
 
 .job{
-    width: 48%;
+    width: 49%;
 }
 }
 
 @media screen and (max-width: 400px){
-
 .job:nth-child(n){
      clear: both;
 }
 
 .job{
-    width: 98%;
+    width: 99%;
 }
 }

@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+require_once('additional/func.php');
+
 if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
 {
     header("location:index.php");
@@ -16,7 +18,7 @@ if(!isset($_SESSION["sort"]))
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
-        <title>PlanYourResponsibilities - Platform</title>
+        <title>PYR - <?php echo name_by_id($_SESSION["id"]); ?></title>
         <link rel="stylesheet" href="style/main.css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
@@ -103,11 +105,6 @@ if(!isset($_SESSION["sort"]))
 
                         echo $div_job_top;
                         echo "Koniec: ".proper_date($res["End"])."<br><br>";
-                        
-                        $temp = $res["WhoAdd"];
-                        $temp_sql = "SELECT Login FROM users WHERE ID='$temp'";
-                        $temp_que = mysqli_query($conn, $temp_sql);
-                        $temp = mysqli_fetch_array($temp_que);
 
                         $topic = $res["Topic"];
                         $bufor = "";
@@ -129,7 +126,7 @@ if(!isset($_SESSION["sort"]))
                             $bufor=$topic;
 
                         echo "<b>".$bufor."</b><br><br>";
-                        echo "Dodano przez: ".$temp["Login"]."<br>";
+                        echo "Dodano przez: ".name_by_id($res["WhoAdd"])."<br>";
                         echo "<span id='job_span_nonim'>ID:".$res["The_ID"]."</span><br>";
                         echo $div_job_bottom;
                     }
@@ -390,6 +387,13 @@ if(!isset($_SESSION["sort"]))
                     $('#okno_job').html(data);
             });
 		}
+
+        //Funkcja dodaje osoby do zadania
+		function job_delperson(delperson_id){
+			$.get("additional/processor.php", {delperson_id: delperson_id}, function(data){
+                    $('#okno_job').html(data);
+            });
+		}
 		
 		//Funkcja wysyła wiadomość na chat
 		function okno_sentmessage(id){
@@ -458,6 +462,102 @@ if(!isset($_SESSION["sort"]))
             okno=0;
         }
 
+        // Funkcja szybko zaznacza wiele osób do nowego zadania
+        function new_job_toggle(sklad){
+            var counter=0;
+
+            if(sklad=="Wszyscy"){
+                var tab = document.getElementsByName("new_forwho[]");
+                if(tab[counter].checked == true){
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=false;
+                        counter++;
+                    }
+                }
+                else{
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=true;
+                        counter++;
+                    }
+                }
+            }
+            else if(sklad=="Niski Skład"){
+                var tab = document.getElementsByClassName("nskl");
+                if(tab[counter].checked == true){
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=false;
+                        counter++;
+                    }
+                }
+                else{
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=true;
+                        counter++;
+                    }
+                }
+            }
+            else if(sklad=="Wysoki Skład"){
+                var tab = document.getElementsByClassName("wskl");
+                if(tab[counter].checked == true){
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=false;
+                        counter++;
+                    }
+                }
+                else{
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=true;
+                        counter++;
+                    }
+                }
+            }
+            else if(sklad=="E-commerce"){
+                var tab = document.getElementsByClassName("ecom");
+                if(tab[counter].checked == true){
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=false;
+                        counter++;
+                    }
+                }
+                else{
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=true;
+                        counter++;
+                    }
+                }
+            }
+            else if(sklad=="Rampa"){
+                var tab = document.getElementsByClassName("ramp");
+                if(tab[counter].checked == true){
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=false;
+                        counter++;
+                    }
+                }
+                else{
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=true;
+                        counter++;
+                    }
+                }
+            }
+            else if(sklad=="Reszta"){
+                var tab = document.getElementsByClassName("resz");
+                if(tab[counter].checked == true){
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=false;
+                        counter++;
+                    }
+                }
+                else{
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=true;
+                        counter++;
+                    }
+                }
+            }
+        }
+
         // -----
 		// Skrypty sortowania
 		
@@ -473,6 +573,7 @@ if(!isset($_SESSION["sort"]))
     </script>
 </html>
 
+<!-- Funkcje, które są potrzebne tylko tutaj --->
 <?php
 
     // FUNKCJA WYŚWIETLAJĄCA ILE DNI ZOSTAŁO DO WYKONANIA ZADANIA
@@ -518,67 +619,6 @@ if(!isset($_SESSION["sort"]))
         $date_job_var=$date_job_var+(intval($date_job_buf));
 
         return $date_job_var-$date_curr_var;
-    }
-
-    // FUNKCJA ZWRACAJĄCA POPRAWNĄ DATĘ
-    function proper_date($date){
-        $better_date="";
-        $bufor="";
-        // DZIEŃ
-        for($i=8; $i<10; $i++)
-        {
-            $better_date = $better_date.$date[$i];
-        }
-        // MIESIĄC
-        for($i=5; $i<7; $i++)
-        {
-            $bufor = $bufor.$date[$i];
-        }
-        switch($bufor){
-            case "01":
-                $better_date= $better_date." sty ";
-            break;
-            case "02":
-                $better_date= $better_date." lut ";
-            break;
-            case "03":
-                $better_date= $better_date." mar ";
-            break;
-            case "04":
-                $better_date= $better_date." kwi ";
-            break;
-            case "05":
-                $better_date= $better_date." maj ";
-            break;
-            case "06":
-                $better_date= $better_date." cze ";
-            break;
-            case "07":
-                $better_date= $better_date." lip ";
-            break;
-            case "08":
-                $better_date= $better_date." sie ";
-            break;
-            case "09":
-                $better_date= $better_date." wrz ";
-            break;
-            case "10":
-                $better_date= $better_date." paź ";
-            break;
-            case "11":
-                $better_date= $better_date." lis ";
-            break;
-            case "12":
-                $better_date= $better_date." gru ";
-            break;
-        }
-        // ROK
-        for($i=0; $i<4; $i++)
-        {
-            $better_date = $better_date.$date[$i];
-        }
-
-        return $better_date;
     }
 
 ?>

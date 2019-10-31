@@ -1,6 +1,8 @@
 <?php
     session_start();
 
+    require_once('func.php');
+
     require_once("../connection.php");
     $conn = mysqli_connect($host, $user_db, $password_db, $db_name);
 
@@ -19,12 +21,20 @@
             <textarea name="new_info" rows=4 cols=50/></textarea><br>
             Dla kogo:<br>
         <div id="new_job_forwho">';
-        $sql = "SELECT ID, Login FROM users";
+        $sql = "SELECT ID, Imie, Nazwisko, Dzial FROM users";
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
-            echo '<input type="checkbox" name="new_forwho[]" value="'.$res["ID"].'" checked/> '.$res['Login'].' | ';
+            echo '<input type="checkbox" class="'.$res["Dzial"].'" name="new_forwho[]" value="'.$res["ID"].'" checked/> '.$res['Imie']." ".$res["Nazwisko"].' | ';
         }
         echo '
+            <div><br>
+            <input type="button" value="Wszyscy" onclick="new_job_toggle(this.value)"/>
+            <input type="button" value="Niski Skład" onclick="new_job_toggle(this.value)"/>
+            <input type="button" value="Wysoki Skład" onclick="new_job_toggle(this.value)"/>
+            <input type="button" value="E-commerce" onclick="new_job_toggle(this.value)"/>
+            <input type="button" value="Rampa" onclick="new_job_toggle(this.value)"/>
+            <input type="button" value="Reszta" onclick="new_job_toggle(this.value)"/>
+            </div>
         </div><br>
             Deadline: <input type="date" name="new_deadline" required/><br>
             <input type="submit"/>
@@ -49,20 +59,25 @@
         while($res = mysqli_fetch_array($que)){
 			$processor_forwho_array = array();
 			
-            echo "<b>Koniec:</b> ".$res["End"]."<br><br>";
+            echo "<b>Koniec:</b> ".proper_date($res["End"])."<br><br>";
             echo $res["Topic"]."<br><br>";
             echo "<b>Dodatkowe informacje:</b><br>";
-            
-            $string = $res["Info"];
-		    $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
-		    $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
-		    echo $string.'<br>';
 
-            $temp = $res["WhoAdd"];
-            $temp_sql = "SELECT Login FROM users WHERE ID='$temp'";
-            $temp_que = mysqli_query($conn, $temp_sql);
-            $temp = mysqli_fetch_array($temp_que);
-            $temp_whoadd = $temp["Login"];
+            $string = $res["Info"];
+            $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
+            $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
+            echo $string.'<br>';
+            
+            /*
+            $atta=0;
+            $bufor = $string;
+            while($pos = strpos($bufor, "a href=")){
+                $bufor[$pos]="x";
+                $atta++;
+            }
+            echo "<script>alert(".$atta.")</script>";
+            */
+
             echo "<br><br>";
 
             echo "<b>Uczestniczący w tym zadaniu:</b><br>";
@@ -70,10 +85,7 @@
                 $temp_que = mysqli_query($conn, $temp_sql);
                 while($temp = mysqli_fetch_array($temp_que)){
                     $other_forwho = $temp["ForWho"];
-                    $temp_sql = "SELECT Login FROM users WHERE ID='$other_forwho'";
-                    $temp_temp_que = mysqli_query($conn, $temp_sql);
-                    $temp_temp = mysqli_fetch_array($temp_temp_que);
-                    echo " - ".$temp_temp["Login"]."<br>";
+                    echo " - ".name_by_id($other_forwho)."<br>";
 					array_push($processor_forwho_array, $other_forwho);
                 }
             echo '<input type="button" id="'.$the_id_processor.'" value="Dodaj osobę" onclick="job_addperson(this.id)"/>';
@@ -82,11 +94,12 @@
             $temp_que = mysqli_query($conn, $temp_sql);
             while($temp = mysqli_fetch_array($temp_que)){
                 echo '<br><input type="button" id="'.$the_id_processor.'" value="Edytuj zadanie" onclick="job_edit(this.id)"/>';
+                echo '<br><input type="button" id="'.$the_id_processor.'" value="Usuń osobę" onclick="job_delperson(this.id)"/>';
             }
 			echo "<br><br>";
 
-            echo "<b>Dodano przez:</b> ".$temp_whoadd."<br>";
-            echo "<b>Data:</b> ".$res["Start"]."<br>";
+            echo "<b>Dodano przez:</b> ".name_by_id($res["WhoAdd"])."<br>";
+            echo "<b>Data:</b> ".proper_date($res["Start"])."<br>";
             echo "<b>ID:</b>".$the_id_processor."<br><br>";
 			
 			$processor_forme=0;
@@ -139,6 +152,10 @@
 	
 	// OKNO DODANIA NOWEJ OSOBY DO ZADANIA
 	else if(isset($_GET["addperson_id"])){
+
+        mysqli_query($conn, "SET CHARSET utf8");
+        mysqli_query($conn, "SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
+
 		$addperson_id = $_GET['addperson_id'];
 		$_SESSION["the_job"]=$addperson_id;
 		$addperson_user_id = $_SESSION["id"];
@@ -157,7 +174,7 @@
 		echo '<form action="additional/addperson.php" method="POST">';
         echo '<b>DODAJ NOWĄ OSOBĘ DO ZADANIA</b><br>';
         echo '<div id="new_job_forwho">';
-        $sql = "SELECT users.ID, users.Login FROM users";
+        $sql = "SELECT ID, Login, Imie, Nazwisko FROM users";
         $que = mysqli_query($conn, $sql);
         $how_many_is_in=0;
         while($res = mysqli_fetch_array($que)){
@@ -172,7 +189,7 @@
 			if($is_out==1){
                 if($how_many_is_in>0)
                     echo " | ";
-                echo '<input type="radio" name="addperson_who" value="'.$res["ID"].'"/> '.$res["Login"];
+                echo '<input type="radio" name="addperson_who" value="'.$res["ID"].'"/> '.$res["Imie"]." ".$res["Nazwisko"];
                 
                 array_push($is_in, $res["Login"]);
                 $how_many_is_in++;
@@ -183,6 +200,54 @@
 		echo '</form>';
 		
 		unset($_GET['addperson_id']);
+    }
+
+    // OKNO USUWANIA OSOBY Z ZADANIA
+    else if(isset($_GET["delperson_id"])){
+        $delperson_id = $_GET['delperson_id'];
+		$_SESSION["the_job"]=$delperson_id;
+		$delperson_user_id = $_SESSION["id"];
+		$is_in = array();
+		
+		$sql="SELECT ForWho FROM job WHERE The_ID='$delperson_id'";
+		$que= mysqli_query($conn, $sql);
+		while($res=mysqli_fetch_array($que)){
+			$temp=$res["ForWho"];
+			$temp_sql="SELECT Login FROM users WHERE ID='$temp'";
+			$temp_que=mysqli_query($conn, $temp_sql);
+			while($temp=mysqli_fetch_array($temp_que)){
+				array_push($is_in, $temp["Login"]);
+			}
+		}
+		echo '<form action="additional/delperson.php" method="POST">';
+        echo '<b>USUŃ OSOBĘ Z ZADANIA</b><br>';
+        echo '<div id="new_job_forwho">';
+        $sql = "SELECT ID, Login, Imie, Nazwisko FROM users";
+        $que = mysqli_query($conn, $sql);
+        $how_many_is_in=0;
+        while($res = mysqli_fetch_array($que)){
+			$is_out=1;
+			
+			foreach($is_in as $user){
+				if($user == $res["Login"]){
+					$is_out=0;
+				}
+		    }
+			
+			if($is_out==0){
+                if($how_many_is_in>0)
+                    echo " | ";
+                echo '<input type="radio" name="delperson_who" value="'.$res["ID"].'"/> '.$res["Imie"]." ".$res["Nazwisko"];
+                
+                array_push($is_in, $res["Login"]);
+                $how_many_is_in++;
+			}
+        }
+        echo '</div>';
+		echo '<input type="submit" value="Usuń osobę"/>';
+		echo '</form>';
+
+        unset($_GET["delperson_id"]);
     }
 
     // EDYTOWANIE ZADANIA
