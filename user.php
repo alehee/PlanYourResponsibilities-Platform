@@ -104,7 +104,31 @@ if(!isset($_SESSION["sort"]))
                         $div_job_bottom='</div><input type="button" class="job_button" id="'.$res["The_ID"].'" value="Wykonano" onclick="job_done(this.id)"/></div>';
 
                         echo $div_job_top;
-                        echo "Koniec: ".proper_date($res["End"])."<br><br>";
+                        echo "Koniec: ".proper_date($res["End"])."<br>";
+                        // LICZNIK ZAŁĄCZNIKÓW
+                        $how_many_atta=0;
+                        $the_id = $res["The_ID"];
+                        $string = $res["Info"];
+                        $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
+                        $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
+                        $bufor = $string;
+                        while($pos = strpos($bufor, "a href=")){
+                            $bufor[$pos]="x";
+                            $how_many_atta++;
+                        }
+                        $temp_sql="SELECT Message FROM chat WHERE The_ID='$the_id'";
+                        $temp_que=mysqli_query($conn, $temp_sql);
+                        while($temp_res = mysqli_fetch_array($temp_que)){
+                            $string=$temp_res["Message"];
+                            $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
+                            $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
+                            $bufor = $string;
+                            while($pos = strpos($bufor, "a href=")){
+                                $bufor[$pos]="x";
+                                $how_many_atta++;
+                            }
+                        }
+                        echo "Załączniki: ".$how_many_atta."<br><br>";
 
                         $topic = $res["Topic"];
                         $bufor = "";
@@ -221,7 +245,31 @@ if(!isset($_SESSION["sort"]))
                     $div_job_bottom='</div></div>';
 
                     echo $div_job_top;
-                    echo "Koniec: ".proper_date($res["End"])."<br><br>";
+                    echo "Koniec: ".proper_date($res["End"])."<br>";
+                    // LICZNIK ZAŁĄCZNIKÓW
+                    $how_many_atta=0;
+                    $the_id = $res["The_ID"];
+                    $string = $res["Info"];
+                    $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
+                    $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
+                    $bufor = $string;
+                    while($pos = strpos($bufor, "a href=")){
+                        $bufor[$pos]="x";
+                        $how_many_atta++;
+                    }
+                    $temp_sql="SELECT Message FROM chat WHERE The_ID='$the_id'";
+                    $temp_que=mysqli_query($conn, $temp_sql);
+                    while($temp_res = mysqli_fetch_array($temp_que)){
+                        $string=$temp_res["Message"];
+                        $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
+                        $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
+                        $bufor = $string;
+                        while($pos = strpos($bufor, "a href=")){
+                            $bufor[$pos]="x";
+                            $how_many_atta++;
+                        }
+                    }
+                    echo "Załączniki: ".$how_many_atta."<br><br>";
 
                     $temp = $res["WhoAdd"];
                     $temp_sql = "SELECT Login FROM users WHERE ID='$temp'";

@@ -59,24 +59,39 @@
         while($res = mysqli_fetch_array($que)){
 			$processor_forwho_array = array();
 			
-            echo "<b>Koniec:</b> ".proper_date($res["End"])."<br><br>";
+            echo "<b>Koniec:</b> ".proper_date($res["End"])."<br>";
+            // LICZNIK ZAŁĄCZNIKÓW
+            $how_many_atta=0;
+            $string = $res["Info"];
+            $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
+            $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
+            $bufor = $string;
+            while($pos = strpos($bufor, "a href=")){
+                $bufor[$pos]="x";
+                $how_many_atta++;
+            }
+            $temp_sql="SELECT Message FROM chat WHERE The_ID='$the_id_processor'";
+            $temp_que=mysqli_query($conn, $temp_sql);
+            while($temp_res = mysqli_fetch_array($temp_que)){
+                $string=$temp_res["Message"];
+                $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
+                $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
+                $bufor = $string;
+                while($pos = strpos($bufor, "a href=")){
+                    $bufor[$pos]="x";
+                    $how_many_atta++;
+                }
+            }
+            echo "Załączniki: ".$how_many_atta."<br><br>"; 
+
             echo $res["Topic"]."<br><br>";
+
             echo "<b>Dodatkowe informacje:</b><br>";
 
             $string = $res["Info"];
             $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
             $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
             echo $string.'<br>';
-            
-            /*
-            $atta=0;
-            $bufor = $string;
-            while($pos = strpos($bufor, "a href=")){
-                $bufor[$pos]="x";
-                $atta++;
-            }
-            echo "<script>alert(".$atta.")</script>";
-            */
 
             echo "<br><br>";
 
