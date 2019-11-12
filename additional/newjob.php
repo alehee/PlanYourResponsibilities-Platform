@@ -50,21 +50,29 @@ Zaloguj się na riverlakestudios.pl/pyr i sprawdź szczegóły!
 Wygenerowano: ".date("Y-m-d G:i:s");
     $headers = "From: ".$from;
 
+    $forwho_id="";
     for($i=0; $i<strlen($new_forwho_list); $i=$i+2){
-        if($new_forwho_list[$i]!=','){
-            $sql = "INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Start, End) VALUES (NULL, '$the_id', '$new_title', '$new_info', '$new_whoadd', '$new_forwho_list[$i]', CURRENT_TIMESTAMP, '$new_deadline')";
+        if($new_forwho_list[$i]==','){
+            $sql = "INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Start, End) VALUES (NULL, '$the_id', '$new_title', '$new_info', '$new_whoadd', '$forwho_id', CURRENT_TIMESTAMP, '$new_deadline')";
+
             mysqli_query($conn, $sql);
 
-        $sql = "SELECT Email FROM users WHERE ID='$new_forwho_list[$i]' LIMIT 1";
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            $to = $res["Email"];
+            $sql = "SELECT Email FROM users WHERE ID='$forwho_id' LIMIT 1";
+            $que = mysqli_query($conn, $sql);
+
+            while($res = mysqli_fetch_array($que)){
+                $to = $res["Email"];
+
             mail($to, $subject, $message, $headers);
+            }
+            $forwho_id="";
+        }
+        else{
+            $forwho_id=$forwho_id.$new_forwho_list[$i];
         }
     }
     unset($_POST["new_title"]);
     header("location:../user.php");
-}
 }
 
 else

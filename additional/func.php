@@ -75,6 +75,9 @@ function name_by_id($id){
     $name="";
     $conn = connect();
 
+    $conn->query("SET CHARSET utf8");
+    $conn->query("SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
+
     $sql = "SELECT Imie, Nazwisko FROM users WHERE ID='$id' LIMIT 1";
     $que = $conn -> query($sql);
     while($res = mysqli_fetch_array($que)){
