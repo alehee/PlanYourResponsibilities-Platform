@@ -31,17 +31,14 @@ if(!isset($_SESSION["sort"]))
 
         <header>
             <h1>.:Plan Your Responsibilities:.</h1><br>
+            <?php echo proper_date(date("Y-m-d")); ?>
+            <p id="p_timer"></p>
         </header>
 
         <div id="div_panel">
         <p><a href="logout.php" id="logout">WYLOGUJ</a></p><br>
 		<p onclick="new_job()" id="new_job">DODAJ ZADANIE</p><br>
 		<p onclick="okno_sort()" id="sort">SORTOWANIE: <?php echo $_SESSION["sort"] ?></p>
-        </div>
-
-        <div id="div_panel">
-            <?php echo proper_date(date("Y-m-d")); ?>
-            <p id="p_timer"></p>
         </div>
 
         <!-- Zadania -->
@@ -393,7 +390,7 @@ if(!isset($_SESSION["sort"]))
 
                 var full_time=time_h+":"+time_m+":"+time_s;
 
-                timer.innerHTML=full_day+"<br>"+full_time;
+                timer.innerHTML=full_day+" "+full_time;
             }, 1000, 1000)
         }
 
