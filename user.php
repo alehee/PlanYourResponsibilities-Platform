@@ -31,7 +31,6 @@ if(!isset($_SESSION["sort"]))
 
         <header>
             <h1>.:Plan Your Responsibilities:.</h1><br>
-            <?php echo proper_date(date("Y-m-d")); ?>
             <p id="p_timer"></p>
         </header>
 
@@ -148,7 +147,6 @@ if(!isset($_SESSION["sort"]))
 
                         echo "<b>".$bufor."</b><br><br>";
                         echo "Dodano przez: ".name_by_id($res["WhoAdd"])."<br>";
-                        echo "<span id='job_span_nonim'>ID:".$res["The_ID"]."</span><br>";
                         echo $div_job_bottom;
                     }
                 }
@@ -390,7 +388,7 @@ if(!isset($_SESSION["sort"]))
 
                 var full_time=time_h+":"+time_m+":"+time_s;
 
-                timer.innerHTML=full_day+" "+full_time;
+                timer.innerHTML=<?php echo '"'.proper_date(date("Y-m-d")).' - "+'; ?>full_day+" - "+full_time;
             }, 1000, 1000)
         }
 

@@ -81,7 +81,7 @@ p{
     margin: 0.5%;
     color: black;
     border: solid 1px dodgerblue;
-    font-size: 80%;
+    font-size: 90%;
 }
 
 .job_topic{
@@ -92,11 +92,6 @@ p{
 
 .job_button{
     width: 100%;
-}
-
-#job_span_nonim{
-    font-size: 10px;
-    color: gray;
 }
 
 
@@ -160,7 +155,7 @@ p{
 }
 
 #logout{
-    font-size: 20px;
+    font-size: 100%;
     text-decoration: none;
     color: red;
     margin: 0 auto;
