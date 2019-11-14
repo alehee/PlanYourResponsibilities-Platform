@@ -23,7 +23,7 @@ session_destroy();
     </head>
     <body>
         <header>
-            <h1>.:Plan Your Responsibilities:.</h1>
+            <h1>. : Plan Your Responsibilities : .</h1>
         </header>
 
     <p>WYLOGOWANO!</p><br><br>

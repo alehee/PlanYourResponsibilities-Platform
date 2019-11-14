@@ -42,7 +42,7 @@ else if(isset($_POST["log_login"]) && isset($_POST["log_password"]))
     </head>
     <body>
         <header>
-            <h1>.:Plan Your Responsibilities:.</h1>
+            <h1>. : Plan Your Responsibilities : .</h1>
         </header>
 
         <div id="div_login">

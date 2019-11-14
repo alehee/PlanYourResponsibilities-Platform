@@ -23,6 +23,11 @@ if(!isset($_SESSION["sort"]))
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
     <body onload="time()">
+
+        <div id="nav">
+            <div id="nav_handle"><img src='icons/bookmark-white.png'/></div>
+        </div>
+
         <!-- Popup okienko zadań -->
         <div id="okno_background" onclick="job_popup()">
             <div id="okno_job" onclick="job_okno()">
@@ -31,6 +36,7 @@ if(!isset($_SESSION["sort"]))
 
         <header>
             <h1>. : Plan Your Responsibilities : .</h1><br>
+            <div style="clear:both;"></div>
             <p id="p_timer"></p>
         </header>
 
@@ -343,6 +349,14 @@ if(!isset($_SESSION["sort"]))
         // Musi tu być bo nie działa skrypt
         document.getElementById("okno_background").style.display="none";
 
+        // Skrypty nav
+
+        function nav_open(){
+            var navbar = document.getElementById("nav");
+            navbar.style.left=0;
+        }
+
+        // -----
         // Skrypty timera
 
         function time(){
@@ -393,7 +407,6 @@ if(!isset($_SESSION["sort"]))
         }
 
         // -----
-
         // Skrypty dla wypełnionych zadań
         $(document).ready(function(){
             $("#div_done").click(function(){

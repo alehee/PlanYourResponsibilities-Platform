@@ -160,7 +160,21 @@
 		echo '</div>';
 		}
 		echo '<textarea style="width:80%; height:40px;" id="okno_chat_chatbox" class="okno_chat_style"/><br>';
-		echo '<input type="button" id="'.$the_id_processor.'" class="okno_chat_style" value="Wyślij wiadomość" onclick="okno_sentmessage(this.id)">';
+        echo '<input type="button" id="'.$the_id_processor.'" class="okno_chat_style" value="Wyślij wiadomość" onclick="okno_sentmessage(this.id)">';
+        
+        // SKRYPT ZMIANY ROGÓW OKNA JEŻELI JEST WIĘKSZE
+        echo '<script>
+        var job_height = document.getElementById("okno_job");
+        var height = parseInt(job_height.clientHeight)/parseInt(window.screen.availHeight);
+
+        if(height>0.72){
+            job_height.style.borderTopRightRadius = "0px";
+            job_height.style.borderBottomRightRadius = "0px";
+        }
+        else{
+            job_height.style.borderTopRightRadius = "20px";
+            job_height.style.borderBottomRightRadius = "20px";
+        }</script>';
 
         unset($_GET['elem']);
     }
