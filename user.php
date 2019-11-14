@@ -30,7 +30,7 @@ if(!isset($_SESSION["sort"]))
         </div>
 
         <header>
-            <h1>.:Plan Your Responsibilities:.</h1><br>
+            <h1>. : Plan Your Responsibilities : .</h1><br>
             <p id="p_timer"></p>
         </header>
 
