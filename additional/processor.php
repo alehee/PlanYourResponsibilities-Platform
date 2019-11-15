@@ -233,6 +233,10 @@
 
     // OKNO USUWANIA OSOBY Z ZADANIA
     else if(isset($_GET["delperson_id"])){
+
+        mysqli_query($conn, "SET CHARSET utf8");
+        mysqli_query($conn, "SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
+
         $delperson_id = $_GET['delperson_id'];
 		$_SESSION["the_job"]=$delperson_id;
 		$delperson_user_id = $_SESSION["id"];

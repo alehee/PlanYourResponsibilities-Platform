@@ -24,8 +24,16 @@ if(!isset($_SESSION["sort"]))
     </head>
     <body onload="time()">
 
-        <div id="nav">
-            <div id="nav_handle"><img src='icons/bookmark-white.png'/></div>
+        <div id="nav_background" onclick="nav_popup()">
+            <div id="nav">
+                <div id="nav_link" onclick='nav_link("http:\/\/riverlakestudios.pl/pyr")'>PANEL GŁÓWNY</div>
+                <div id="nav_link" onclick='nav_link("http:\/\/mail.oxylane.com")'>MAIL</div>
+                <div id="nav_link" onclick='nav_link("http:\/\/google.com")'>GOOGLE</div>
+                <div id="nav_link" onclick='nav_link("http:\/\/google.com")'>GOOGLE</div>
+                <div id="nav_link" onclick='nav_link("http:\/\/google.com")'>GOOGLE</div>
+                <div id="nav_link" onclick='nav_link("http:\/\/google.com")'>GOOGLE</div>
+                <div id="nav_link" onclick='nav_link("http:\/\/google.com")'>GOOGLE</div>
+            </div>
         </div>
 
         <!-- Popup okienko zadań -->
@@ -35,7 +43,8 @@ if(!isset($_SESSION["sort"]))
         </div>
 
         <header>
-            <h1>. : Plan Your Responsibilities : .</h1><br>
+            <div id="nav_handle"><img src='icons/menu-3-white.png' onclick="nav_open()"/></div>
+            <h1 style="width:60%; float:left;">. : Plan Your Responsibilities : .</h1><br>
             <div style="clear:both;"></div>
             <p id="p_timer"></p>
         </header>
@@ -152,7 +161,7 @@ if(!isset($_SESSION["sort"]))
                             $bufor=$topic;
 
                         echo "<b>".$bufor."</b><br><br>";
-                        echo "Dodano przez: ".name_by_id($res["WhoAdd"])."<br>";
+                        echo "Dodano przez: ".name_by_id($res["WhoAdd"]);
                         echo $div_job_bottom;
                     }
                 }
@@ -272,11 +281,6 @@ if(!isset($_SESSION["sort"]))
                     }
                     echo "Załączniki: ".$how_many_atta."<br><br>";
 
-                    $temp = $res["WhoAdd"];
-                    $temp_sql = "SELECT Login FROM users WHERE ID='$temp'";
-                    $temp_que = mysqli_query($conn, $temp_sql);
-                    $temp = mysqli_fetch_array($temp_que);
-
                     $topic = $res["Topic"];
                     $bufor = "";
                     if(strlen($topic)>100)
@@ -296,8 +300,7 @@ if(!isset($_SESSION["sort"]))
                         $bufor=$topic;
 
                     echo "<b>".$bufor."</b><br><br>";
-                    echo "Dodano przez: ".$temp["Login"]."<br>";
-                    echo "<span id='job_span_nonim'>ID:".$res["The_ID"]."</span><br>";
+                    echo "Dodano przez: ".name_by_id($res["WhoAdd"]);
                     echo $div_job_bottom;
                 }
 
@@ -348,12 +351,21 @@ if(!isset($_SESSION["sort"]))
     <script>
         // Musi tu być bo nie działa skrypt
         document.getElementById("okno_background").style.display="none";
+        document.getElementById("nav_background").style.display="none";
 
         // Skrypty nav
 
+        var okno = 0;
         function nav_open(){
             var navbar = document.getElementById("nav");
+            var navback = document.getElementById("nav_background");
+            navback.style.display="inline";
             navbar.style.left=0;
+        }
+
+        function nav_link(link){
+            var win = window.open(link, '_blank');
+            win.focus;
         }
 
         // -----
