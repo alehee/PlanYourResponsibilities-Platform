@@ -1,3 +1,12 @@
+/*
+KOLORYSTYKA PLIKU:
+Kolor DECATHLON: #0f70b7
+Kolor DECATHLON LIGHT: #2b9dee
+Kolor szary: #f2f2f2
+
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+*/
+
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 *{
@@ -49,7 +58,7 @@ p{
     width: 80%;
     min-height: 30%;
     max-height: 80%;
-    background-color: white;
+    background-color: #f2f2f2;
     left: 10%;
     top: 10%;
     overflow-y: auto;
@@ -62,7 +71,7 @@ p{
 }
 
 #okno_chat_message{
-	border: solid dodgerblue 2px;
+	border: solid #0f70b7 2px;
 	width: 90%;
     margin: 10px auto;
     padding: 1%;
@@ -77,25 +86,102 @@ p{
     margin: 10px auto;
 }
 
-.job{
+.job, .job_red, .job_yellow{
     float: left;
     margin: 0 auto;
     width: 19%;
     height: auto;
     margin: 0.5%;
-    color: black;
-    border: solid 1px dodgerblue;
+    color: white;
+    border: solid 2px #0f70b7;
+    border-radius: 20px;
+    background-color: #0f70b7;
     font-size: 90%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-shadow: 1px 1px 1px black;
+    text-align: center;
+}
+
+.job_red{
+    border: solid 2px red;
+    background-color: red;
+}
+
+.job_yellow{
+    border: solid 2px #ffbf00;
+    background-color: #ffbf00;
+}
+
+.job_title{
+    padding-top: 5px;
+}
+
+.job_title:hover{
+    cursor: pointer;
 }
 
 .job_topic{
+    color: black;
+    text-shadow: none;
     padding: 20px;
-    background-color: lightblue;
+    background-color: white;
     cursor: pointer;
+    border-radius: 20px;
+    transition: 0.1s;
+    border: solid 1px #0f70b7;
+}
+
+.job_red .job_topic{
+    border: solid 1px red;
+}
+
+.job_yellow .job_topic{
+    border: solid 1px #ffbf00;
+}
+
+.job_topic_justbg{
+    background-color: white;
+    border-radius: 20px;
+    transition: 0.1s;
 }
 
 .job_button{
     width: 100%;
+    background-color: #0f70b7;
+    cursor: pointer;
+    border: none;
+    transition: 0.1s;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    color: white;
+    height: 30px;
+    font-size: 100%;
+    text-shadow: 1px 1px 1px black;
+}
+
+.job_red .job_button{
+    background-color: red;
+}
+
+.job_yellow .job_button{
+    background-color: #ffbf00;
+}
+
+.job_button:hover{
+    transition: 0.1s;
+    background-color: white;
+    color: #0f70b7;
+    font-size: 120%;
+    font-weight: 800;
+    text-shadow: none;
+}
+
+.job_red .job_button:hover{
+    color: red;
+}
+
+.job_yellow .job_button:hover{
+    color: #ffbf00;
 }
 
 
@@ -111,7 +197,7 @@ p{
 
 #div_done, #done{
     clear: both;
-    border: solid 2px dodgerblue;
+    border: solid 2px #0f70b7;
     width: 92%;
     min-height: 50px;
     margin: 0 auto;
@@ -141,8 +227,6 @@ p{
     width: 250px;
     height: 100%;
     background-color: #0f70b7;
-    left: -250px;
-    transition: 0.5s;
 }
 
 #nav_handle{
@@ -151,6 +235,7 @@ p{
 }
 
 #nav_handle img{
+    padding-top: 1%;
     float: left;
     height: 50px;
     width: auto;
@@ -228,7 +313,7 @@ p{
 h2{ 
     padding: 10px;
     padding-left: 30px;
-    color: dodgerblue;
+    color: #0f70b7;
 }
 
 
@@ -243,32 +328,50 @@ h2{
 
 }
 
-@media screen and (min-width: 701px) and (max-width: 1000px){
-.job:nth-child(3n+2){
-    clear: both;
-}
+    @media screen and (min-width: 1001px){
+    .job:nth-child(5n+2)
+    {
+        clear: both;
+    }
     
-.job{
-    width: 32%;
-}
-}
+    }
 
-@media screen and (min-width: 401px) and (max-width: 700px){
-.job:nth-child(2n+2){
-    clear: both;
-}
-
-.job{
-    width: 49%;
-}
-}
-
-@media screen and (max-width: 400px){
-.job:nth-child(n){
-     clear: both;
-}
-
-.job{
-    width: 99%;
-}
-}
+    @media screen and (min-width: 801px) and (max-width: 1000px){
+        .job:nth-child(4n+2){
+            clear: both;
+        }
+            
+        .job{
+            width: 24%;
+        }
+        }
+    
+    @media screen and (min-width: 701px) and (max-width: 800px){
+    .job:nth-child(3n+2){
+        clear: both;
+    }
+        
+    .job{
+        width: 32%;
+    }
+    }
+    
+    @media screen and (min-width: 401px) and (max-width: 700px){
+    .job:nth-child(2n+2){
+        clear: both;
+    }
+    
+    .job{
+        width: 49%;
+    }
+    }
+    
+    @media screen and (max-width: 400px){
+    .job:nth-child(n){
+         clear: both;
+    }
+    
+    .job{
+        width: 99%;
+    }
+    }
