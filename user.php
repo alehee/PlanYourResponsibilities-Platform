@@ -27,13 +27,13 @@ if(!isset($_SESSION["sort"]))
         <!-- Pasek z linkami --->
         <div id="nav_background" onclick="nav_hide()">
             <div id="nav">
-                <div id="nav_link" onclick='nav_link("http:\/\/riverlakestudios.pl/pyr")'>PANEL GŁÓWNY</div>
+                <div id="nav_link" onclick='nav_classic_link("http:\/\/riverlakestudios.pl/pyr")'>PANEL GŁÓWNY</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/mail.oxylane.com")'>MAIL</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/google.com")'>LINK 1</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/google.com")'>LINK 2</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/google.com")'>LINK 3</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/google.com")'>LINK 4</div>
-                <div id="nav_link" onclick='nav_link("http:\/\/google.com")'>LINK 5</div>
+                <div id="nav_link" onclick='nav_classic_link("http:\/\/riverlakestudios.pl/pyr/logout.php")'><span style="color:red;">WYLOGUJ</span></div>
             </div>
         </div>
 
@@ -52,7 +52,6 @@ if(!isset($_SESSION["sort"]))
 
         <!-- Panel akcji (wyloguj etc.) --->
         <div id="div_panel">
-            <p><a href="logout.php" id="logout">WYLOGUJ</a></p><br>
             <p onclick="new_job()" id="new_job">DODAJ ZADANIE</p><br>
             <p onclick="okno_sort()" id="sort">SORTOWANIE: <?php echo $_SESSION["sort"] ?></p>
         </div>
@@ -99,7 +98,7 @@ if(!isset($_SESSION["sort"]))
                         else{
                             $div_job_top='<div class="job" id="'.$res["The_ID"].'">';
                             $div_job_topic_top = '<div class="job_topic_justbg"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
-                            $div_job_topic_bottom = '</div></div><input type="button" class="job_button" id="'.$res["The_ID"].'" value="Zakończ" onclick="job_done(this.id)" onmouseover="job_topic_radius(this.id)" onmouseout="job_topic_radius_fix(this.id)"/>';
+                            $div_job_topic_bottom = '</div><input type="button" class="job_button" id="'.$res["The_ID"].'" value="Zakończ" onclick="job_done(this.id)"/></div>';
                         }
 
                         $div_job_title_top = '<div class="job_title" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
@@ -159,13 +158,22 @@ if(!isset($_SESSION["sort"]))
                                 $how_many_atta++;
                             }
                         }
-                        echo "Załączniki: ".$how_many_atta."<br><br>";
+                        echo "Załączniki: ".$how_many_atta."<br>";
+                        // -----
+
+                        // ILOŚĆ OSÓB W ZADANIU
+                        $how_many_per=0;
+                        $temp_sql="SELECT ForWho FROM job WHERE The_ID=$the_id";
+                        $temp_que=mysqli_query($conn, $temp_sql);
+                        while($temp_res = mysqli_fetch_array($temp_que)){
+                            $how_many_per++;
+                        }
+                        echo "Osób w zadaniu: ".$how_many_per."<br><br>";
                         // -----
 
                         echo "Dodano przez: ".name_by_id($res["WhoAdd"]);
 
                         echo $div_job_topic_bottom;
-
                         echo $div_job_bottom;
                     }
                 }
@@ -229,37 +237,55 @@ if(!isset($_SESSION["sort"]))
                     $div_job_top="";
 
                     if($days_left<=0){
-                        $div_job_top='<div class="job" id="'.$the_id.'"
-                            style="
-                            border: solid 2px red;
-                        "
-                        >
-                        <div class="job_topic" id="'.$the_id.'" onclick="job_popup(this.id)"
-                        style="
-                            background-color: lightcoral;
-                        "
-                        >';
+                        $div_job_top='<div class="job_red job" id="'.$res["The_ID"].'">';
+                        $div_job_topic_top = '<div class="job_topic_justbg"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
+                        $div_job_topic_bottom = '</div></div>';
                     }
                     else if($days_left<3){
-                        $div_job_top='<div class="job" id="'.$the_id.'"
-                            style="
-                                border: solid 2px yellow;
-                            "
-                            >
-                            <div class="job_topic" id="'.$the_id.'" onclick="job_popup(this.id)"
-                            style="
-                                background-color: beige;
-                            "
-                            >';
+                        $div_job_top='<div class="job_yellow job" id="'.$res["The_ID"].'">';
+                        $div_job_topic_top = '<div class="job_topic_justbg"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
+                        $div_job_topic_bottom = '</div></div>';
                     }
                     else{
-                        $div_job_top='<div class="job" id="'.$the_id.'"><div class="job_topic" id="'.$the_id.'" onclick="job_popup(this.id)">';
+                        $div_job_top='<div class="job" id="'.$res["The_ID"].'">';
+                        $div_job_topic_top = '<div class="job_topic_justbg"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
+                        $div_job_topic_bottom = '</div></div>';
                     }
 
-                    $div_job_bottom='</div></div>';
+                    $div_job_title_top = '<div class="job_title" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
+                    $div_job_title_bottom = '</div>';
+                    $div_job_bottom = '</div>';
 
                     echo $div_job_top;
+                    echo $div_job_title_top;
+
+                    // TYTUŁ
+                    $topic = $res["Topic"];
+                    $bufor = "";
+                    if(strlen($topic)>100)
+                    {
+                            for($i=0; $i<100; $i++)
+                            {
+                                if($i>80 && $topic[$i]==" ")
+                                {
+                                    echo "...";
+                                    $i=99;
+                                }
+                                else 
+                                    echo $topic[$i];
+                            }
+                    }
+                    else
+                        $bufor=$topic;
+
+                    echo "<b>".$bufor."</b><br><br>";
+                    // -----
+
+                    echo $div_job_title_bottom;
+                    echo $div_job_topic_top;
+
                     echo "Koniec: ".proper_date($res["End"])."<br>";
+
                     // LICZNIK ZAŁĄCZNIKÓW
                     $how_many_atta=0;
                     $the_id = $res["The_ID"];
@@ -283,28 +309,22 @@ if(!isset($_SESSION["sort"]))
                             $how_many_atta++;
                         }
                     }
-                    echo "Załączniki: ".$how_many_atta."<br><br>";
+                    echo "Załączniki: ".$how_many_atta."<br>";
+                    // -----
 
-                    $topic = $res["Topic"];
-                    $bufor = "";
-                    if(strlen($topic)>100)
-                    {
-                            for($i=0; $i<100; $i++)
-                            {
-                                if($i>80 && $topic[$i]==" ")
-                                {
-                                    echo "...";
-                                    $i=99;
-                                }
-                                else 
-                                    echo $topic[$i];
-                            }
+                    // ILOŚĆ OSÓB W ZADANIU
+                    $how_many_per=0;
+                    $temp_sql="SELECT ForWho FROM job WHERE The_ID='$the_id'";
+                    $temp_que=mysqli_query($conn, $temp_sql);
+                    while($temp_res = mysqli_fetch_array($temp_que)){
+                        $how_many_per++;
                     }
-                    else
-                        $bufor=$topic;
+                    echo "Osób w zadaniu: ".$how_many_per."<br><br>";
+                    // -----
 
-                    echo "<b>".$bufor."</b><br><br>";
                     echo "Dodano przez: ".name_by_id($res["WhoAdd"]);
+
+                    echo $div_job_topic_bottom;
                     echo $div_job_bottom;
                 }
 
@@ -374,6 +394,10 @@ if(!isset($_SESSION["sort"]))
             win.focus;
         }
 
+        function nav_classic_link(link){
+            window.location.href = link;
+        }
+
         // -----
         // Skrypty timera
 
@@ -434,41 +458,6 @@ if(!isset($_SESSION["sort"]))
 
         // -----
         // Skrypty dla aktywnych zadań
-
-        /*
-        //Funkcja naprawia kształt job_topic przy najechaniu
-        function job_topic_radius(id){
-            var div_topic = document.getElementById(id);
-            div_topic_justbg = div_topic.children.length;
-            for(i=0; i<div_topic_justbg; i++){
-                if(div_topic.children[i].classList.contains("job_topic_justbg")){
-                    div_topic.children[i].style.borderBottomRightRadius="0px";
-                    div_topic.children[i].style.borderBottomLeftRadius="0px";
-                }
-            }
-        }
-
-        //Analogicznie naprawia po opuszczeniu
-        function job_topic_radius_fix(id){
-            var div_topic = document.getElementById(id);
-            div_topic_justbg = div_topic.children.length;
-            for(i=0; i<div_topic_justbg; i++){
-                if(div_topic.children[i].classList.contains("job_topic_justbg")){
-                    div_topic.children[i].style.borderBottomRightRadius="20px";
-                    div_topic.children[i].style.borderBottomLeftRadius="20px";
-                }
-            }
-        }
-        */
-
-        $("div.job_button")
-            .mouseover(function(){
-                var id = $(this).attr("id");
-                $("div "+id+":nth-child(2)").css("background-color", "yellow");
-            })
-            .mouseout(function(){
-
-            });
 
         //Funkcje obsługi okienka z zadaniami
         var okno=0;

@@ -47,12 +47,9 @@ else if(isset($_POST["log_login"]) && isset($_POST["log_password"]))
 
         <div id="div_login">
             <form action="index.php" method="POST">
-                <h3>LOGIN</h3>
-                <input type="text" name="log_login" placeholder="Login" required/>
-                <h3>HASŁO</h3>
-                <input type="password" name="log_password" placeholder="Hasło" required/>
-                <br>
-                <input type="submit" value="Zaloguj"/>
+                <div class="index_logpanel"><input type="text" name="log_login" placeholder="Login" required/></div>
+                <div class="index_logpanel"><input type="password" name="log_password" placeholder="Hasło" required/></div>
+                <input type="submit" value="Zaloguj" class="index_logbutt"/>
                 <p id="alert"><br></p>
             </form>
         </div>

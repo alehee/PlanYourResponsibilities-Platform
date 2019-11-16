@@ -147,15 +147,10 @@
 		$string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
 		echo $string.'<br>';
 		
-		$processor_chat_login=$res['SentFrom'];
+		$processor_chat_id=$res['SentFrom'];
+		$processor_chat_realname = name_by_id($processor_chat_id);
 		
-			$temp_sql = "SELECT Login FROM users WHERE ID='$processor_chat_login'";
-            $temp_que = mysqli_query($conn, $temp_sql);
-            while($temp = mysqli_fetch_array($temp_que)){
-                $processor_chat_login = $temp['Login'];
-            }
-		
-		echo '<span style="float:right;">'.$processor_chat_login.', '.$res['Date'].'</span>';
+		echo '<span style="float:right;">'.$processor_chat_realname.', '.$res['Date'].'</span>';
 		echo '<div style="clear:both;"></div>';
 		echo '</div>';
 		}

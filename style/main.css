@@ -34,6 +34,7 @@ p{
 #div_login{
     min-height: 50px;
     width: 70%;
+    max-width: 900px;
     margin: 0 auto;
     padding: 20px;
     background-color: #f2f2f2;
@@ -96,10 +97,10 @@ p{
     border: solid 2px #0f70b7;
     border-radius: 20px;
     background-color: #0f70b7;
-    font-size: 90%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     text-shadow: 1px 1px 1px black;
     text-align: center;
+    padding-top: 10px;
 }
 
 .job_red{
@@ -114,6 +115,7 @@ p{
 
 .job_title{
     padding-top: 5px;
+    font-size: 120%;
 }
 
 .job_title:hover{
@@ -127,7 +129,6 @@ p{
     background-color: white;
     cursor: pointer;
     border-radius: 20px;
-    transition: 0.1s;
     border: solid 1px #0f70b7;
 }
 
@@ -135,28 +136,37 @@ p{
     border: solid 1px red;
 }
 
+.job_red .job_topic:hover{
+    border: solid 1px red;
+}
+
 .job_yellow .job_topic{
     border: solid 1px #ffbf00;
 }
 
+.job_yellow .job_topic:hover{
+    border: solid 1px #ffbf00;
+}
+
 .job_topic_justbg{
-    background-color: white;
+    background-color: #0f70b7;
     border-radius: 20px;
     transition: 0.1s;
 }
 
 .job_button{
+    margin: 5px auto;
     width: 100%;
     background-color: #0f70b7;
     cursor: pointer;
     border: none;
     transition: 0.1s;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+    border-radius: 20px;
     color: white;
     height: 30px;
     font-size: 100%;
     text-shadow: 1px 1px 1px black;
+    padding-bottom: -5px;
 }
 
 .job_red .job_button{
@@ -169,19 +179,8 @@ p{
 
 .job_button:hover{
     transition: 0.1s;
-    background-color: white;
-    color: #0f70b7;
     font-size: 120%;
     font-weight: 800;
-    text-shadow: none;
-}
-
-.job_red .job_button:hover{
-    color: red;
-}
-
-.job_yellow .job_button:hover{
-    color: #ffbf00;
 }
 
 
@@ -255,6 +254,7 @@ p{
     cursor: pointer;
     color: white;
     transition: 0.1s;
+    text-shadow: 1px 1px 1px black;
 }
 
 #nav_link:hover{
@@ -271,6 +271,10 @@ p{
 }
 
 
+
+body{
+    background-color: #f2f2f2;
+}
 
 #div_panel{
     float: left;
@@ -294,13 +298,6 @@ p{
     color: red;
 }
 
-#logout{
-    font-size: 100%;
-    text-decoration: none;
-    color: red;
-    margin: 0 auto;
-}
-
 #thrash{
     display: none;
 }
@@ -314,6 +311,7 @@ h2{
     padding: 10px;
     padding-left: 30px;
     color: #0f70b7;
+    text-align: center;
 }
 
 
