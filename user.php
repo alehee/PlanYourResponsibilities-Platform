@@ -34,6 +34,7 @@ if(!isset($_SESSION["sort"]))
                 <div id="nav_link" onclick='nav_link("http:\/\/google.com")'>LINK 3</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/google.com")'>LINK 4</div>
                 <div id="nav_link" onclick='nav_classic_link("http:\/\/riverlakestudios.pl/pyr/logout.php")'><span style="color:red;">WYLOGUJ</span></div>
+                <div id="nav_link" onclick='nav_classic_link("http:\/\/riverlakestudios.pl/pyr/report.php")'><span style="color:#ffbf00;">ZGŁOŚ USTERKĘ</span></div>
             </div>
         </div>
 
