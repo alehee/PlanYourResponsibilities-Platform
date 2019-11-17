@@ -18,7 +18,7 @@ if(!isset($_SESSION["sort"]))
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
-        <title>PYR - <?php echo name_by_id($_SESSION["id"]); ?></title>
+        <title>PYR - Panel Główny</title>
         <link rel="stylesheet" href="style/main.css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
@@ -26,13 +26,17 @@ if(!isset($_SESSION["sort"]))
 
         <!-- Pasek z linkami --->
         <div id="nav_background" onclick="nav_hide()">
-            <div id="nav">
+            <div id="nav" onclick="nav_hidenot()">
+                <div id="nav_profile">
+                    <img src="<?php echo "photo/".$_SESSION["id"].".png" ?>"/>
+                    <p style="color:white; padding: 5px;"><?php echo name_by_id($_SESSION["id"]) ?></p>
+                </div>
                 <div id="nav_link" onclick='nav_classic_link("http:\/\/riverlakestudios.pl/pyr")'>PANEL GŁÓWNY</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/mail.oxylane.com")'>MAIL</div>
-                <div id="nav_link" onclick='nav_link("http:\/\/google.com")'>LINK 1</div>
-                <div id="nav_link" onclick='nav_link("http:\/\/google.com")'>LINK 2</div>
-                <div id="nav_link" onclick='nav_link("http:\/\/google.com")'>LINK 3</div>
-                <div id="nav_link" onclick='nav_link("http:\/\/google.com")'>LINK 4</div>
+                <div id="nav_link" onclick='nav_link("http:\/\/riverlakestudios.pl")'>LINK 1</div>
+                <div id="nav_link" onclick='nav_link("http:\/\/wp.pl")'>LINK 2</div>
+                <div id="nav_link" onclick='nav_link("http:\/\/lowcygier.pl")'>LINK 3</div>
+                <div id="nav_link" onclick='nav_link("http:\/\/drive.google.com")'>LINK 4</div>
                 <div id="nav_link" onclick='nav_classic_link("http:\/\/riverlakestudios.pl/pyr/logout.php")'><span style="color:red;">WYLOGUJ</span></div>
                 <div id="nav_link" onclick='nav_classic_link("http:\/\/riverlakestudios.pl/pyr/report.php")'><span style="color:#ffbf00;">ZGŁOŚ USTERKĘ</span></div>
             </div>
@@ -53,8 +57,9 @@ if(!isset($_SESSION["sort"]))
 
         <!-- Panel akcji (wyloguj etc.) --->
         <div id="div_panel">
-            <p onclick="new_job()" id="new_job">DODAJ ZADANIE</p><br>
-            <p onclick="okno_sort()" id="sort">SORTOWANIE: <?php echo $_SESSION["sort"] ?></p>
+            <div onclick="new_job()" id="new_job">DODAJ ZADANIE</div>
+            <div onclick="okno_sort()" id="sort">SORTOWANIE: <?php echo $_SESSION["sort"] ?></div>
+            <div style="clear:both;"></div>
         </div>
 
         <!-- Zadania -->
@@ -380,9 +385,17 @@ if(!isset($_SESSION["sort"]))
 
         // Skrypty nav
 
+        var okno=0;
+        function nav_hidenot(){
+            okno=1;
+        }
+
         function nav_hide(){
-            var navback = document.getElementById("nav_background");
-            navback.style.display="none";
+            if(okno==0){
+                var navback = document.getElementById("nav_background");
+                navback.style.display="none";
+            }
+            okno=0;
         }
 
         function nav_open(){
@@ -497,10 +510,6 @@ if(!isset($_SESSION["sort"]))
 		//Funkcja wysyła wiadomość na chat
 		function okno_sentmessage(id){
 			var message = id+"~"+document.getElementById("okno_chat_chatbox").value;
-			
-			//$.get("additional/chat.php", {message: message}, function(data){
-			//	$("#thrash").html(data);
-			//});
 			
 			$.get("additional/chat.php", {message: message}, function(data){
                     $('#thrash').html(data);

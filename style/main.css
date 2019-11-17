@@ -1,7 +1,8 @@
 /*
 KOLORYSTYKA PLIKU:
 Kolor DECATHLON: #0f70b7
-Kolor DECATHLON LIGHT: #2b9dee
+Kolor DECATHLON LIGHT 4: #2b9dee
+Kolor DECAHTLON DARK 2: #0b578e
 Kolor szary: #f2f2f2
 
 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -265,10 +266,10 @@ p{
 
 
 #nav{
-    position: fixed;
     width: 250px;
     height: 100%;
     background-color: #0f70b7;
+    overflow-y: auto;
 }
 
 #nav_handle{
@@ -290,19 +291,34 @@ p{
     position: relative;
     background-color: #0f70b7;
     width: 100%;
-    height: 6%;
-    font-size: 150%;
-    padding: 5%;
+    height: 50px;
+    font-size: 120%;
+    padding: 15px;
     text-align: center;
     cursor: pointer;
     color: white;
     transition: 0.1s;
-    text-shadow: 1px 1px 1px black;
 }
 
 #nav_link:hover{
-    background-color: #2b9dee;
+    background-color: #0b578e;
     transition: 0.1s;
+}
+
+#nav_profile{
+    min-height: 200px;
+    width: 100%;
+    font-size: 150%;
+    background-color: #0b578e;
+}
+
+#nav_profile img{
+    height: 150px;
+    width: 150px;
+    margin: 0 50px;
+    border-radius: 100%;
+    border: 2px solid white;
+    background-color: #f2f2f2;
 }
 
 #nav_background{
@@ -321,19 +337,42 @@ body{
 
 #div_panel{
     float: left;
-    width: 50%;
-    height: 150px;
+    width: 100%;
+    min-height: 50px;
     text-align: center;
     padding-top: 20px;
 }
 
-#sort{
-	clear: both;
-	color: orange;
+#new_job, #sort{
+    float: left;
+    width:31%;
+    height: 50px;
+    color: white;
+    cursor: pointer;
+    background-color: green;
+    border: 2px solid green;
+    border-radius: 20px;
+    padding: 5px;
+    padding-top: 15px;
+    margin: 0 1%;
+    transition: 0.1s;
+}
+
+#new_job:hover, #sort:hover{
+    border: 2px solid green;
+    background-color: white;
+    color: green;
+    transition: 0.1s;
 }
 
 #sort:hover{
-	cursor: pointer;
+    border: 2px solid orange;
+    color: orange;
+}
+
+#sort{
+    background-color: orange;
+    border: 2px solid orange;
 }
 
 #alert{
@@ -345,11 +384,6 @@ body{
     display: none;
 }
 
-#new_job{
-    color: green;
-    cursor: pointer;
-}
-
 h2{ 
     padding: 10px;
     padding-left: 30px;
@@ -358,18 +392,7 @@ h2{
 }
 
 
-
-
-
-@media screen and (min-width: 1001px){
-.job:nth-child(5n+2)
-{
-    clear: both;
-}
-
-}
-
-    @media screen and (min-width: 1001px){
+    @media screen and (min-width: 1301px){
     .job:nth-child(5n+2)
     {
         clear: both;
@@ -377,17 +400,17 @@ h2{
     
     }
 
-    @media screen and (min-width: 801px) and (max-width: 1000px){
-        .job:nth-child(4n+2){
-            clear: both;
-        }
+    @media screen and (min-width: 1001px) and (max-width: 1300px){
+    .job:nth-child(4n+2){
+        clear: both;
+    }
             
-        .job{
-            width: 24%;
-        }
-        }
+    .job{
+        width: 24%;
+    }
+    }
     
-    @media screen and (min-width: 701px) and (max-width: 800px){
+    @media screen and (min-width: 801px) and (max-width: 1000px){
     .job:nth-child(3n+2){
         clear: both;
     }
@@ -397,7 +420,7 @@ h2{
     }
     }
     
-    @media screen and (min-width: 401px) and (max-width: 700px){
+    @media screen and (min-width: 401px) and (max-width: 800px){
     .job:nth-child(2n+2){
         clear: both;
     }
