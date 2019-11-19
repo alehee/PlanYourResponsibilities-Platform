@@ -170,6 +170,7 @@ p{
     color: black;
     text-shadow: none;
     padding: 20px;
+    padding-bottom: 5px;
     background-color: white;
     cursor: pointer;
     border-radius: 20px;
@@ -225,6 +226,47 @@ p{
     transition: 0.1s;
     font-size: 120%;
     font-weight: 800;
+}
+
+.job_small_info{
+    float: left;
+    background-color: #e6e6e6;
+    width: 28%;
+    min-height: 30px;
+    margin: 1%;
+    margin-bottom: 2%;
+    padding: 2%;
+    margin-top: -15px;
+    border-radius: 20px;
+    font-size: 100%;
+}
+
+.job_small_info_plus{
+    float: left;
+    background-color: #e6e6e6;
+    width: 68%;
+    min-height: 30px;
+    margin: 1%;
+    margin-bottom: 2%;
+    padding: 2%;
+    margin-top: -15px;
+    border-radius: 20px;
+    font-size: 100%;
+}
+
+.job_small_info img, .job_small_info_plus img{
+    height: 20px;
+    width: auto;
+    margin-left: -10px;
+    margin-right: 5px;
+    margin-bottom: -2%;
+}
+
+.job_info{
+    clear: both;
+    width: 100%;
+    min-height: 50px;
+    font-size: 100%;
 }
 
 
@@ -306,6 +348,7 @@ p{
 }
 
 #nav_profile{
+    padding-top: 10px;
     min-height: 200px;
     width: 100%;
     font-size: 150%;
@@ -346,7 +389,7 @@ body{
 #new_job, #sort{
     float: left;
     width:31%;
-    height: 50px;
+    min-height: 50px;
     color: white;
     cursor: pointer;
     background-color: green;
@@ -392,7 +435,7 @@ h2{
 }
 
 
-    @media screen and (min-width: 1301px){
+    @media screen and (min-width: 1401px){
     .job:nth-child(5n+2)
     {
         clear: both;
@@ -400,7 +443,7 @@ h2{
     
     }
 
-    @media screen and (min-width: 1001px) and (max-width: 1300px){
+    @media screen and (min-width: 1001px) and (max-width: 1400px){
     .job:nth-child(4n+2){
         clear: both;
     }

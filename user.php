@@ -139,7 +139,9 @@ if(!isset($_SESSION["sort"]))
                         echo $div_job_title_bottom;
                         echo $div_job_topic_top;
 
-                        echo "Koniec: ".proper_date($res["End"])."<br>";
+                        // DATA KOŃCA ZADANIA
+                        echo "<div class='job_small_info_plus'><img src='icons/hourglass.png'/><span>".proper_date($res["End"])."</span></div>";
+                        // -----
 
                         // LICZNIK ZAŁĄCZNIKÓW
                         $how_many_atta=0;
@@ -164,7 +166,18 @@ if(!isset($_SESSION["sort"]))
                                 $how_many_atta++;
                             }
                         }
-                        echo "Załączniki: ".$how_many_atta."<br>";
+                        echo "<div class='job_small_info'><img src='icons/attachment.png'/>".$how_many_atta."</div>";
+                        echo "<div style='clear:both;'></div>";
+                        // -----
+
+                        // INFORMACJE DODATKOWE W ZADANIU
+                        $job_info = $res["Info"];
+                        echo "<div class='job_info'>".$job_info."</div>";
+                        echo "<div style='clear:both;'></div>";
+                        // -----
+
+                        // KTO DODAŁ ZADANIE
+                        echo "<div class='job_small_info_plus'><img src='icons/user.png'/>".name_by_id($res["WhoAdd"])."</div>";
                         // -----
 
                         // ILOŚĆ OSÓB W ZADANIU
@@ -174,10 +187,9 @@ if(!isset($_SESSION["sort"]))
                         while($temp_res = mysqli_fetch_array($temp_que)){
                             $how_many_per++;
                         }
-                        echo "Osób w zadaniu: ".$how_many_per."<br><br>";
+                        echo "<div class='job_small_info'/><img src='icons/users.png'/>".$how_many_per."</div>";
+                        echo "<div style='clear:both;'></div>";
                         // -----
-
-                        echo "Dodano przez: ".name_by_id($res["WhoAdd"]);
 
                         echo $div_job_topic_bottom;
                         echo $div_job_bottom;
