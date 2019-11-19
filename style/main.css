@@ -265,8 +265,11 @@ p{
 .job_info{
     clear: both;
     width: 100%;
-    min-height: 50px;
+    min-height: 40px;
     font-size: 100%;
+    font-weight: 800;
+    padding-top: 5%;
+    padding-bottom: 13%;
 }
 
 
@@ -276,25 +279,6 @@ p{
     width: 100%;
     min-height: 50px;
     margin: 10px auto;
-}
-
-
-
-#div_done, #done{
-    clear: both;
-    border: solid 2px #0f70b7;
-    width: 92%;
-    min-height: 50px;
-    margin: 0 auto;
-}
-
-#div_done{
-    cursor: pointer;
-}
-
-#done{
-    display: none;
-    margin-bottom: 5%;
 }
 
 
@@ -374,6 +358,34 @@ p{
 
 
 
+.done_job_job:hover{
+    cursor: default;
+}
+
+.done_job_backbutton{
+    float: left;
+    width:98%;
+    min-height: 50px;
+    color: white;
+    cursor: pointer;
+    background-color: #0f70b7;
+    border: 2px solid #0f70b7;
+    border-radius: 20px;
+    padding: 5px;
+    padding-top: 15px;
+    margin: 0 1%;
+    transition: 0.1s;
+}
+
+.done_job_backbutton:hover{
+    background-color: white;
+    border: 2px solid #0f70b7;
+    color: #0f70b7;
+    transition: 0.1s;
+}
+
+
+
 body{
     background-color: #f2f2f2;
 }
@@ -386,7 +398,7 @@ body{
     padding-top: 20px;
 }
 
-#new_job, #sort{
+#new_job, #sort, #done_job{
     float: left;
     width:31%;
     min-height: 50px;
@@ -401,7 +413,7 @@ body{
     transition: 0.1s;
 }
 
-#new_job:hover, #sort:hover{
+#new_job:hover, #sort:hover, #done_job:hover{
     border: 2px solid green;
     background-color: white;
     color: green;
@@ -416,6 +428,16 @@ body{
 #sort{
     background-color: orange;
     border: 2px solid orange;
+}
+
+#done_job:hover{
+    border: 2px solid rebeccapurple;
+    color: rebeccapurple;
+}
+
+#done_job{
+    background-color: rebeccapurple;
+    border: 2px solid rebeccapurple;
 }
 
 #alert{

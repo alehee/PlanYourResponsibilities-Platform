@@ -31,7 +31,7 @@ if(!isset($_SESSION["sort"]))
                     <img src="<?php echo "photo/".$_SESSION["id"].".png" ?>"/>
                     <p style="color:white; padding: 5px;"><?php echo name_by_id($_SESSION["id"]) ?></p>
                 </div>
-                <div id="nav_link" onclick='nav_classic_link("http:\/\/riverlakestudios.pl/pyr")'>PANEL GŁÓWNY</div>
+                <div id="nav_link" onclick='nav_classic_link("user.php")'>PANEL GŁÓWNY</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/mail.oxylane.com")'>MAIL</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/riverlakestudios.pl")'>LINK 1</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/wp.pl")'>LINK 2</div>
@@ -59,6 +59,7 @@ if(!isset($_SESSION["sort"]))
         <div id="div_panel">
             <div onclick="new_job()" id="new_job">DODAJ ZADANIE</div>
             <div onclick="okno_sort()" id="sort">SORTOWANIE: <?php echo $_SESSION["sort"] ?></div>
+            <div onclick="nav_classic_link('user_done.php')" id="done_job">WYPEŁNIONE ZADANIA</div>
             <div style="clear:both;"></div>
         </div>
 
@@ -177,7 +178,7 @@ if(!isset($_SESSION["sort"]))
                         // -----
 
                         // KTO DODAŁ ZADANIE
-                        echo "<div class='job_small_info_plus'><img src='icons/user.png'/>".name_by_id($res["WhoAdd"])."</div>";
+                        echo "<div style='clear:both;'><div class='job_small_info_plus'><img src='icons/user.png'/>".name_by_id($res["WhoAdd"])."</div>";
                         // -----
 
                         // ILOŚĆ OSÓB W ZADANIU
@@ -187,7 +188,7 @@ if(!isset($_SESSION["sort"]))
                         while($temp_res = mysqli_fetch_array($temp_que)){
                             $how_many_per++;
                         }
-                        echo "<div class='job_small_info'/><img src='icons/users.png'/>".$how_many_per."</div>";
+                        echo "<div class='job_small_info'/><img src='icons/users.png'/>".$how_many_per."</div></div>";
                         echo "<div style='clear:both;'></div>";
                         // -----
 
@@ -302,7 +303,9 @@ if(!isset($_SESSION["sort"]))
                     echo $div_job_title_bottom;
                     echo $div_job_topic_top;
 
-                    echo "Koniec: ".proper_date($res["End"])."<br>";
+                    // DATA KOŃCA ZADANIA
+                    echo "<div class='job_small_info_plus'><img src='icons/hourglass.png'/><span>".proper_date($res["End"])."</span></div>";
+                    // -----
 
                     // LICZNIK ZAŁĄCZNIKÓW
                     $how_many_atta=0;
@@ -327,20 +330,30 @@ if(!isset($_SESSION["sort"]))
                             $how_many_atta++;
                         }
                     }
-                    echo "Załączniki: ".$how_many_atta."<br>";
+                    echo "<div class='job_small_info'><img src='icons/attachment.png'/>".$how_many_atta."</div>";
+                    echo "<div style='clear:both;'></div>";
+                    // -----
+
+                    // INFORMACJE DODATKOWE W ZADANIU
+                    $job_info = $res["Info"];
+                    echo "<div class='job_info'>".$job_info."</div>";
+                    echo "<div style='clear:both;'></div>";
+                    // -----
+
+                    // KTO DODAŁ ZADANIE
+                    echo "<div style='clear:both;'><div class='job_small_info_plus'><img src='icons/user.png'/>".name_by_id($res["WhoAdd"])."</div>";
                     // -----
 
                     // ILOŚĆ OSÓB W ZADANIU
                     $how_many_per=0;
-                    $temp_sql="SELECT ForWho FROM job WHERE The_ID='$the_id'";
+                    $temp_sql="SELECT ForWho FROM job WHERE The_ID=$the_id";
                     $temp_que=mysqli_query($conn, $temp_sql);
                     while($temp_res = mysqli_fetch_array($temp_que)){
                         $how_many_per++;
                     }
-                    echo "Osób w zadaniu: ".$how_many_per."<br><br>";
+                    echo "<div class='job_small_info'/><img src='icons/users.png'/>".$how_many_per."</div></div>";
+                    echo "<div style='clear:both;'></div>";
                     // -----
-
-                    echo "Dodano przez: ".name_by_id($res["WhoAdd"]);
 
                     echo $div_job_topic_bottom;
                     echo $div_job_bottom;
@@ -355,38 +368,8 @@ if(!isset($_SESSION["sort"]))
             $conn -> close();
         ?>
 
-        <!-- Zadania ukończone -->
-        <div id="div_done"><p>Pokaż wypełnione zadania</p></div>
-        <div id="done">
-                <?php
-                    $my_id=$_SESSION["id"];
-
-                    require_once("connection.php");
-                    $conn = @new mysqli($host, $user_db, $password_db, $db_name);
-
-                    $conn -> query("SET CHARSET utf8");
-                    $conn -> query("SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
-
-                    $sql="SELECT * FROM done WHERE ForWho=$my_id";
-                    $que = $conn -> query($sql);
-                    while($res = mysqli_fetch_array($que)){
-                        echo "<b>".$res["Topic"]."</b><br>";
-
-                        $temp = $res["WhoAdd"];
-                        $temp_sql = "SELECT Login FROM users WHERE ID='$temp'";
-                        $temp_que = mysqli_query($conn, $temp_sql);
-                        $temp = mysqli_fetch_array($temp_que);
-
-                        echo "Dodano przez: ".$temp["Login"]."<br>";
-                        echo "Planowany koniec: ".$res["End"]."<br>";
-                        echo "ID:".$res["The_ID"]." <input type='button' id='".$res["The_ID"]."' value='Przywróć zadanie' onclick='job_undone(this.id)'><br><br>";
-                    }
-
-                    $conn -> close();
-                ?>
-        </div>
-
-        <div id="thrash"></div>
+    <!-- Div który zbiera śmieci przy jQuery -->
+    <div id="thrash"></div>
 
     </body>
 
@@ -473,14 +456,6 @@ if(!isset($_SESSION["sort"]))
                 timer.innerHTML=<?php echo '"'.proper_date(date("Y-m-d")).' - "+'; ?>full_day+" - "+full_time;
             }, 1000, 1000)
         }
-
-        // -----
-        // Skrypty dla wypełnionych zadań
-        $(document).ready(function(){
-            $("#div_done").click(function(){
-                $("#done").slideToggle("slow");
-            });
-        });
 
         // -----
         // Skrypty dla aktywnych zadań

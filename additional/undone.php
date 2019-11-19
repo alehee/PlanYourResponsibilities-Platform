@@ -43,6 +43,7 @@
         $conn -> query($sql);
 
         $conn -> close();
-        echo "<script>location.reload()</script>";
+        // NIE DZIAŁA HEADER
+        echo "<script>nav_classic_link('user.php')</script>";
     }
 ?>
