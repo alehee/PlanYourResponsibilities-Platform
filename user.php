@@ -22,7 +22,7 @@ if(!isset($_SESSION["sort"]))
         <link rel="stylesheet" href="style/main.css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
-    <body onload="time()">
+    <body onload="time()" class='normal'>
 
         <!-- Pasek z linkami --->
         <div id="nav_background" onclick="nav_hide()">
@@ -37,14 +37,14 @@ if(!isset($_SESSION["sort"]))
                 <div id="nav_link" onclick='nav_link("http:\/\/wp.pl")'>LINK 2</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/lowcygier.pl")'>LINK 3</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/drive.google.com")'>LINK 4</div>
-                <div id="nav_link" onclick='nav_classic_link("http:\/\/riverlakestudios.pl/pyr/logout.php")'><span style="color:red;">WYLOGUJ</span></div>
-                <div id="nav_link" onclick='nav_classic_link("http:\/\/riverlakestudios.pl/pyr/report.php")'><span style="color:#ffbf00;">ZGŁOŚ USTERKĘ</span></div>
+                <div id="nav_link" onclick='nav_classic_link("logout.php")'><span style="color:red;">WYLOGUJ</span></div>
+                <div id="nav_link" onclick='nav_classic_link("report.php")'><span style="color:#ffbf00;">ZGŁOŚ USTERKĘ</span></div>
             </div>
         </div>
 
         <!-- Popup okienko zadań -->
         <div id="okno_background" onclick="job_popup()">
-            <div id="okno_job" onclick="job_okno()">
+            <div id="okno_job" class='hidden' onclick="job_okno()">
             </div>
         </div>
 
@@ -144,6 +144,17 @@ if(!isset($_SESSION["sort"]))
                         echo "<div class='job_small_info_plus'><img src='icons/hourglass.png'/><span>".proper_date($res["End"])."</span></div>";
                         // -----
 
+                        // ILOŚĆ OSÓB W ZADANIU
+                        $the_id = $res["The_ID"];
+                        $how_many_per=0;
+                        $temp_sql="SELECT ForWho FROM job WHERE The_ID=$the_id";
+                        $temp_que=mysqli_query($conn, $temp_sql);
+                        while($temp_res = mysqli_fetch_array($temp_que)){
+                            $how_many_per++;
+                        }
+                        echo "<div class='job_small_info'/><img src='icons/users.png'/>".$how_many_per."</div>";
+                        // -----
+
                         // LICZNIK ZAŁĄCZNIKÓW
                         $how_many_atta=0;
                         $the_id = $res["The_ID"];
@@ -173,22 +184,31 @@ if(!isset($_SESSION["sort"]))
 
                         // INFORMACJE DODATKOWE W ZADANIU
                         $job_info = $res["Info"];
-                        echo "<div class='job_info'>".$job_info."</div>";
+                        $bufor = "";
+
+                        if(strlen($job_info)>200)
+                        {
+                                for($i=0; $i<200; $i++)
+                                {
+                                    if($i>180 && $job_info[$i]==" ")
+                                    {
+                                        $bufor=$bufor."...";
+                                        $i=199;
+                                    }
+                                    else 
+                                        $bufor=$bufor.$job_info[$i];
+                                }
+                        }
+                        else
+                            $bufor=$job_info;
+
+                        echo "<div class='job_info'>".$bufor."</div>";
                         echo "<div style='clear:both;'></div>";
                         // -----
 
                         // KTO DODAŁ ZADANIE
                         echo "<div style='clear:both;'><div class='job_small_info_plus'><img src='icons/user.png'/>".name_by_id($res["WhoAdd"])."</div>";
-                        // -----
-
-                        // ILOŚĆ OSÓB W ZADANIU
-                        $how_many_per=0;
-                        $temp_sql="SELECT ForWho FROM job WHERE The_ID=$the_id";
-                        $temp_que=mysqli_query($conn, $temp_sql);
-                        while($temp_res = mysqli_fetch_array($temp_que)){
-                            $how_many_per++;
-                        }
-                        echo "<div class='job_small_info'/><img src='icons/users.png'/>".$how_many_per."</div></div>";
+                        echo "</div>";
                         echo "<div style='clear:both;'></div>";
                         // -----
 
@@ -281,14 +301,14 @@ if(!isset($_SESSION["sort"]))
                     // TYTUŁ
                     $topic = $res["Topic"];
                     $bufor = "";
-                    if(strlen($topic)>100)
+                    if(strlen($topic)>200)
                     {
-                            for($i=0; $i<100; $i++)
+                            for($i=0; $i<200; $i++)
                             {
-                                if($i>80 && $topic[$i]==" ")
+                                if($i>180 && $topic[$i]==" ")
                                 {
                                     echo "...";
-                                    $i=99;
+                                    $i=199;
                                 }
                                 else 
                                     echo $topic[$i];
@@ -305,6 +325,17 @@ if(!isset($_SESSION["sort"]))
 
                     // DATA KOŃCA ZADANIA
                     echo "<div class='job_small_info_plus'><img src='icons/hourglass.png'/><span>".proper_date($res["End"])."</span></div>";
+                    // -----
+
+                    // ILOŚĆ OSÓB W ZADANIU
+                    $the_id = $res["The_ID"];
+                    $how_many_per=0;
+                    $temp_sql="SELECT ForWho FROM job WHERE The_ID=$the_id";
+                    $temp_que=mysqli_query($conn, $temp_sql);
+                    while($temp_res = mysqli_fetch_array($temp_que)){
+                        $how_many_per++;
+                    }
+                    echo "<div class='job_small_info'/><img src='icons/users.png'/>".$how_many_per."</div>";
                     // -----
 
                     // LICZNIK ZAŁĄCZNIKÓW
@@ -336,7 +367,23 @@ if(!isset($_SESSION["sort"]))
 
                     // INFORMACJE DODATKOWE W ZADANIU
                     $job_info = $res["Info"];
-                    echo "<div class='job_info'>".$job_info."</div>";
+                    $bufor = "";
+                    if(strlen($job_info)>100)
+                    {
+                            for($i=0; $i<100; $i++)
+                            {
+                                if($i>80 && $job_info[$i]==" ")
+                                {
+                                    echo "...";
+                                    $i=99;
+                                }
+                                else 
+                                    echo $job_info[$i];
+                            }
+                    }
+                    else
+                        $bufor=$job_info;
+                    echo "<div class='job_info'>".$bufor."</div>";
                     echo "<div style='clear:both;'></div>";
                     // -----
 
@@ -344,16 +391,8 @@ if(!isset($_SESSION["sort"]))
                     echo "<div style='clear:both;'><div class='job_small_info_plus'><img src='icons/user.png'/>".name_by_id($res["WhoAdd"])."</div>";
                     // -----
 
-                    // ILOŚĆ OSÓB W ZADANIU
-                    $how_many_per=0;
-                    $temp_sql="SELECT ForWho FROM job WHERE The_ID=$the_id";
-                    $temp_que=mysqli_query($conn, $temp_sql);
-                    while($temp_res = mysqli_fetch_array($temp_que)){
-                        $how_many_per++;
-                    }
-                    echo "<div class='job_small_info'/><img src='icons/users.png'/>".$how_many_per."</div></div>";
+                    echo "</div>";
                     echo "<div style='clear:both;'></div>";
-                    // -----
 
                     echo $div_job_topic_bottom;
                     echo $div_job_bottom;
@@ -469,12 +508,16 @@ if(!isset($_SESSION["sort"]))
         function job_popup(elem){
             if(document.getElementById("okno_background").style.display=="none"){
                 document.getElementById("okno_background").style.display="inline";
+                document.body.style.overflowY="hidden";
                 $.get("additional/processor.php", {elem: elem}, function(data){
                     $('#okno_job').html(data);
                 });
             }
             else if(okno==0){
+                document.body.style.overflowY="auto";
                 document.getElementById("okno_background").style.display="none";
+                document.getElementById("okno_job").style.backgroundColor="#0f70b7";
+                document.getElementById("okno_job").style.border="5px solid #0f70b7";
             }
             
             okno=0;
@@ -671,49 +714,6 @@ if(!isset($_SESSION["sort"]))
 <!-- Funkcje, które są potrzebne tylko tutaj --->
 <?php
 
-    // FUNKCJA WYŚWIETLAJĄCA ILE DNI ZOSTAŁO DO WYKONANIA ZADANIA
-    function how_many_days_left($date_job){
-
-        $date_curr = date("Y-m-d");
-        $job_important=0;
-
-        $date_curr_buf="";
-        $date_job_buf="";
-
-        for($i=0; $i<4; $i++){
-            $date_curr_buf = $date_curr_buf.$date_curr[$i];
-            $date_job_buf = $date_job_buf.$date_job[$i];
-        }
-
-        // YEAR
-        $date_curr_var=(intval($date_curr_buf)-1970)*365;
-        $date_job_var=(intval($date_job_buf)-1970)*365;
-
-        $date_curr_buf="";
-        $date_job_buf="";
-
-        for($i=5; $i<7; $i++){
-            $date_curr_buf = $date_curr_buf.$date_curr[$i];
-            $date_job_buf = $date_job_buf.$date_job[$i];
-        }
-
-        // MONTH
-        $date_curr_var=$date_curr_var+(intval($date_curr_buf))*30;
-        $date_job_var=$date_job_var+(intval($date_job_buf))*30;
-
-        $date_curr_buf="";
-        $date_job_buf="";
-
-        for($i=8; $i<10; $i++){
-            $date_curr_buf = $date_curr_buf.$date_curr[$i];
-            $date_job_buf = $date_job_buf.$date_job[$i];
-        }
-
-        // DAY
-        $date_curr_var=$date_curr_var+(intval($date_curr_buf));
-        $date_job_var=$date_job_var+(intval($date_job_buf));
-
-        return $date_job_var-$date_curr_var;
-    }
+    
 
 ?>

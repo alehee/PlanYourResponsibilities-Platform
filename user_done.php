@@ -37,8 +37,8 @@ if(!isset($_SESSION["sort"]))
                 <div id="nav_link" onclick='nav_link("http:\/\/wp.pl")'>LINK 2</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/lowcygier.pl")'>LINK 3</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/drive.google.com")'>LINK 4</div>
-                <div id="nav_link" onclick='nav_classic_link("http:\/\/riverlakestudios.pl/pyr/logout.php")'><span style="color:red;">WYLOGUJ</span></div>
-                <div id="nav_link" onclick='nav_classic_link("http:\/\/riverlakestudios.pl/pyr/report.php")'><span style="color:#ffbf00;">ZGŁOŚ USTERKĘ</span></div>
+                <div id="nav_link" onclick='nav_classic_link("logout.php")'><span style="color:red;">WYLOGUJ</span></div>
+                <div id="nav_link" onclick='nav_classic_link("report.php")'><span style="color:#ffbf00;">ZGŁOŚ USTERKĘ</span></div>
             </div>
         </div>
 
@@ -115,6 +115,17 @@ if(!isset($_SESSION["sort"]))
                         echo "<div class='job_small_info_plus'><img src='icons/hourglass.png'/><span>".proper_date($res["End"])."</span></div>";
                         // -----
 
+                        // ILOŚĆ OSÓB W ZADANIU
+                        $the_id = $res["The_ID"];
+                        $how_many_per=0;
+                        $temp_sql="SELECT ForWho FROM job WHERE The_ID=$the_id";
+                        $temp_que=mysqli_query($conn, $temp_sql);
+                        while($temp_res = mysqli_fetch_array($temp_que)){
+                            $how_many_per++;
+                        }
+                        echo "<div class='job_small_info'/><img src='icons/users.png'/>".$how_many_per."</div>";
+                        // -----
+
                         // LICZNIK ZAŁĄCZNIKÓW
                         $how_many_atta=0;
                         $the_id = $res["The_ID"];
@@ -152,16 +163,8 @@ if(!isset($_SESSION["sort"]))
                         echo "<div style='clear:both;'><div class='job_small_info_plus'><img src='icons/user.png'/>".name_by_id($res["WhoAdd"])."</div>";
                         // -----
 
-                        // ILOŚĆ OSÓB W ZADANIU
-                        $how_many_per=0;
-                        $temp_sql="SELECT ForWho FROM job WHERE The_ID=$the_id";
-                        $temp_que=mysqli_query($conn, $temp_sql);
-                        while($temp_res = mysqli_fetch_array($temp_que)){
-                            $how_many_per++;
-                        }
-                        echo "<div class='job_small_info'/><img src='icons/users.png'/>".$how_many_per."</div></div>";
+                        echo "</div>";
                         echo "<div style='clear:both;'></div>";
-                        // -----
 
                         echo $div_job_topic_bottom;
                         echo $div_job_bottom;

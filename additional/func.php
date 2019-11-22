@@ -89,4 +89,49 @@ function name_by_id($id){
     return $name;
 }
 
+// FUNKCJA WYŚWIETLAJĄCA ILE DNI ZOSTAŁO DO WYKONANIA ZADANIA
+function how_many_days_left($date_job){
+
+    $date_curr = date("Y-m-d");
+    $job_important=0;
+
+    $date_curr_buf="";
+    $date_job_buf="";
+
+    for($i=0; $i<4; $i++){
+        $date_curr_buf = $date_curr_buf.$date_curr[$i];
+        $date_job_buf = $date_job_buf.$date_job[$i];
+    }
+
+    // YEAR
+    $date_curr_var=(intval($date_curr_buf)-1970)*365;
+    $date_job_var=(intval($date_job_buf)-1970)*365;
+
+    $date_curr_buf="";
+    $date_job_buf="";
+
+    for($i=5; $i<7; $i++){
+        $date_curr_buf = $date_curr_buf.$date_curr[$i];
+        $date_job_buf = $date_job_buf.$date_job[$i];
+    }
+
+    // MONTH
+    $date_curr_var=$date_curr_var+(intval($date_curr_buf))*30;
+    $date_job_var=$date_job_var+(intval($date_job_buf))*30;
+
+    $date_curr_buf="";
+    $date_job_buf="";
+
+    for($i=8; $i<10; $i++){
+        $date_curr_buf = $date_curr_buf.$date_curr[$i];
+        $date_job_buf = $date_job_buf.$date_job[$i];
+    }
+
+    // DAY
+    $date_curr_var=$date_curr_var+(intval($date_curr_buf));
+    $date_job_var=$date_job_var+(intval($date_job_buf));
+
+    return $date_job_var-$date_curr_var;
+}
+
 ?>

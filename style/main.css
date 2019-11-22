@@ -103,12 +103,17 @@ p{
     width: 80%;
     min-height: 30%;
     max-height: 80%;
-    background-color: #f2f2f2;
+    background-color: #0f70b7;
+    border: solid 5px #0f70b7;
     left: 10%;
     top: 10%;
     overflow-y: auto;
-    padding: 20px;
+    overflow-x: hidden;
     border-radius: 20px;
+    padding-top: 20px;
+    text-align: center;
+    color: white;
+    font-size: 200%;
 }
 
 #okno_dodajosobe{
@@ -116,10 +121,181 @@ p{
 }
 
 #okno_chat_message{
-	border: solid #0f70b7 2px;
+    border: solid #0f70b7 2px;
+    border-radius: 20px;
 	width: 90%;
     margin: 10px auto;
     padding: 1%;
+}
+
+.okno_chat_butt{
+    width:20%;
+    min-height: 50px;
+    color: white;
+    cursor: pointer;
+    background-color: rebeccapurple;
+    border: 2px solid rebeccapurple;
+    border-radius: 20px;
+    padding: 5px;
+    padding-top: 15px;
+    margin-left: 75%;
+    transition: 0.1s;
+    text-align: center;
+}
+
+.okno_chat_butt:hover{
+    border: 2px solid rebeccapurple;
+    background-color: white;
+    color: rebeccapurple;
+    transition: 0.1s;
+}
+
+.okno{
+    background-color: #f2f2f2;
+    width: 100%;
+    min-height: 100px;
+    border-radius: 20px;
+    color: black;
+    font-size: 60%;
+    text-align: left;
+    padding-bottom: 20px;
+}
+
+.okno a{
+    color: #0f70b7;
+}
+
+.okno ul{
+    list-style: none;
+}
+
+.okno ul li{
+    float: left;
+    margin-top: 8px;
+    margin-right: 5%;
+    margin-left: 30px;
+}
+
+.okno ul li::before{
+    content: "\2022";
+    color: #0f70b7;
+    font-weight: bold;
+    display: inline-block; 
+    width: 1em;
+    margin-left: -1em;
+}
+
+.okno_element{
+    float: left;
+    min-height: 30px;
+    width: 23%;
+    margin: 1%;
+    background-color: #e6e6e6;
+    text-align: center;
+    margin: 1%;
+    padding: 1%;
+    border-radius: 20px;
+}
+
+.okno_element img{
+    height: 20px;
+    width: auto;
+    margin: 0 10px;
+    margin-bottom: -2%;
+}
+
+.okno_addperson, .okno_edit, .okno_delperson, .okno_done{
+    float: left;
+    width:23%;
+    min-height: 50px;
+    color: white;
+    cursor: pointer;
+    background-color: green;
+    border: 2px solid green;
+    border-radius: 20px;
+    padding: 5px;
+    padding-top: 15px;
+    margin: 0 1%;
+    transition: 0.1s;
+}
+
+.okno_edit{
+    background-color: #ffbf00;
+    border: 2px solid #ffbf00;
+}
+
+.okno_delperson{
+    background-color: red;
+    border: 2px solid red;
+}
+
+.okno_done{
+    background-color: #0f70b7;
+    border: 2px solid #0f70b7;
+}
+
+.okno_addperson:hover, .okno_edit:hover, .okno_delperson:hover, .okno_done:hover{
+    border: 2px solid green;
+    background-color: white;
+    color: green;
+    transition: 0.1s;
+}
+
+.okno_edit:hover{
+    border: 2px solid #ffbf00;
+    color: #ffbf00;
+}
+
+.okno_delperson:hover{
+    border: 2px solid red;
+    color: red;
+}
+
+.okno_done:hover{
+    border: 2px solid #0f70b7;
+    color: #0f70b7;
+}
+
+.okno_addperson_butt, .okno_delperson_butt, .okno_edit_butt{
+    font-size: 100%;
+    width:20%;
+    min-height: 40px;
+    color: white;
+    cursor: pointer;
+    background-color: green;
+    border: 2px solid green;
+    border-radius: 20px;
+    padding: 5px;
+    padding-top: 10px;
+    margin: 10px 40%;
+    transition: 0.1s;
+}
+
+.okno_delperson_butt{
+    background-color: red;
+    border: 2px solid red;
+}
+
+.okno_edit_butt{
+    background-color: #ffbf00;
+    border: 2px solid #ffbf00;
+}
+
+.okno_addperson_butt:hover, .okno_delperson_butt:hover, .okno_edit_butt:hover{
+    border: 2px solid green;
+    background-color: white;
+    color: green;
+    transition: 0.1s;
+}
+
+.okno_delperson_butt:hover{
+    border: 2px solid red;
+    color: red;
+}
+
+.okno_edit_butt:hover{
+    border: 2px solid #ffbf00;
+    color: #ffbf00;
 }
 
 
@@ -231,31 +407,31 @@ p{
 .job_small_info{
     float: left;
     background-color: #e6e6e6;
-    width: 28%;
-    min-height: 30px;
+    width: 22%;
+    min-height: 20px;
     margin: 1%;
     margin-bottom: 2%;
     padding: 2%;
     margin-top: -15px;
     border-radius: 20px;
-    font-size: 100%;
+    font-size: 80%;
 }
 
 .job_small_info_plus{
     float: left;
     background-color: #e6e6e6;
-    width: 68%;
-    min-height: 30px;
+    min-width: 49%;
+    min-height: 20px;
     margin: 1%;
     margin-bottom: 2%;
     padding: 2%;
     margin-top: -15px;
     border-radius: 20px;
-    font-size: 100%;
+    font-size: 80%;
 }
 
 .job_small_info img, .job_small_info_plus img{
-    height: 20px;
+    height: 16px;
     width: auto;
     margin-left: -10px;
     margin-right: 5px;
@@ -287,6 +463,46 @@ p{
     width: 98%;
     margin: 10px auto;
     min-height: 10px;
+}
+
+.new_job_dzial_butt{
+    padding: 10px;
+    border-radius: 20px;
+    background-color: #0f70b7;
+    border: #0f70b7 solid 2px;
+    color: white;
+    font-size: 80%;
+    transition: 0.1s;
+    cursor: pointer;
+}
+
+.new_job_dzial_butt:hover{
+    background-color: white;
+    border: #0f70b7 solid 2px;
+    color: #0f70b7;
+    transition: 0.1s;
+}
+
+.new_job_butt{
+    font-size: 100%;
+    width:20%;
+    min-height: 40px;
+    color: white;
+    cursor: pointer;
+    background-color: #0f70b7;
+    border: 2px solid #0f70b7;
+    border-radius: 20px;
+    padding: 5px;
+    padding-top: 10px;
+    margin: 10px 40%;
+    transition: 0.1s;
+}
+
+.new_job_butt:hover{
+    border: 2px solid #0f70b7;
+    background-color: white;
+    color: #0f70b7;
+    transition: 0.1s;
 }
 
 
@@ -457,6 +673,33 @@ h2{
 }
 
 
+
+.hidden::-webkit-scrollbar {
+    width: 0px;
+}
+
+/* width */
+.normal::-webkit-scrollbar {
+    width: 10px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+    background: none; 
+}
+   
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+  
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+
+
     @media screen and (min-width: 1401px){
     .job:nth-child(5n+2)
     {
@@ -483,6 +726,13 @@ h2{
     .job{
         width: 32%;
     }
+
+    .okno_element{
+        width: 98%;
+    }
+    .okno_element img{
+        margin-bottom: 0;
+    }
     }
     
     @media screen and (min-width: 401px) and (max-width: 800px){
@@ -493,6 +743,14 @@ h2{
     .job{
         width: 49%;
     }
+
+    .okno_element{
+        width: 98%;
+    }
+
+    .okno_element img{
+        margin-bottom: 0;
+    }
     }
     
     @media screen and (max-width: 400px){
@@ -502,5 +760,13 @@ h2{
     
     .job{
         width: 99%;
+    }
+
+    .okno_element{
+        width: 98%;
+    }
+
+    .okno_element img{
+        margin-bottom: 0;
     }
     }

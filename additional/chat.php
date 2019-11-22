@@ -31,9 +31,10 @@ if(isset($_GET['message'])){
 			$is_clear=1;
 	}
 	
-	//echo $chat_message." <- wiadomosc, do zadania -> ".$chat_the_id;
-	$sql = "INSERT INTO chat(ID, The_ID, SentFrom, Message, Date) VALUES (NULL, '$chat_the_id', '$chat_sentfrom', '$chat_message', CURRENT_TIMESTAMP)";
-	$que = $conn -> query($sql);
+	if($chat_message!=""){
+		$sql = "INSERT INTO chat(ID, The_ID, SentFrom, Message, Date) VALUES (NULL, '$chat_the_id', '$chat_sentfrom', '$chat_message', CURRENT_TIMESTAMP)";
+		$que = $conn -> query($sql);
+	}
 
     unset($_GET['message']);
 	$conn ->close();
