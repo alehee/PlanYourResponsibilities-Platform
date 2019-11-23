@@ -31,7 +31,7 @@ if(!isset($_SESSION["sort"]))
                     <img src="<?php echo "photo/".$_SESSION["id"].".png" ?>"/>
                     <p style="color:white; padding: 5px;"><?php echo name_by_id($_SESSION["id"]) ?></p>
                 </div>
-                <div id="nav_link" onclick='nav_classic_link("user.php")'>PANEL GŁÓWNY</div>
+                <div id="nav_link" onclick='nav_classic_link("user.php")'><span style="color:#00ffff;">PANEL GŁÓWNY</span></div>
                 <div id="nav_link" onclick='nav_link("http:\/\/mail.oxylane.com")'>MAIL</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/riverlakestudios.pl")'>LINK 1</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/wp.pl")'>LINK 2</div>

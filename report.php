@@ -18,7 +18,7 @@ if(!isset($_SESSION["sort"]))
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
-        <title>PYR - Zgłoś usterkę</title>
+        <title>PYR - Zgłoś Usterkę</title>
         <link rel="stylesheet" href="style/main.css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
@@ -31,7 +31,7 @@ if(!isset($_SESSION["sort"]))
                     <img src="<?php echo "photo/".$_SESSION["id"].".png" ?>"/>
                     <p style="color:white; padding: 5px;"><?php echo name_by_id($_SESSION["id"]) ?></p>
                 </div>
-                <div id="nav_link" onclick='nav_classic_link("user.php")'>PANEL GŁÓWNY</div>
+                <div id="nav_link" onclick='nav_classic_link("user.php")'><span style="color:#00ffff;">PANEL GŁÓWNY</span></div>
                 <div id="nav_link" onclick='nav_link("http:\/\/mail.oxylane.com")'>MAIL</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/riverlakestudios.pl")'>LINK 1</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/wp.pl")'>LINK 2</div>

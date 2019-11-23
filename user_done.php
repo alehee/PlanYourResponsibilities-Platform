@@ -18,7 +18,7 @@ if(!isset($_SESSION["sort"]))
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
-        <title>PYR - Wypełnione zadania</title>
+        <title>PYR - Wypełnione Zadania</title>
         <link rel="stylesheet" href="style/main.css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
@@ -31,7 +31,7 @@ if(!isset($_SESSION["sort"]))
                     <img src="<?php echo "photo/".$_SESSION["id"].".png" ?>"/>
                     <p style="color:white; padding: 5px;"><?php echo name_by_id($_SESSION["id"]) ?></p>
                 </div>
-                <div id="nav_link" onclick='nav_classic_link("user.php")'>PANEL GŁÓWNY</div>
+                <div id="nav_link" onclick='nav_classic_link("user.php")'><span style="color:#00ffff;">PANEL GŁÓWNY</span></div>
                 <div id="nav_link" onclick='nav_link("http:\/\/mail.oxylane.com")'>MAIL</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/riverlakestudios.pl")'>LINK 1</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/wp.pl")'>LINK 2</div>
@@ -275,53 +275,3 @@ if(!isset($_SESSION["sort"]))
 
     </script>
 </html>
-
-<!-- Funkcje, które są potrzebne tylko tutaj --->
-<?php
-
-    // FUNKCJA WYŚWIETLAJĄCA ILE DNI ZOSTAŁO DO WYKONANIA ZADANIA
-    function how_many_days_left($date_job){
-
-        $date_curr = date("Y-m-d");
-        $job_important=0;
-
-        $date_curr_buf="";
-        $date_job_buf="";
-
-        for($i=0; $i<4; $i++){
-            $date_curr_buf = $date_curr_buf.$date_curr[$i];
-            $date_job_buf = $date_job_buf.$date_job[$i];
-        }
-
-        // YEAR
-        $date_curr_var=(intval($date_curr_buf)-1970)*365;
-        $date_job_var=(intval($date_job_buf)-1970)*365;
-
-        $date_curr_buf="";
-        $date_job_buf="";
-
-        for($i=5; $i<7; $i++){
-            $date_curr_buf = $date_curr_buf.$date_curr[$i];
-            $date_job_buf = $date_job_buf.$date_job[$i];
-        }
-
-        // MONTH
-        $date_curr_var=$date_curr_var+(intval($date_curr_buf))*30;
-        $date_job_var=$date_job_var+(intval($date_job_buf))*30;
-
-        $date_curr_buf="";
-        $date_job_buf="";
-
-        for($i=8; $i<10; $i++){
-            $date_curr_buf = $date_curr_buf.$date_curr[$i];
-            $date_job_buf = $date_job_buf.$date_job[$i];
-        }
-
-        // DAY
-        $date_curr_var=$date_curr_var+(intval($date_curr_buf));
-        $date_job_var=$date_job_var+(intval($date_job_buf));
-
-        return $date_job_var-$date_curr_var;
-    }
-
-?>

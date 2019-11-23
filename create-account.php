@@ -31,7 +31,7 @@ if(!isset($_SESSION["sort"]))
                     <img src="<?php echo "photo/".$_SESSION["id"].".png" ?>"/>
                     <p style="color:white; padding: 5px;"><?php echo name_by_id($_SESSION["id"]) ?></p>
                 </div>
-                <div id="nav_link" onclick='nav_classic_link("user.php")'>PANEL GŁÓWNY</div>
+                <div id="nav_link" onclick='nav_classic_link("user.php")'><span style="color:#00ffff;">PANEL GŁÓWNY</span></div>
                 <div id="nav_link" onclick='nav_link("http:\/\/mail.oxylane.com")'>MAIL</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/riverlakestudios.pl")'>LINK 1</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/wp.pl")'>LINK 2</div>
@@ -50,6 +50,16 @@ if(!isset($_SESSION["sort"]))
             <div style="clear:both;"></div>
             <p id="p_timer"><br></p>
         </header>
+
+        <div class="create_panel">
+        <div style="text-align:center; font-size:200%; padding:20px;"><b>UTWÓRZ NOWY PROFIL</b></div>
+        <form action="additional/create_acc.php" method="POST" enctype="multipart/form-data">
+            <div style="text-align:center; padding:10px; font-size:150%;"><b>IMIĘ: </b><input type="text" style="font-size:100%;" name="imie"/> <span style="padding:0 10px;"></span> <b>NAZWISKO: </b><input type="text" style="font-size:100%;" name="nazwisko"/></div>
+            <div style="text-align:center; padding:10px; font-size:150%;"><b>ZDJĘCIE: </b><input type="file" name="photo"/></div>
+            <div style="text-align:center; padding:10px;"><input type="text" name=""/></div>
+            <div style="text-align:center; margin:10px;"><input type="submit" value="UTWÓRZ UŻYTKOWNIKA"/></div>
+        </form>
+        </div>
 
     <!-- Div który zbiera śmieci przy jQuery -->
     <div id="thrash"></div>

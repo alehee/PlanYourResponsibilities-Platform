@@ -613,6 +613,16 @@ p{
 
 
 
+.create_panel{
+    width: 98%;
+    min-height: 200px;
+    background-color: #e6e6e6;
+    border-radius: 20px;
+    margin: 10px auto;
+}
+
+
+
 body{
     background-color: #f2f2f2;
 }
@@ -701,12 +711,12 @@ h2{
    
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #0f70b7; 
+    background: #888; 
 }
   
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #0b578e; 
+    background: #555; 
 }
 
 
