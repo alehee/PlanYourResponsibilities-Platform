@@ -37,6 +37,8 @@ if(!isset($_SESSION["sort"]))
                 <div id="nav_link" onclick='nav_link("http:\/\/wp.pl")'>LINK 2</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/lowcygier.pl")'>LINK 3</div>
                 <div id="nav_link" onclick='nav_link("http:\/\/drive.google.com")'>LINK 4</div>
+                <div id="nav_link" onclick='nav_classic_link("profile.php")'><span style="color:#ff00ff;">MÓJ PROFIL</span></div>
+                <div id="nav_link" onclick='nav_classic_link("create-account.php")'><span style="color:#00ff00;">DODAJ NOWĄ OSOBĘ</span></div>
                 <div id="nav_link" onclick='nav_classic_link("logout.php")'><span style="color:red;">WYLOGUJ</span></div>
                 <div id="nav_link" onclick='nav_classic_link("report.php")'><span style="color:#ffbf00;">ZGŁOŚ USTERKĘ</span></div>
             </div>
@@ -52,7 +54,7 @@ if(!isset($_SESSION["sort"]))
             <div id="nav_handle"><img src='icons/menu-3-white.png' onclick="nav_open()"/></div>
             <h1 style="width:60%; float:left;">. : Plan Your Responsibilities : .</h1><br>
             <div style="clear:both;"></div>
-            <p id="p_timer"></p>
+            <p id="p_timer"><br></p>
         </header>
 
         <!-- Panel akcji (wyloguj etc.) --->
@@ -428,6 +430,7 @@ if(!isset($_SESSION["sort"]))
             if(okno==0){
                 var navback = document.getElementById("nav_background");
                 navback.style.display="none";
+                document.body.style.overflowY="auto";
             }
             okno=0;
         }
@@ -435,6 +438,7 @@ if(!isset($_SESSION["sort"]))
         function nav_open(){
             var navback = document.getElementById("nav_background");
             navback.style.display="inline";
+            document.body.style.overflowY="hidden";
         }
 
         function nav_link(link){

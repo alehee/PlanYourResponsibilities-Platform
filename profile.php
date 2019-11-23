@@ -18,7 +18,7 @@ if(!isset($_SESSION["sort"]))
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
-        <title>PYR - Zgłoś usterkę</title>
+        <title>PYR - Mój Profil</title>
         <link rel="stylesheet" href="style/main.css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
@@ -50,6 +50,11 @@ if(!isset($_SESSION["sort"]))
             <div style="clear:both;"></div>
             <p id="p_timer"><br></p>
         </header>
+
+        <!-- Panel z profilami --->
+        <div class="profile_panel">
+
+        </div>
 
     <!-- Div który zbiera śmieci przy jQuery -->
     <div id="thrash"></div>
