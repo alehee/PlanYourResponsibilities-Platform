@@ -48,7 +48,7 @@ p{
 
 
 .index_logpanel{
-    border: none;
+    border: solid 3px #f2f2f2;
     border-bottom: solid 3px #e6e6e6;
     width: 40%;
     height: 50px;
@@ -619,6 +619,28 @@ p{
     background-color: #e6e6e6;
     border-radius: 20px;
     margin: 10px auto;
+}
+
+.create_panel_butt{
+    width:20%;
+    min-height: 50px;
+    color: white;
+    cursor: pointer;
+    background-color: green;
+    border: 2px solid green;
+    border-radius: 20px;
+    padding: 5px;
+    padding-top: 8px;
+    margin: 10px;
+    transition: 0.1s;
+    font-size: 150%;
+}
+
+.create_panel_butt:hover{
+    border: 2px solid green;
+    background-color: white;
+    color: green;
+    transition: 0.1s;
 }
 
 

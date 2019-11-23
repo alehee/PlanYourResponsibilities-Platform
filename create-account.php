@@ -18,7 +18,7 @@ if(!isset($_SESSION["sort"]))
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
-        <title>PYR - Utwórz Profil</title>
+        <title>Utwórz Profil</title>
         <link rel="stylesheet" href="style/main.css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
@@ -54,10 +54,21 @@ if(!isset($_SESSION["sort"]))
         <div class="create_panel">
         <div style="text-align:center; font-size:200%; padding:20px;"><b>UTWÓRZ NOWY PROFIL</b></div>
         <form action="additional/create_acc.php" method="POST" enctype="multipart/form-data">
-            <div style="text-align:center; padding:10px; font-size:150%;"><b>IMIĘ: </b><input type="text" style="font-size:100%;" name="imie"/> <span style="padding:0 10px;"></span> <b>NAZWISKO: </b><input type="text" style="font-size:100%;" name="nazwisko"/></div>
-            <div style="text-align:center; padding:10px; font-size:150%;"><b>ZDJĘCIE: </b><input type="file" name="photo"/></div>
-            <div style="text-align:center; padding:10px;"><input type="text" name=""/></div>
-            <div style="text-align:center; margin:10px;"><input type="submit" value="UTWÓRZ UŻYTKOWNIKA"/></div>
+            <div style="text-align:center; padding:10px; font-size:150%;"><b>IMIĘ: </b><input type="text" style="font-size:100%;" name="imie" required/> <span style="padding:0 10px;"></span> <b>NAZWISKO: </b><input type="text" style="font-size:100%;" name="nazwisko" required/></div>
+            <div style="text-align:center; padding:10px; font-size:150%;"><b>LOGIN: </b><input type="text" style="font-size:100%;" name="login" required/></div>
+            <div style="text-align:center; padding:10px; font-size:150%;"><b>HASŁO: </b><input type="password" style="font-size:100%;" name="password" required/></div>
+            <div style="text-align:center; padding:10px; font-size:150%;"><b>E-MAIL: </b><input type="text" style="font-size:100%;" name="email" required/></div>
+            <div style="text-align:center; padding:10px; font-size:150%;"><b>ZDJĘCIE (.png): </b><input type="file" accept="image/png" name="photo"/> <a href="https://imageresizer.com">LINK DO EDYTORA ZDJĘĆ</a></div>
+            <div style="text-align:center; padding:10px; font-size:150%;"><b>DZIAŁ: </b>
+            <select name="dzial" style="font-size:100%;" required>
+                <option value="nskl">Niski Skład</option>
+                <option value="wskl">Wysoki Skład</option>
+                <option value="ecom">E-commerce</option>
+                <option value="ramp">Rampa</option>
+                <option value="resz">Reszta</option>
+            </select>
+            </div>
+            <div style="text-align:center; margin:10px;"><input type="submit" class="create_panel_butt" value="UTWÓRZ UŻYTKOWNIKA"/></div>
         </form>
         </div>
 

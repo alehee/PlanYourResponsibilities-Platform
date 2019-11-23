@@ -10,7 +10,12 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
 }
 
 if(!isset($_SESSION["sort"]))
-	$_SESSION["sort"]='Deadline';
+    $_SESSION["sort"]='Deadline';
+    
+if(isset($_SESSION["error"])){
+    echo '<script>confirm("'.$_SESSION["error"].'")</script>';
+    unset($_SESSION["error"]);
+}
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +23,7 @@ if(!isset($_SESSION["sort"]))
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
-        <title>PYR - Panel Główny</title>
+        <title>Panel Główny</title>
         <link rel="stylesheet" href="style/main.css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>

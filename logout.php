@@ -18,7 +18,7 @@ session_destroy();
 <html lang="pl">
     <head>
         <meta charset="utf-8"/>
-        <title>Wylogowano - PYR</title>
+        <title>Wylogowano</title>
         <link rel="stylesheet" href="style/main.css"/>
     </head>
     <body>

@@ -39,7 +39,7 @@ else if(isset($_POST["log_login"]) && isset($_POST["log_password"]) && isset($_P
 <html lang="pl">
     <head>
         <meta charset="utf-8"/>
-        <title>PYR - Zaloguj</title>
+        <title>Zaloguj</title>
         <link rel="stylesheet" href="style/main.css"/>
     </head>
     <body>
@@ -51,7 +51,11 @@ else if(isset($_POST["log_login"]) && isset($_POST["log_password"]) && isset($_P
             <form action="index.php" method="POST">
                 <div style="margin: 0 auto;"><img src="icons/id-card-3-blue.png" class="index_img"/><input type="text" class="index_logpanel" name="log_login" placeholder="Login" required/></div>
                 <div style="margin: 0 auto;"><img src="icons/locked-4-blue.png" class="index_img"/><input type="password" class="index_logpanel" name="log_password" placeholder="Hasło" required/></div>
-                <div style="margin 0 auto;"><img src="icons/map-location-blue.png" class="index_img"/><input list="cities" class="index_logpanel" name="log_city" required/></div>
+                <div style="margin 0 auto;"><img src="icons/map-location-blue.png" class="index_img"/>
+                <select name="log_city" class="index_logpanel" required>
+                    <option value="CAR Gliwice">CAR Gliwice</option>
+                </select>
+                </div>
                 <input type="submit" value="Zaloguj" class="index_logbutt"/>
                 <p id="alert"><br></p>
 
