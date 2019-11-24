@@ -98,6 +98,10 @@ p{
     display:none;
 }
 
+.okno_radius{
+    border-radius: 20px;
+}
+
 #okno_job{
     position: fixed;
     width: 80%;
@@ -717,8 +721,17 @@ h2{
 
 
 
-.hidden::-webkit-scrollbar {
-    width: 0px;
+.okno_job_web::-webkit-scrollbar {
+    width: 10px;
+}
+
+.okno_job_web::-webkit-scrollbar-track {
+    border-radius: 20px;
+}
+
+/* Handle */
+.okno_job_web::-webkit-scrollbar-thumb {
+    border-radius: 20px;
 }
 
 /* width */
@@ -733,12 +746,12 @@ h2{
    
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #888; 
+    background: rgba(0, 0, 0, 0.2); 
 }
   
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
+    background: rgba(0, 0, 0, 0.4); 
 }
 
 

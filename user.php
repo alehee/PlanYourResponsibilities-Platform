@@ -51,7 +51,9 @@ if(isset($_SESSION["error"])){
 
         <!-- Popup okienko zadań -->
         <div id="okno_background" onclick="job_popup()">
-            <div id="okno_job" class='hidden' onclick="job_okno()">
+            <div class="okno_radius">
+            <div id="okno_job" class='okno_job_web' onclick="job_okno()">
+            </div>
             </div>
         </div>
 
