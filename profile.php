@@ -53,7 +53,8 @@ if(!isset($_SESSION["sort"]))
 
         <!-- Panel z profilami --->
         <div class="profile_panel">
-
+        <div style="text-align:center; font-size:200%; padding:20px;"><b>MÓJ PROFIL</b></div>
+        <div style="text-align:center; font-size:100%; padding:20px;"><b>Praca w toku... Przepraszamy...</b></div>
         </div>
 
     <!-- Div który zbiera śmieci przy jQuery -->

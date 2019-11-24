@@ -51,6 +51,11 @@ if(!isset($_SESSION["sort"]))
             <p id="p_timer"><br></p>
         </header>
 
+        <div class="report_panel">
+        <div style="text-align:center; font-size:200%; padding:20px;"><b>ZGŁOŚ USTERKĘ</b></div>
+        <div style="text-align:center; font-size:100%; padding:20px;"><b>Praca w toku... Przepraszamy...</b></div>
+        </div>
+
     <!-- Div który zbiera śmieci przy jQuery -->
     <div id="thrash"></div>
 
