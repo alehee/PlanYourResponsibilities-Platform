@@ -54,7 +54,78 @@ if(!isset($_SESSION["sort"]))
         <!-- Panel z profilami --->
         <div class="profile_panel">
         <div style="text-align:center; font-size:200%; padding:20px;"><b>MÓJ PROFIL</b></div>
-        <div style="text-align:center; font-size:100%; padding:20px;"><b>Praca w toku... Przepraszamy...</b></div>
+        <div style='width:80%; text-align:center; margin-left:10%; margin-right:10%;'>
+            <div class="profile_img_div"><img src="<?php echo 'photo/'.$_SESSION["id"].'.png' ?>"/></div>
+            <div class="profile_info">
+                <?php 
+                    require_once("connection.php");
+                    $conn = @new mysqli($host, $user_db, $password_db, $db_name);
+
+                    $login;
+                    $password;
+                    $imie;
+                    $nazwisko;
+                    $dzial;
+                    $email;
+                    $jednostka;
+                    $activity;
+
+                    $id = $_SESSION["id"];
+                    $sql = "SELECT Login, Password, Imie, Nazwisko, Dzial, Email, Jednostka, Activity FROM users WHERE ID='$id' LIMIT 1";
+                    $que = $conn -> query($sql);
+                    while($res = mysqli_fetch_array($que)){
+                        $login = $res["Login"];
+                        $password = $res["Password"];
+                        $imie = $res["Imie"];
+                        $nazwisko = $res["Nazwisko"];
+                        $dzial = $res["Dzial"];
+                        $email = $res["Email"];
+                        $jednostka = $res["Jednostka"];
+                        $activity = $res["Activity"];
+                    }
+
+                    switch($dzial){
+                        case 'nskl':
+                            $dzial = "Niski Skład";
+                        break;
+                        case 'wskl':
+                            $dzial = "Wysoki Skład";
+                        break;
+                        case 'ecom':
+                            $dzial = "E-commerce";
+                        break;
+                        case 'ramp':
+                            $dzial = "Rampa";
+                        break;
+                        case 'resz':
+                            $dzial = "Reszta";
+                        break;
+                    }
+
+                    $pass_len = strlen($password);
+                    $password = "";
+
+                    for($i=0; $i<$pass_len; $i++){
+                        $password = $password."*";
+                    }
+
+                    echo "<div style='float:left; margin-right:50px; margin-bottom:20px;'><b style='font-size:80%;'>IMIĘ: </b>$imie</div>";
+                    echo "<div style='float:left; margin-right:50px; margin-bottom:20px;'><b style='font-size:80%;'>NAZWISKO: </b>$nazwisko</div>";
+                    echo "<div style='clear:both;'></div>";
+                    echo "<div style='float:left; margin-right:50px; margin-bottom:20px;'><b style='font-size:80%;'>LOGIN: </b>$login</div>";
+                    echo "<div style='float:left; margin-right:50px; margin-bottom:20px;'><b style='font-size:80%;'>HASŁO: </b>$password</div>";
+                    echo "<div style='float:left; margin-right:50px; margin-bottom:20px;'><b style='font-size:80%;'>E-MAIL: </b>$email</div>";
+                    echo "<div style='clear:both;'></div>";
+                    echo "<div style='float:left; margin-right:50px; margin-bottom:20px;'><b style='font-size:80%;'>DZIAŁ: </b>$dzial</div>";
+                    echo "<div style='float:left; margin-right:50px; margin-bottom:20px;'><b style='font-size:80%;'>JEDNOSTKA: </b>$jednostka</div>";
+                    echo "<div style='clear:both;'></div>";
+                    echo "<div style='float:left; margin-right:50px; margin-bottom:20px;'><b style='font-size:80%;'>OSTATNIA AKTYWNOŚĆ: </b>$activity</div>";
+
+                    $conn -> close();
+                ?>
+            </div>
+        </div>
+        <div style="clear:both;"></div>
         </div>
 
     <!-- Div który zbiera śmieci przy jQuery -->

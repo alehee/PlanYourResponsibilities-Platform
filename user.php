@@ -216,7 +216,7 @@ if(isset($_SESSION["error"])){
                         // -----
 
                         // KTO DODAŁ ZADANIE
-                        echo "<div style='clear:both;'><div class='job_small_info_plus'><img src='icons/user.png'/>".name_by_id($res["WhoAdd"])."</div>";
+                        echo "<div style='clear:both;'><div class='job_small_info_plus' style='width:70%;'><img src='icons/user.png'/>".name_by_id($res["WhoAdd"])."</div>";
                         echo "</div>";
                         echo "<div style='clear:both;'></div>";
                         // -----
@@ -397,7 +397,7 @@ if(isset($_SESSION["error"])){
                     // -----
 
                     // KTO DODAŁ ZADANIE
-                    echo "<div style='clear:both;'><div class='job_small_info_plus'><img src='icons/user.png'/>".name_by_id($res["WhoAdd"])."</div>";
+                    echo "<div style='clear:both;'><div class='job_small_info_plus' style='width:70%;'><img src='icons/user.png'/>".name_by_id($res["WhoAdd"])."</div>";
                     // -----
 
                     echo "</div>";
