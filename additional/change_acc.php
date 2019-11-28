@@ -14,6 +14,7 @@ if(isset($_GET["imie"])){
     $conn -> query($sql);
 
     unset($_GET["imie"]);
+    echo ("<script>window.location = 'profile.php'</script>");
 }
 
 // ZMIEŃ NAZWISKO
@@ -24,6 +25,7 @@ else if(isset($_GET["nazwisko"])){
     $conn -> query($sql);
 
     unset($_GET["nazwisko"]);
+    echo ("<script>window.location = 'profile.php'</script>");
 }
 
 // ZMIEŃ LOGIN
@@ -34,6 +36,7 @@ else if(isset($_GET["login"])){
     $conn -> query($sql);
 
     unset($_GET["login"]);
+    echo ("<script>window.location = 'profile.php'</script>");
 }
 
 // ZMIEŃ HASŁO
@@ -44,6 +47,7 @@ else if(isset($_GET["haslo"])){
     $conn -> query($sql);
 
     unset($_GET["haslo"]);
+    echo ("<script>window.location = 'profile.php'</script>");
 }
 
 // ZMIEŃ EMAIL
@@ -54,10 +58,19 @@ else if(isset($_GET["email"])){
     $conn -> query($sql);
 
     unset($_GET["email"]);
+    echo ("<script>window.location = 'profile.php'</script>");
 }
 
 // ZMIEŃ ZDJĘCIE
+else if(isset($_FILES['photo'])){
+    $plik_tmp = $_FILES['photo']['tmp_name'];
+    if(is_uploaded_file($plik_tmp)){
+        move_uploaded_file($plik_tmp, "../photo/".$id.".png");
+    }
+
+    unset($_FILES['photo']);
+    echo ("<script>window.location = '../profile.php'</script>");
+}
 
 $conn -> close();
-echo ("<script>location.reload();</script>");
 ?>

@@ -56,12 +56,13 @@ if(!isset($_SESSION["sort"]))
         <div style="text-align:center; font-size:200%; padding:20px;"><b>MÓJ PROFIL</b></div>
         <div style='width:80%; margin-left:10%; margin-right:10%;'>
             <div class="profile_img_div"><img src="<?php echo 'photo/'.$_SESSION["id"].'.png' ?>"/>
-                <div class="profile_img_button" onclick="open_form()"></div>
-                <form class="profile_img_form" id="img_form" action="additional/change_acc.php" method="POST">
-                    <b>ZDJĘCIE (.png): </b>
+                <div class="profile_img_button" onclick="open_form()"><b>ZMIEŃ ZDJĘCIE</b></div>
+                <form class="profile_img_form" id="img_form" action="additional/change_acc.php" method="POST" enctype="multipart/form-data">
+                    <b style='color:red;'>PAMIĘTAJ ŻE ZDJĘCIE POWINNO BYĆ KWADRATOWE</b><br>
+                    <b>ZDJĘCIE (.png): </b><br>
                     <input type="file" accept="image/png" name="photo"/><br>
-                    <a href="https://imageresizer.com">LINK DO EDYTORA ZDJĘĆ</a><br>
-                    <input type="submit" class="profile_img_button_send" value="Zmień zdjęcie"/>
+                    <a href="https://imageresizer.com" target="_blank">LINK DO EDYTORA ZDJĘĆ</a><br>
+                    <input type="submit" class="profile_img_button_send" value="PRZEŚLIJ"/>
                 </form>
             </div>
             <div class="profile_info">
@@ -119,17 +120,17 @@ if(!isset($_SESSION["sort"]))
                         $password = $password."*";
                     }
 
-                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%;'>IMIĘ: </b>$imie<span class='panel_info_zmien' onclick='change_imie()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
-                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%;'>NAZWISKO: </b>$nazwisko<span class='panel_info_zmien' onclick='change_nazwisko()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
+                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%; color:#0f70b7;'>IMIĘ: </b>$imie<span class='panel_info_zmien' onclick='change_imie()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
+                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%; color:#0f70b7;'>NAZWISKO: </b>$nazwisko<span class='panel_info_zmien' onclick='change_nazwisko()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
                     echo "<div style='clear:both;'></div>";
-                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%;'>LOGIN: </b>$login<span class='panel_info_zmien' onclick='change_login()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
-                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%;'>HASŁO: </b>$password<span class='panel_info_zmien' onclick='change_password()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
-                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%;'>E-MAIL: </b>$email<span class='panel_info_zmien' onclick='change_email()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
+                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%; color:#0f70b7;'>LOGIN: </b>$login<span class='panel_info_zmien' onclick='change_login()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
+                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%; color:#0f70b7;'>HASŁO: </b>$password<span class='panel_info_zmien' onclick='change_password()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
+                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%; color:#0f70b7;'>E-MAIL: </b>$email<span class='panel_info_zmien' onclick='change_email()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
                     echo "<div style='clear:both;'></div>";
-                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%;'>GRUPA: </b>$dzial</div>";
-                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%;'>JEDNOSTKA: </b>$jednostka</div>";
+                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%; color:#0f70b7;'>GRUPA: </b>$dzial</div>";
+                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%; color:#0f70b7;'>JEDNOSTKA: </b>$jednostka</div>";
                     echo "<div style='clear:both;'></div>";
-                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%;'>OSTATNIA AKTYWNOŚĆ: </b>$activity</div>";
+                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%; color:#0f70b7;'>OSTATNIA AKTYWNOŚĆ: </b>$activity</div>";
 
                     $conn -> close();
                 ?>
@@ -231,8 +232,16 @@ if(!isset($_SESSION["sort"]))
         // -----
         // Skrypty zmian w profilu
 
+        var form_opened=0;
         function open_form(){
-            document.getElementById("img_form").style.display="inline";
+            if(form_opened==0){
+                document.getElementById("img_form").style.display="inline";
+                form_opened=1;
+            }
+            else if(form_opened==1){
+                document.getElementById("img_form").style.display="none";
+                form_opened=0;
+            }
         }
 
         function change_imie(){
