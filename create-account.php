@@ -59,7 +59,7 @@ if(!isset($_SESSION["sort"]))
             <div style="text-align:center; padding:10px; font-size:150%;"><b>HASŁO: </b><input type="password" style="font-size:100%;" name="password" required/></div>
             <div style="text-align:center; padding:10px; font-size:150%;"><b>E-MAIL: </b><input type="text" style="font-size:100%;" name="email" required/></div>
             <div style="text-align:center; padding:10px; font-size:150%;"><b>ZDJĘCIE (.png): </b><input type="file" accept="image/png" name="photo"/> <a href="https://imageresizer.com">LINK DO EDYTORA ZDJĘĆ</a></div>
-            <div style="text-align:center; padding:10px; font-size:150%;"><b>DZIAŁ: </b>
+            <div style="text-align:center; padding:10px; font-size:150%;"><b>GRUPA: </b>
             <select name="dzial" style="font-size:100%;" required>
                 <option value="nskl">Niski Skład</option>
                 <option value="wskl">Wysoki Skład</option>

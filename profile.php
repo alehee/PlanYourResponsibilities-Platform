@@ -51,11 +51,19 @@ if(!isset($_SESSION["sort"]))
             <p id="p_timer"><br></p>
         </header>
 
-        <!-- Panel z profilami --->
+        <!-- Panel z profilem --->
         <div class="profile_panel">
         <div style="text-align:center; font-size:200%; padding:20px;"><b>MÓJ PROFIL</b></div>
-        <div style='width:80%; text-align:center; margin-left:10%; margin-right:10%;'>
-            <div class="profile_img_div"><img src="<?php echo 'photo/'.$_SESSION["id"].'.png' ?>"/></div>
+        <div style='width:80%; margin-left:10%; margin-right:10%;'>
+            <div class="profile_img_div"><img src="<?php echo 'photo/'.$_SESSION["id"].'.png' ?>"/>
+                <div class="profile_img_button" onclick="open_form()"></div>
+                <form class="profile_img_form" id="img_form" action="additional/change_acc.php" method="POST">
+                    <b>ZDJĘCIE (.png): </b>
+                    <input type="file" accept="image/png" name="photo"/><br>
+                    <a href="https://imageresizer.com">LINK DO EDYTORA ZDJĘĆ</a><br>
+                    <input type="submit" class="profile_img_button_send" value="Zmień zdjęcie"/>
+                </form>
+            </div>
             <div class="profile_info">
                 <?php 
                     require_once("connection.php");
@@ -102,6 +110,8 @@ if(!isset($_SESSION["sort"]))
                         break;
                     }
 
+                    echo "<script> var real_password = '".$password."';</script>";
+
                     $pass_len = strlen($password);
                     $password = "";
 
@@ -109,17 +119,17 @@ if(!isset($_SESSION["sort"]))
                         $password = $password."*";
                     }
 
-                    echo "<div style='float:left; margin-right:50px; margin-bottom:20px;'><b style='font-size:80%;'>IMIĘ: </b>$imie</div>";
-                    echo "<div style='float:left; margin-right:50px; margin-bottom:20px;'><b style='font-size:80%;'>NAZWISKO: </b>$nazwisko</div>";
+                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%;'>IMIĘ: </b>$imie<span class='panel_info_zmien' onclick='change_imie()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
+                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%;'>NAZWISKO: </b>$nazwisko<span class='panel_info_zmien' onclick='change_nazwisko()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
                     echo "<div style='clear:both;'></div>";
-                    echo "<div style='float:left; margin-right:50px; margin-bottom:20px;'><b style='font-size:80%;'>LOGIN: </b>$login</div>";
-                    echo "<div style='float:left; margin-right:50px; margin-bottom:20px;'><b style='font-size:80%;'>HASŁO: </b>$password</div>";
-                    echo "<div style='float:left; margin-right:50px; margin-bottom:20px;'><b style='font-size:80%;'>E-MAIL: </b>$email</div>";
+                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%;'>LOGIN: </b>$login<span class='panel_info_zmien' onclick='change_login()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
+                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%;'>HASŁO: </b>$password<span class='panel_info_zmien' onclick='change_password()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
+                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%;'>E-MAIL: </b>$email<span class='panel_info_zmien' onclick='change_email()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
                     echo "<div style='clear:both;'></div>";
-                    echo "<div style='float:left; margin-right:50px; margin-bottom:20px;'><b style='font-size:80%;'>DZIAŁ: </b>$dzial</div>";
-                    echo "<div style='float:left; margin-right:50px; margin-bottom:20px;'><b style='font-size:80%;'>JEDNOSTKA: </b>$jednostka</div>";
+                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%;'>GRUPA: </b>$dzial</div>";
+                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%;'>JEDNOSTKA: </b>$jednostka</div>";
                     echo "<div style='clear:both;'></div>";
-                    echo "<div style='float:left; margin-right:50px; margin-bottom:20px;'><b style='font-size:80%;'>OSTATNIA AKTYWNOŚĆ: </b>$activity</div>";
+                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%;'>OSTATNIA AKTYWNOŚĆ: </b>$activity</div>";
 
                     $conn -> close();
                 ?>
@@ -216,6 +226,88 @@ if(!isset($_SESSION["sort"]))
 
                 timer.innerHTML=<?php echo '"'.proper_date(date("Y-m-d")).' - "+'; ?>full_day+" - "+full_time;
             }, 1000, 1000)
+        }
+
+        // -----
+        // Skrypty zmian w profilu
+
+        function open_form(){
+            document.getElementById("img_form").style.display="inline";
+        }
+
+        function change_imie(){
+            var pass = prompt("Podaj hasło");
+            if(real_password == pass){
+                var imie = "";
+                imie = prompt("Podaj nowe imię");
+                if(imie!=""){
+                    $.get("additional/change_acc.php", {imie: imie}, function(data){
+                        $('#thrash').html(data);
+                    });
+                }
+            }
+            else
+                alert("Podano błędne hasło");
+        }
+
+        function change_nazwisko(){
+            var pass = prompt("Podaj hasło");
+            if(real_password == pass){
+                var nazwisko = "";
+                nazwisko = prompt("Podaj nowe nazwisko");
+                if(nazwisko!=""){
+                    $.get("additional/change_acc.php", {nazwisko: nazwisko}, function(data){
+                        $('#thrash').html(data);
+                    });
+                }
+            }
+            else
+                alert("Podano błędne hasło");
+        }
+
+        function change_login(){
+            var pass = prompt("Podaj hasło");
+            if(real_password == pass){
+                var login = "";
+                login = prompt("Podaj nowy login");
+                if(login!=""){
+                    $.get("additional/change_acc.php", {login: login}, function(data){
+                        $('#thrash').html(data);
+                    });
+                }
+            }
+            else
+                alert("Podano błędne hasło");
+        }
+
+        function change_password(){
+            var pass = prompt("Podaj hasło");
+            if(real_password == pass){
+                var haslo = "";
+                haslo = prompt("Podaj nowe hasło");
+                if(haslo!=""){
+                    $.get("additional/change_acc.php", {haslo: haslo}, function(data){
+                        $('#thrash').html(data);
+                    });
+                }
+            }
+            else
+                alert("Podano błędne hasło");
+        }
+
+        function change_email(){
+            var pass = prompt("Podaj hasło");
+            if(real_password == pass){
+                var email = "";
+                email = prompt("Podaj nowy email");
+                if(email!=""){
+                    $.get("additional/change_acc.php", {email: email}, function(data){
+                        $('#thrash').html(data);
+                    });
+                }
+            }
+            else
+                alert("Podano błędne hasło");
         }
 
         // -----

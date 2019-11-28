@@ -611,32 +611,68 @@ p{
     background-color: #e6e6e6;
     border-radius: 20px;
     margin: 10px auto;
+    padding-bottom: 20px;
 }
 
 .profile_img_div{
-    float: left;
-    width: 300px;
-    min-height: 300px;
-    margin: 10px;
+    width: 30%;
+    height: auto;
+    margin: 10px 35%;
     text-align: center;
 }
 
 .profile_img_div img{
-    height: 300px;
-    width: 300px;
+    width: 100%;
+    height: auto;
     border-radius: 100%;
     border: 5px solid white;
 }
 
+.profile_img_button{
+    width: 100%;
+    height: 20px;
+    background-color: red;
+    margin: 10px;
+}
+
+.profile_img_button:hover{
+
+}
+
+.profile_img_form{
+    display: none;
+}
+
+.profile_img_button_send{
+
+}
+
 .profile_info{
     float: left;
-    width: 50%;
-    min-height: 300px;
+    width: 100%;
+    min-height: 200px;
     font-size: 200%;
     padding: 20px;
-    background-color: white;
+    background-color: #f2f2f2;
     border: #0f70b7 solid 2px;
     border-radius: 20px;
+}
+
+.panel_info_zmien{
+    color: #0f70b7;
+    font-size: 50%;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.panel_info_zmien:hover{
+    color: #0b578e;
+    text-decoration: underline;
+}
+
+.panel_info_zmien img{
+    height: 15px;
+    width: auto;
 }
 
 
@@ -688,7 +724,7 @@ body{
 
 #new_job, #sort, #done_job{
     float: left;
-    width:31%;
+    width:31.3%;
     min-height: 50px;
     color: white;
     cursor: pointer;
@@ -854,6 +890,15 @@ h2{
         width: 50%;
         margin: 10px 25%;
     }
+
+    .profile_info{
+        font-size: 150%;
+    }
+
+    .profile_img_div{
+        width: 40%;
+        margin: 10px 30%;
+    }
     }
     
     @media screen and (min-width: 401px) and (max-width: 800px){
@@ -892,6 +937,15 @@ h2{
         width: 50%;
         margin: 10px 25%;
     }
+
+    .profile_info{
+        font-size: 100%;
+    }
+
+    .profile_img_div{
+        width: 50%;
+        margin: 10px 25%;
+    }
     }
     
     @media screen and (max-width: 400px){
@@ -927,6 +981,15 @@ h2{
     }
 
     .new_job_butt{
+        width: 50%;
+        margin: 10px 25%;
+    }
+
+    .profile_info{
+        font-size: 100%;
+    }
+
+    .profile_img_div{
         width: 50%;
         margin: 10px 25%;
     }
