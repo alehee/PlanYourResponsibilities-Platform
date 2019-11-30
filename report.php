@@ -42,7 +42,7 @@ if(!isset($_SESSION["sort"]))
             <div style="font-size:100%; text-align:center;"><b style="color:#0f70b7;">Informacje:</b><br>
                 <textarea name="report_info" style="font-size:120%; min-height:200px; width:80%; padding:5px; margin-bottom:10px;"></textarea>
             </div>
-            <div style="text-align:center; font-size:120%; padding:20px;"><b style="color:red;">Administrator może skontaktować się z Tobę drogą mailową.</b></div>
+            <div style="text-align:center; font-size:120%; padding:20px;"><b style="color:red;">Administrator może skontaktować się z Tobą drogą mailową.</b></div>
             <input class="report_panel_butt" type="submit" value="WYŚLIJ ZGŁOSZENIE"/>
             </form>
         </div>
