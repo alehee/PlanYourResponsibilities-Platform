@@ -731,6 +731,77 @@ p{
 
 
 
+.report_panel{
+    clear: both;
+    width: 98%;
+    min-height: 200px;
+    background-color: #e6e6e6;
+    border-radius: 20px;
+    margin: 10px auto;
+    text-align: center;
+}
+
+.report_panel_butt{
+    width:250px;
+    min-height: 50px;
+    color: white;
+    cursor: pointer;
+    background-color: #ffbf00;
+    border: 2px solid #ffbf00;
+    border-radius: 20px;
+    padding-top: 8px;
+    padding: 5px;
+    margin: 10px;
+    transition: 0.1s;
+    font-size: 100%;
+}
+
+.report_panel_butt:hover{
+    border: 2px solid #ffbf00;
+    background-color: white;
+    color: #ffbf00;
+    transition: 0.1s;
+}
+
+
+
+.stats_panel{
+    clear: both;
+    width: 98%;
+    min-height: 200px;
+    background-color: #e6e6e6;
+    border-radius: 20px;
+    margin: 10px auto;
+    padding-bottom: 20px;
+}
+
+.stats_table{
+    clear: both;
+    min-height: 200px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.stats_table tr{
+    width: 100%;
+    height: 10px;
+    font-size: 70%;
+    background-color: white;
+}
+
+.stats_table tr:nth-child(2n){
+    background-color: #e6e6e6;
+}
+
+.stats_table td{
+    width: 20px;
+    border: 2px solid black;
+    padding: 5px;
+}
+
+
+
 body{
     background-color: #f2f2f2;
 }
@@ -853,6 +924,15 @@ h2{
     .okno_addperson, .okno_edit, .okno_delperson, .okno_done{
         width:23%;
     }
+
+    .stats_table tr{
+        height: 10px;
+        font-size: 100%;
+    }
+    
+    .stats_table td{
+        width: 200px;
+    }
     
     }
 
@@ -873,6 +953,15 @@ h2{
 
     .okno_addperson, .okno_edit, .okno_delperson, .okno_done{
         width:23%;
+    }
+
+    .stats_table tr{
+        height: 10px;
+        font-size: 100%;
+    }
+    
+    .stats_table td{
+        width: 200px;
     }
     }
     
@@ -919,6 +1008,15 @@ h2{
     .profile_img_div{
         width: 40%;
         margin: 10px 30%;
+    }
+
+    .stats_table tr{
+        height: 10px;
+        font-size: 90%;
+    }
+    
+    .stats_table td{
+        width: 50px;
     }
     }
     
@@ -967,6 +1065,15 @@ h2{
         width: 50%;
         margin: 10px 25%;
     }
+
+    .stats_table tr{
+        height: 10px;
+        font-size: 60%;
+    }
+    
+    .stats_table td{
+        width: 20px;
+    }
     }
     
     @media screen and (max-width: 400px){
@@ -1013,5 +1120,14 @@ h2{
     .profile_img_div{
         width: 50%;
         margin: 10px 25%;
+    }
+
+    .stats_table tr{
+        height: 10px;
+        font-size: 60%;
+    }
+    
+    .stats_table td{
+        width: 20px;
     }
     }

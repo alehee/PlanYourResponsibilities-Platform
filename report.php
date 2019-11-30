@@ -2,6 +2,7 @@
 session_start();
 
 require_once('additional/func.php');
+require_once('additional/navbar.php');
 
 if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
 {
@@ -25,24 +26,7 @@ if(!isset($_SESSION["sort"]))
     <body onload="time()" class='normal'>
 
         <!-- Pasek z linkami --->
-        <div id="nav_background" onclick="nav_hide()">
-            <div id="nav" onclick="nav_hidenot()">
-                <div id="nav_profile">
-                    <img src="<?php echo "photo/".$_SESSION["id"].".png" ?>"/>
-                    <p style="color:white; padding: 5px;"><?php echo name_by_id($_SESSION["id"]) ?></p>
-                </div>
-                <div id="nav_link" onclick='nav_classic_link("user.php")'><span style="color:#00ffff;">PANEL GŁÓWNY</span></div>
-                <div id="nav_link" onclick='nav_link("http:\/\/mail.oxylane.com")'>MAIL</div>
-                <div id="nav_link" onclick='nav_link("http:\/\/riverlakestudios.pl")'>LINK 1</div>
-                <div id="nav_link" onclick='nav_link("http:\/\/wp.pl")'>LINK 2</div>
-                <div id="nav_link" onclick='nav_link("http:\/\/lowcygier.pl")'>LINK 3</div>
-                <div id="nav_link" onclick='nav_link("http:\/\/drive.google.com")'>LINK 4</div>
-                <div id="nav_link" onclick='nav_classic_link("profile.php")'><span style="color:#ff00ff;">MÓJ PROFIL</span></div>
-                <div id="nav_link" onclick='nav_classic_link("create-account.php")'><span style="color:#00ff00;">DODAJ NOWĄ OSOBĘ</span></div>
-                <div id="nav_link" onclick='nav_classic_link("logout.php")'><span style="color:red;">WYLOGUJ</span></div>
-                <div id="nav_link" onclick='nav_classic_link("report.php")'><span style="color:#ffbf00;">ZGŁOŚ USTERKĘ</span></div>
-            </div>
-        </div>
+        <?php echo $navbar ?>
 
         <header>
             <div id="nav_handle"><img src='icons/menu-3-white.png' onclick="nav_open()"/></div>
@@ -52,8 +36,15 @@ if(!isset($_SESSION["sort"]))
         </header>
 
         <div class="report_panel">
-        <div style="text-align:center; font-size:200%; padding:20px;"><b>ZGŁOŚ USTERKĘ</b></div>
-        <div style="text-align:center; font-size:100%; padding:20px;"><b>Praca w toku... Przepraszamy...</b></div>
+            <form action="additional/report-send.php" method="POST">
+            <div style="text-align:center; font-size:200%; padding:20px;"><b>ZGŁOŚ USTERKĘ</b></div>
+            <div style="text-align:center; font-size:120%; padding:20px;"><b style="color:red;">Napisz dokładnie co nie działa, bądź sprawiło Ci trudność w użytkowaniu.</b></div>
+            <div style="font-size:100%; text-align:center;"><b style="color:#0f70b7;">Informacje:</b><br>
+                <textarea name="report_info" style="font-size:120%; min-height:200px; width:80%; padding:5px; margin-bottom:10px;"></textarea>
+            </div>
+            <div style="text-align:center; font-size:120%; padding:20px;"><b style="color:red;">Administrator może skontaktować się z Tobę drogą mailową.</b></div>
+            <input class="report_panel_butt" type="submit" value="WYŚLIJ ZGŁOSZENIE"/>
+            </form>
         </div>
 
     <!-- Div który zbiera śmieci przy jQuery -->

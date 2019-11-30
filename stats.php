@@ -4,10 +4,26 @@ session_start();
 require_once('additional/func.php');
 require_once('additional/navbar.php');
 
+$conn = connect();
+
 if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
 {
     header("location:index.php");
     exit();
+}
+
+else{
+    $id = $_SESSION['id'];
+
+    $is_su=0;
+	$sql = "SELECT ID FROM susers WHERE User_ID='$id'";
+	$que = $conn -> query($sql);
+	while($res = mysqli_fetch_array($que))
+		$is_su=1;
+
+    if($is_su == 0){
+        header("location:user.php");
+    }
 }
 
 if(!isset($_SESSION["sort"]))
@@ -19,7 +35,7 @@ if(!isset($_SESSION["sort"]))
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
-        <title>Utwórz Profil</title>
+        <title>Panel Statystyk</title>
         <link rel="stylesheet" href="style/main.css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
@@ -35,26 +51,68 @@ if(!isset($_SESSION["sort"]))
             <p id="p_timer"><br></p>
         </header>
 
-        <div class="create_panel">
-        <div style="text-align:center; font-size:200%; padding:20px;"><b>UTWÓRZ NOWY PROFIL</b></div>
-        <form action="additional/create_acc.php" method="POST" enctype="multipart/form-data">
-            <div style="margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0f70b7;'>IMIĘ: </b><input type="text" style="font-size:80%; float:right;" name="imie" required/></div> 
-            <div style="margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0f70b7;'>NAZWISKO: </b><input type="text" style="font-size:80%; float:right;" name="nazwisko" required/></div> 
-            <div style="margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0f70b7;'>LOGIN: </b><input type="text" style="font-size:80%; float:right;" name="login" required/></div>
-            <div style="margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0f70b7;'>HASŁO: </b><input type="password" style="font-size:80%; float:right;" name="password" required/></div>
-            <div style="margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0f70b7;'>E-MAIL: </b><input type="text" style="font-size:80%; float:right;" name="email" required/></div>
-            <div style="text-align:center; margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:red;'>PAMIĘTAJ ŻE ZDJĘCIE POWINNO BYĆ KWADRATOWE</b><br><b>ZDJĘCIE (.png): </b><input type="file" accept="image/png" name="photo"/><br><a href="https://imageresizer.com" target="_blank">LINK DO EDYTORA ZDJĘĆ</a></div>
-            <div style="text-align:center; margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0f70b7;'>GRUPA: </b>
-            <select name="dzial" style="font-size:100%;" required>
-                <option value="nskl">Niski Skład</option>
-                <option value="wskl">Wysoki Skład</option>
-                <option value="ecom">E-commerce</option>
-                <option value="ramp">Rampa</option>
-                <option value="resz">Reszta</option>
-            </select>
-            </div>
-            <div style="text-align:center; margin:10px;"><input type="submit" class="create_panel_butt" value="UTWÓRZ UŻYTKOWNIKA"/></div>
-        </form>
+        <div class="stats_panel">
+            <div style="text-align:center; font-size:200%; padding:20px;"><b>STATYSTYKI</b></div>
+            <table class="stats_table">
+            <tr style="color:#0f70b7"><td><b>IMIĘ</b></td><td><b>NAZWISKO</b></td><td><b>GRUPA</b></td><td><b style='color:green'>ILOŚĆ ZADAŃ AKTYWNYCH</b></td><td><b style='color:red'>ILOŚĆ SPÓŹNIEŃ</b></td><td><b style='color:rebeccapurple'>OSTATNIA AKTYWNOŚĆ</b></td></tr>
+                <?php 
+                require_once("connection.php");
+
+                $city = $_SESSION["city"];
+
+                $conn -> query("SET CHARSET utf8");
+	            $conn -> query("SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
+
+                $sql = "SELECT * FROM users WHERE Jednostka='$city' ORDER BY Dzial ASC";
+                $que = $conn -> query($sql);
+                while($res = mysqli_fetch_array($que)){
+                    // ID
+                    $stat_id = $res["ID"];
+                    // IMIE
+                    $stat_imie = $res["Imie"];
+                    // NAZWISKO
+                    $stat_nazwisko = $res["Nazwisko"];
+                    // DZIAL
+                    $stat_dzial = $res["Dzial"];
+                    switch($stat_dzial){
+                        case 'nskl':
+                            $stat_dzial = "Niski Skład";
+                        break;
+                        case 'wskl':
+                            $stat_dzial = "Wysoki Skład";
+                        break;
+                        case 'ecom':
+                            $stat_dzial = "E-commerce";
+                        break;
+                        case 'ramp':
+                            $stat_dzial = "Rampa";
+                        break;
+                        case 'resz':
+                            $stat_dzial = "Reszta";
+                        break;
+                    }
+                    // OSTATNIA AKTYWNOŚĆ
+                    $stat_activity = $res["Activity"];
+                    // ILOŚĆ ZADAŃ
+                    $stat_ilo_zad=0;
+                    $temp_sql = "SELECT COUNT(ForWho) as ilo_zad FROM job WHERE ForWho='$stat_id' GROUP BY ForWho";
+                    $temp_que = $conn -> query($temp_sql);
+                    while($temp_res = mysqli_fetch_array($temp_que)){
+                        $stat_ilo_zad = $temp_res["ilo_zad"];
+                    }
+                    // ILOŚĆ ZADAŃ PO CZASIE
+                    $stat_spoznien = $res["Spoznien"];
+
+                    echo "<tr>";
+
+                    echo "<td>$stat_imie</td><td>$stat_nazwisko</td><td>$stat_dzial</td><td><b style='color:green'>$stat_ilo_zad</b></td><td><b style='color:red'>$stat_spoznien</b></td><td><b style='color:rebeccapurple'>$stat_activity</b></td>";
+
+                    echo "</tr>";
+                }
+
+                $conn -> close();
+                ?>
+            </table>
         </div>
 
     <!-- Div który zbiera śmieci przy jQuery -->

@@ -24,7 +24,7 @@ if(isset($_POST['delperson_who']) && isset($_SESSION["the_job"])){
 		$end = $res["End"];
 	}
 		
-	$sql = "INSERT INTO done(ID, The_ID, Topic, Info, WhoAdd, ForWho, End) VALUES (NULL, '$delperson_the_job', '$topic', '$info', '$whoadd', '$delperson_who', '$end')";
+	$sql = "INSERT INTO done(ID, The_ID, Topic, Info, WhoAdd, ForWho, End, Date) VALUES (NULL, '$delperson_the_job', '$topic', '$info', '$whoadd', '$delperson_who', '$end', CURRENT_TIMESTAMP)";
 	$conn -> query($sql);
 	
 	$sql = "DELETE FROM job WHERE The_ID='$delperson_the_job' AND ForWho='$delperson_who'";

@@ -27,7 +27,7 @@ if(isset($_POST["imie"])){
 	}
 
 	if($is_ok==1){
-		$sql = "INSERT INTO users(ID, Login, Password, Imie, Nazwisko, Dzial, Email, Jednostka, Activity) VALUES(NULL, '$login', '$password', '$imie', '$nazwisko', '$dzial', '$email', '$city', CURRENT_TIMESTAMP)";
+		$sql = "INSERT INTO users(ID, Login, Password, Imie, Nazwisko, Dzial, Email, Jednostka, Activity, Spoznien) VALUES(NULL, '$login', '$password', '$imie', '$nazwisko', '$dzial', '$email', '$city', CURRENT_TIMESTAMP, '0')";
 		$conn -> query($sql);
 
 		$user_id;
