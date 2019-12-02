@@ -60,7 +60,7 @@ Oto Twoja dzisiejsza przypominajka z platformy PYR:
 	$user_id = $res["ID"];
 	$user_email = $res["Email"];
 	$user_jobs = array();
-	$temp_sql = "SELECT * FROM job WHERE ForWho='$user_id'";
+	$temp_sql = "SELECT * FROM job WHERE ForWho='$user_id' ORDER BY End DESC";
 	$temp_que = $conn -> query($temp_sql);
 	while($temp_res = mysqli_fetch_array($temp_que)){
 		$user_topic = $temp_res["Topic"];
