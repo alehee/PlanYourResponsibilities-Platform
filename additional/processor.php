@@ -23,7 +23,7 @@
 
             <div style="font-size:100%; text-align:center;"><b>Dla kogo:</b></div>
         <div id="new_job_forwho" style="width:98%; min-height:50px; background-color:#e6e6e6; border-radius:20px; margin:1%; text-align:center; padding-top:10px; padding-bottom:10px;">';
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial FROM users";
+        $sql = "SELECT ID, Imie, Nazwisko, Dzial FROM users ORDER BY Dzial ASC";
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
             echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" class="'.$res["Dzial"].'" name="new_forwho[]" value="'.$res["ID"].'"';
@@ -35,9 +35,9 @@
             <div style="clear:both;"></div>
             <div style="margin:10px;">
                 <input type="button" class="new_job_dzial_butt" value="Wszyscy" onclick="new_job_toggle(this.value)"/>
+                <input type="button" class="new_job_dzial_butt" value="E-commerce" onclick="new_job_toggle(this.value)"/>
                 <input type="button" class="new_job_dzial_butt" value="Niski Skład" onclick="new_job_toggle(this.value)"/>
                 <input type="button" class="new_job_dzial_butt" value="Wysoki Skład" onclick="new_job_toggle(this.value)"/>
-                <input type="button" class="new_job_dzial_butt" value="E-commerce" onclick="new_job_toggle(this.value)"/>
                 <input type="button" class="new_job_dzial_butt" value="Rampa" onclick="new_job_toggle(this.value)"/>
                 <input type="button" class="new_job_dzial_butt" value="Reszta" onclick="new_job_toggle(this.value)"/>
             </div>
@@ -273,7 +273,7 @@
 		echo '<form action="additional/addperson.php" method="POST">';
         echo '<div style="width:98%; min-height:50px; background-color:#e6e6e6; border-radius:20px; margin:1%; text-align:center; font-weight:800; padding-top:10px; font-size:150%;">DODAJ NOWĄ OSOBĘ DO ZADANIA</div>';
         echo '<div id="new_job_forwho">';
-        $sql = "SELECT ID, Login, Imie, Nazwisko FROM users";
+        $sql = "SELECT ID, Login, Imie, Nazwisko FROM users ORDER BY Dzial ASC";
         $que = mysqli_query($conn, $sql);
         $anyone=0;
         while($res = mysqli_fetch_array($que)){
@@ -335,7 +335,7 @@
 		echo '<form action="additional/delperson.php" method="POST">';
         echo '<div style="width:98%; min-height:50px; background-color:#e6e6e6; border-radius:20px; margin:1%; text-align:center; font-weight:800; padding-top:10px; font-size:150%;">USUŃ OSOBĘ Z ZADANIA</div>';
         echo '<div id="new_job_forwho">';
-        $sql = "SELECT ID, Login, Imie, Nazwisko FROM users";
+        $sql = "SELECT ID, Login, Imie, Nazwisko FROM users  ORDER BY Dzial ASC";
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
 			$is_out=1;

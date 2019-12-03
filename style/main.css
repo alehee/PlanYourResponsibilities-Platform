@@ -75,7 +75,7 @@ p{
     background-color: #0f70b7;
     color: white;
     border: 2px solid white;
-    width: 20%;
+    width: 30%;
     height: 50px;
     font-size: 150%;
     border-radius: 20px;
@@ -87,6 +87,64 @@ p{
     color: #0f70b7;
     border: 2px solid #0f70b7;
 }
+
+.login_blankspace{
+    width: 100%;
+    height: 100px;
+    font-weight: 800;
+    font-size: 200%;
+    text-align: center;
+    padding-top: 70px;
+}
+
+.login_newsfeed{
+    width: 90%;
+    min-height: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 20px;
+    margin: 10px 5%;
+    border: #0f70b7 2px solid;
+}
+
+.login_news{
+    float: left;
+    width: 100%;
+    min-height: 50px;
+    padding: 10px;
+    background-color: white;
+}
+
+.login_news:nth-child(2n){
+    background-color: #e6e6e6;
+}
+
+.login_news_content{
+    background-color: red;
+    width: 100%;
+    padding-left: 200px;
+    padding: 20px;
+    margin: auto;
+}
+
+.login_news_photo{
+    float: left;
+    width: 150px;
+    min-height: 50px;
+    color: gray;
+    font-size: 80%;
+    text-align: center;
+}
+
+.login_news_photo img{
+    height: 80px;
+    width: 80px;
+    border-radius: 100%;
+    margin: 0 auto;
+    border: solid 2px #0f70b7;
+}
+
+
 
 
 
@@ -469,6 +527,7 @@ p{
 
 .new_job_dzial_butt{
     padding: 10px;
+    margin: 1px;
     border-radius: 20px;
     background-color: #0f70b7;
     border: #0f70b7 solid 2px;
