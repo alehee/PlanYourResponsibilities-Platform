@@ -108,6 +108,7 @@ p{
 }
 
 .login_news{
+    position: relative;
     float: left;
     width: 100%;
     min-height: 50px;
@@ -120,15 +121,14 @@ p{
 }
 
 .login_news_content{
-    background-color: red;
-    width: 100%;
-    padding-left: 200px;
-    padding: 20px;
+    padding: 10px;
+    padding-left: 150px;
     margin: auto;
 }
 
 .login_news_photo{
     float: left;
+    height: 100%;
     width: 150px;
     min-height: 50px;
     color: gray;

@@ -64,31 +64,6 @@ else if(isset($_POST["log_login"]) && isset($_POST["log_password"]) && isset($_P
                 </datalist>
             </form>
         </div>
-        <div class="login_blankspace">NEWSFEED</div>
-        <div class="login_newsfeed">
-            <?php
-                require_once("additional/func.php");
-                $conn = connect();
-
-                $conn -> query("SET CHARSET utf8");
-	            $conn -> query("SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
-
-                $sql = "SELECT * FROM newsfeed ORDER BY Date DESC";
-                $que = $conn -> query($sql);
-                while($res = mysqli_fetch_array($que)){
-                    echo "<div class='login_news'>";
-                        echo "<div class='login_news_photo'>";
-                            echo "<img src='photo/".$res["User_ID"].".png'/><br>";
-                            echo name_by_id($res["User_ID"]);
-                        echo "</div>";
-                        echo "<div class='login_news_content'>".$res["News"]."</div>";
-                    echo "</div>";
-                    echo "<div style='clear:both;'></div>";
-                }
-
-                $conn -> close();
-            ?>
-        </div>
     </body>
 </html>
 
