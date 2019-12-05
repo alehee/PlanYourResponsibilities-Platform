@@ -523,8 +523,8 @@ $conn -> close();
             else if(okno==0){
                 document.body.style.overflowY="auto";
                 document.getElementById("okno_background").style.display="none";
-                document.getElementById("okno_job").style.backgroundColor="#0f70b7";
-                document.getElementById("okno_job").style.border="5px solid #0f70b7";
+                document.getElementById("okno_job").style.backgroundColor="#0082C3";
+                document.getElementById("okno_job").style.border="5px solid #0082C3";
             }
             
             okno=0;

@@ -39,7 +39,7 @@ if(!isset($_SESSION["sort"]))
             <form action="additional/report-send.php" method="POST">
             <div style="text-align:center; font-size:200%; padding:20px;"><b>ZGŁOŚ USTERKĘ</b></div>
             <div style="text-align:center; font-size:120%; padding:20px;"><b style="color:red;">Napisz dokładnie co nie działa, bądź sprawiło Ci trudność w użytkowaniu.</b></div>
-            <div style="font-size:100%; text-align:center;"><b style="color:#0f70b7;">Informacje:</b><br>
+            <div style="font-size:100%; text-align:center;"><b style="color:#0082C3;">Informacje:</b><br>
                 <textarea name="report_info" style="font-size:120%; min-height:200px; width:80%; padding:5px; margin-bottom:10px;"></textarea>
             </div>
             <div style="text-align:center; font-size:120%; padding:20px;"><b style="color:red;">Administrator może skontaktować się z Tobą drogą mailową.</b></div>

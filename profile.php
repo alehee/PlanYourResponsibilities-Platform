@@ -104,17 +104,17 @@ if(!isset($_SESSION["sort"]))
                         $password = $password."*";
                     }
 
-                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%; color:#0f70b7;'>IMIĘ: </b>$imie<span class='panel_info_zmien' onclick='change_imie()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
-                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%; color:#0f70b7;'>NAZWISKO: </b>$nazwisko<span class='panel_info_zmien' onclick='change_nazwisko()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
+                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%; color:#0082C3;'>IMIĘ: </b>$imie<span class='panel_info_zmien' onclick='change_imie()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
+                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%; color:#0082C3;'>NAZWISKO: </b>$nazwisko<span class='panel_info_zmien' onclick='change_nazwisko()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
                     echo "<div style='clear:both;'></div>";
-                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%; color:#0f70b7;'>LOGIN: </b>$login<span class='panel_info_zmien' onclick='change_login()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
-                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%; color:#0f70b7;'>HASŁO: </b>$password<span class='panel_info_zmien' onclick='change_password()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
-                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%; color:#0f70b7;'>E-MAIL: </b>$email<span class='panel_info_zmien' onclick='change_email()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
+                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%; color:#0082C3;'>LOGIN: </b>$login<span class='panel_info_zmien' onclick='change_login()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
+                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%; color:#0082C3;'>HASŁO: </b>$password<span class='panel_info_zmien' onclick='change_password()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
+                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%; color:#0082C3;'>E-MAIL: </b>$email<span class='panel_info_zmien' onclick='change_email()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
                     echo "<div style='clear:both;'></div>";
-                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%; color:#0f70b7;'>GRUPA: </b>$dzial</div>";
-                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%; color:#0f70b7;'>JEDNOSTKA: </b>$jednostka</div>";
+                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%; color:#0082C3;'>GRUPA: </b>$dzial</div>";
+                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%; color:#0082C3;'>JEDNOSTKA: </b>$jednostka</div>";
                     echo "<div style='clear:both;'></div>";
-                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%; color:#0f70b7;'>OSTATNIA AKTYWNOŚĆ: </b>$activity</div>";
+                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%; color:#0082C3;'>OSTATNIA AKTYWNOŚĆ: </b>$activity</div>";
 
                     $conn -> close();
                 ?>

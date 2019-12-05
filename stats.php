@@ -54,7 +54,7 @@ if(!isset($_SESSION["sort"]))
         <div class="stats_panel">
             <div style="text-align:center; font-size:200%; padding:20px;"><b>STATYSTYKI</b></div>
             <table class="stats_table">
-            <tr style="color:#0f70b7"><td><b>IMIĘ</b></td><td><b>NAZWISKO</b></td><td><b>GRUPA</b></td><td><b style='color:green'>ILOŚĆ ZADAŃ AKTYWNYCH</b></td><td><b style='color:red'>ILOŚĆ SPÓŹNIEŃ</b></td><td><b style='color:rebeccapurple'>OSTATNIA AKTYWNOŚĆ</b></td></tr>
+            <tr style="color:#0082C3"><td><b>IMIĘ</b></td><td><b>NAZWISKO</b></td><td><b>GRUPA</b></td><td><b style='color:green'>ILOŚĆ ZADAŃ AKTYWNYCH</b></td><td><b style='color:red'>ILOŚĆ SPÓŹNIEŃ</b></td><td><b style='color:rebeccapurple'>OSTATNIA AKTYWNOŚĆ</b></td></tr>
                 <?php 
                 require_once("connection.php");
 

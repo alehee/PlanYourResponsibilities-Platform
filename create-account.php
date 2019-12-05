@@ -38,13 +38,13 @@ if(!isset($_SESSION["sort"]))
         <div class="create_panel">
         <div style="text-align:center; font-size:200%; padding:20px;"><b>UTWÓRZ NOWY PROFIL</b></div>
         <form action="additional/create_acc.php" method="POST" enctype="multipart/form-data">
-            <div style="margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0f70b7;'>IMIĘ: </b><input type="text" style="font-size:80%; float:right;" name="imie" required/></div> 
-            <div style="margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0f70b7;'>NAZWISKO: </b><input type="text" style="font-size:80%; float:right;" name="nazwisko" required/></div> 
-            <div style="margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0f70b7;'>LOGIN: </b><input type="text" style="font-size:80%; float:right;" name="login" required/></div>
-            <div style="margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0f70b7;'>HASŁO: </b><input type="password" style="font-size:80%; float:right;" name="password" required/></div>
-            <div style="margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0f70b7;'>E-MAIL: </b><input type="text" style="font-size:80%; float:right;" name="email" required/></div>
+            <div style="margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0082C3;'>IMIĘ: </b><input type="text" style="font-size:80%; float:right;" name="imie" required/></div> 
+            <div style="margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0082C3;'>NAZWISKO: </b><input type="text" style="font-size:80%; float:right;" name="nazwisko" required/></div> 
+            <div style="margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0082C3;'>LOGIN: </b><input type="text" style="font-size:80%; float:right;" name="login" required/></div>
+            <div style="margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0082C3;'>HASŁO: </b><input type="password" style="font-size:80%; float:right;" name="password" required/></div>
+            <div style="margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0082C3;'>E-MAIL: </b><input type="text" style="font-size:80%; float:right;" name="email" required/></div>
             <div style="text-align:center; margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:red;'>PAMIĘTAJ ŻE ZDJĘCIE POWINNO BYĆ KWADRATOWE</b><br><b>ZDJĘCIE (.png): </b><input type="file" accept="image/png" name="photo"/><br><a href="https://imageresizer.com" target="_blank">LINK DO EDYTORA ZDJĘĆ</a></div>
-            <div style="text-align:center; margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0f70b7;'>GRUPA: </b>
+            <div style="text-align:center; margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0082C3;'>GRUPA: </b>
             <select name="dzial" style="font-size:100%;" required>
                 <option value="nskl">Niski Skład</option>
                 <option value="wskl">Wysoki Skład</option>

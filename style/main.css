@@ -1,8 +1,8 @@
 /*
 KOLORYSTYKA PLIKU:
-Kolor DECATHLON: #0f70b7
-Kolor DECATHLON LIGHT 4: #2b9dee
-Kolor DECAHTLON DARK 2: #0b578e
+Kolor DECATHLON: #0082C3
+Kolor DECATHLON DARK: #006699
+Kolor DECATHLON ORANGE: #EC6607
 Kolor szary: #f2f2f2
 
 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -20,7 +20,7 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 header{
     min-height: 50px;
     width: 100%;
-    background-color: #0f70b7;
+    background-color: #0082C3;
     color: white;
     font-size: 100%;
     padding: 20px;
@@ -42,7 +42,7 @@ p{
     text-align: center;
     font-size: 100%;
     border-radius: 20px;
-    border: #0f70b7 2px solid;
+    border: #0082C3 2px solid;
 }
 
 
@@ -60,7 +60,7 @@ p{
 }
 
 .index_logpanel:focus{
-    border-bottom: solid 3px #0f70b7;
+    border-bottom: solid 3px #0082C3;
     transition: 0.2s;
 }
 
@@ -72,7 +72,7 @@ p{
 }
 
 .index_logbutt{
-    background-color: #0f70b7;
+    background-color: #0082C3;
     color: white;
     border: 2px solid white;
     width: 30%;
@@ -84,8 +84,8 @@ p{
 
 .index_logbutt:hover{
     background-color: white;
-    color: #0f70b7;
-    border: 2px solid #0f70b7;
+    color: #0082C3;
+    border: 2px solid #0082C3;
 }
 
 .login_blankspace{
@@ -104,7 +104,7 @@ p{
     overflow-y: auto;
     border-radius: 20px;
     margin: 10px 5%;
-    border: #0f70b7 2px solid;
+    border: #0082C3 2px solid;
 }
 
 .login_news{
@@ -141,7 +141,7 @@ p{
     width: 80px;
     border-radius: 100%;
     margin: 0 auto;
-    border: solid 2px #0f70b7;
+    border: solid 2px #0082C3;
 }
 
 
@@ -164,8 +164,8 @@ p{
     position: fixed;
     min-height: 30%;
     max-height: 80%;
-    background-color: #0f70b7;
-    border: solid 5px #0f70b7;
+    background-color: #0082C3;
+    border: solid 5px #0082C3;
     overflow-y: auto;
     overflow-x: hidden;
     border-radius: 20px;
@@ -180,7 +180,7 @@ p{
 }
 
 #okno_chat_message{
-    border: solid #0f70b7 2px;
+    border: solid #0082C3 2px;
     border-radius: 20px;
 	width: 90%;
     margin: 10px auto;
@@ -222,7 +222,7 @@ p{
 }
 
 .okno a{
-    color: #0f70b7;
+    color: #0082C3;
 }
 
 .okno ul{
@@ -238,7 +238,7 @@ p{
 
 .okno ul li::before{
     content: "\2022";
-    color: #0f70b7;
+    color: #0082C3;
     font-weight: bold;
     display: inline-block; 
     width: 1em;
@@ -290,8 +290,8 @@ p{
 }
 
 .okno_done{
-    background-color: #0f70b7;
-    border: 2px solid #0f70b7;
+    background-color: #0082C3;
+    border: 2px solid #0082C3;
 }
 
 .okno_addperson:hover, .okno_edit:hover, .okno_delperson:hover, .okno_done:hover{
@@ -312,8 +312,8 @@ p{
 }
 
 .okno_done:hover{
-    border: 2px solid #0f70b7;
-    color: #0f70b7;
+    border: 2px solid #0082C3;
+    color: #0082C3;
 }
 
 .okno_addperson_butt, .okno_delperson_butt, .okno_edit_butt{
@@ -374,9 +374,9 @@ p{
     height: auto;
     margin: 0.5%;
     color: white;
-    border: solid 2px #0f70b7;
+    border: solid 2px #0082C3;
     border-radius: 20px;
-    background-color: #0f70b7;
+    background-color: #0082C3;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     text-shadow: 1px 1px 1px black;
     text-align: center;
@@ -410,7 +410,7 @@ p{
     background-color: white;
     cursor: pointer;
     border-radius: 20px;
-    border: solid 1px #0f70b7;
+    border: solid 1px #0082C3;
 }
 
 .job_red .job_topic{
@@ -430,7 +430,7 @@ p{
 }
 
 .job_topic_justbg{
-    background-color: #0f70b7;
+    background-color: #0082C3;
     border-radius: 20px;
     transition: 0.1s;
 }
@@ -438,7 +438,7 @@ p{
 .job_button{
     margin: 5px auto;
     width: 100%;
-    background-color: #0f70b7;
+    background-color: #0082C3;
     cursor: pointer;
     border: none;
     transition: 0.1s;
@@ -529,8 +529,8 @@ p{
     padding: 10px;
     margin: 1px;
     border-radius: 20px;
-    background-color: #0f70b7;
-    border: #0f70b7 solid 2px;
+    background-color: #0082C3;
+    border: #0082C3 solid 2px;
     color: white;
     font-size: 80%;
     transition: 0.1s;
@@ -539,8 +539,8 @@ p{
 
 .new_job_dzial_butt:hover{
     background-color: white;
-    border: #0f70b7 solid 2px;
-    color: #0f70b7;
+    border: #0082C3 solid 2px;
+    color: #0082C3;
     transition: 0.1s;
 }
 
@@ -550,8 +550,8 @@ p{
     min-height: 40px;
     color: white;
     cursor: pointer;
-    background-color: #0f70b7;
-    border: 2px solid #0f70b7;
+    background-color: #0082C3;
+    border: 2px solid #0082C3;
     border-radius: 20px;
     padding: 5px;
     padding-top: 10px;
@@ -560,9 +560,9 @@ p{
 }
 
 .new_job_butt:hover{
-    border: 2px solid #0f70b7;
+    border: 2px solid #0082C3;
     background-color: white;
-    color: #0f70b7;
+    color: #0082C3;
     transition: 0.1s;
 }
 
@@ -571,7 +571,7 @@ p{
 #nav{
     width: 250px;
     height: 100%;
-    background-color: #0f70b7;
+    background-color: #0082C3;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -593,7 +593,7 @@ p{
 #nav_link{
     clear: both;
     position: relative;
-    background-color: #0f70b7;
+    background-color: #0082C3;
     width: 100%;
     height: 50px;
     font-size: 120%;
@@ -602,10 +602,11 @@ p{
     cursor: pointer;
     color: white;
     transition: 0.1s;
+    font-weight: 800;
 }
 
 #nav_link:hover{
-    background-color: #0b578e;
+    background-color: #006699;
     transition: 0.1s;
 }
 
@@ -614,7 +615,7 @@ p{
     min-height: 200px;
     width: 100%;
     font-size: 150%;
-    background-color: #0b578e;
+    background-color: #006699;
 }
 
 #nav_profile img{
@@ -646,8 +647,8 @@ p{
     min-height: 50px;
     color: white;
     cursor: pointer;
-    background-color: #0f70b7;
-    border: 2px solid #0f70b7;
+    background-color: #0082C3;
+    border: 2px solid #0082C3;
     border-radius: 20px;
     padding: 5px;
     padding-top: 15px;
@@ -657,8 +658,8 @@ p{
 
 .done_job_backbutton:hover{
     background-color: white;
-    border: 2px solid #0f70b7;
-    color: #0f70b7;
+    border: 2px solid #0082C3;
+    color: #0082C3;
     transition: 0.1s;
 }
 
@@ -690,8 +691,8 @@ p{
 .profile_img_button{
     width: 100%;
     height: 30px;
-    background-color: #0f70b7;
-    border: 2px solid #0f70b7;
+    background-color: #0082C3;
+    border: 2px solid #0082C3;
     border-radius: 20px;
     color: white;
     margin: 10px;
@@ -701,8 +702,8 @@ p{
 
 .profile_img_button:hover{
     background-color: white;
-    border: 2px solid #0f70b7;
-    color: #0f70b7;
+    border: 2px solid #0082C3;
+    color: #0082C3;
 }
 
 .profile_img_form{
@@ -712,8 +713,8 @@ p{
 .profile_img_button_send{
     width: 50%;
     height: 30px;
-    background-color: #0f70b7;
-    border: 2px solid #0f70b7;
+    background-color: #0082C3;
+    border: 2px solid #0082C3;
     border-radius: 20px;
     color: white;
     margin: 10px;
@@ -723,8 +724,8 @@ p{
 
 .profile_img_button_send:hover{
     background-color: white;
-    border: 2px solid #0f70b7;
-    color: #0f70b7;
+    border: 2px solid #0082C3;
+    color: #0082C3;
 }
 
 .profile_info{
@@ -734,19 +735,19 @@ p{
     font-size: 200%;
     padding: 20px;
     background-color: #f2f2f2;
-    border: #0f70b7 solid 2px;
+    border: #0082C3 solid 2px;
     border-radius: 20px;
 }
 
 .panel_info_zmien{
-    color: #0f70b7;
+    color: #0082C3;
     font-size: 50%;
     margin: 5px;
     cursor: pointer;
 }
 
 .panel_info_zmien:hover{
-    color: #0b578e;
+    color: #006699;
     text-decoration: underline;
 }
 
@@ -927,7 +928,7 @@ body{
 h2{ 
     padding: 10px;
     padding-left: 30px;
-    color: #0f70b7;
+    color: #0082C3;
     text-align: center;
 }
 

@@ -87,8 +87,8 @@
             else{
                 echo '
                 <script>
-                    document.getElementById("okno_job").style.backgroundColor="#0f70b7";
-                    document.getElementById("okno_job").style.border="5px solid #0f70b7";
+                    document.getElementById("okno_job").style.backgroundColor="#0082C3";
+                    document.getElementById("okno_job").style.border="5px solid #0082C3";
                 </script>
                 ';
             }
