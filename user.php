@@ -36,7 +36,7 @@ $conn -> close();
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
-        <title>Panel Główny</title>
+        <title>Zadania Ogólne</title>
         <link rel="stylesheet" href="style/main.css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
@@ -70,7 +70,7 @@ $conn -> close();
 
         <!-- Zadania -->
         <div id="div_aktualne">
-            <div><h2>Zadania</h2></div>
+            <div><h2>ZADANIA OGÓLNE</h2></div>
             <?php
                 require_once("connection.php");
                 $conn = mysqli_connect($host, $user_db, $password_db, $db_name);
@@ -273,7 +273,7 @@ $conn -> close();
 
 					if($already==0){
 						echo '<div id="div_nadane">';
-						echo '<div><h2>Zadania nadane</h2></div>';
+						echo '<div><h2>ZADANIA OGÓLNE - NADANE</h2></div>';
 						$already=1;
                     }
 

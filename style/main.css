@@ -97,55 +97,6 @@ p{
     padding-top: 70px;
 }
 
-.login_newsfeed{
-    width: 90%;
-    min-height: 200px;
-    max-height: 400px;
-    overflow-y: auto;
-    border-radius: 20px;
-    margin: 10px 5%;
-    border: #0082C3 2px solid;
-}
-
-.login_news{
-    position: relative;
-    float: left;
-    width: 100%;
-    min-height: 50px;
-    padding: 10px;
-    background-color: white;
-}
-
-.login_news:nth-child(2n){
-    background-color: #e6e6e6;
-}
-
-.login_news_content{
-    padding: 10px;
-    padding-left: 150px;
-    margin: auto;
-}
-
-.login_news_photo{
-    float: left;
-    height: 100%;
-    width: 150px;
-    min-height: 50px;
-    color: gray;
-    font-size: 80%;
-    text-align: center;
-}
-
-.login_news_photo img{
-    height: 80px;
-    width: 80px;
-    border-radius: 100%;
-    margin: 0 auto;
-    border: solid 2px #0082C3;
-}
-
-
-
 
 
 #okno_background{
@@ -596,18 +547,32 @@ p{
     background-color: #0082C3;
     width: 100%;
     height: 50px;
-    font-size: 120%;
+    font-size: 90%;
     padding: 15px;
     text-align: center;
     cursor: pointer;
     color: white;
     transition: 0.1s;
-    font-weight: 800;
 }
 
 #nav_link:hover{
-    background-color: #006699;
+    background-color: #ec6607;
     transition: 0.1s;
+    font-weight: 800;
+    font-size: 100%;
+}
+
+#nav_link_header{
+    clear: both;
+    position: relative;
+    background-color: #006699;
+    color: white;
+    font-weight: 800;
+    font-size: 110%;
+    width: 100%;
+    padding: 10px;
+    min-height: 30px;
+    text-align: center;
 }
 
 #nav_profile{
@@ -615,7 +580,9 @@ p{
     min-height: 200px;
     width: 100%;
     font-size: 150%;
-    background-color: #006699;
+    font-weight: 800;
+    background-color: #f2f2f2;
+    color: #ec6607;
 }
 
 #nav_profile img{
@@ -623,7 +590,6 @@ p{
     width: 150px;
     margin: 0 50px;
     border-radius: 100%;
-    border: 2px solid white;
     background-color: #e6e6e6;
 }
 
@@ -862,6 +828,54 @@ p{
 
 
 
+.ri{
+    width: 98%;
+    margin: 10px 1%;
+    min-height: 200px;
+    text-align: center;
+    background-color: #e6e6e6;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+
+
+.project{
+    width: 98%;
+    margin: 10px 1%;
+    min-height: 200px;
+    text-align: center;
+    background-color: #e6e6e6;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+
+
+.main{
+    width: 98%;
+    margin: 10px 1%;
+    min-height: 200px;
+    text-align: center;
+    background-color: #e6e6e6;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+
+
+.staff{
+    width: 98%;
+    margin: 10px 1%;
+    min-height: 200px;
+    text-align: center;
+    background-color: #e6e6e6;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+
+
 body{
     background-color: #f2f2f2;
 }
@@ -926,10 +940,11 @@ body{
 }
 
 h2{ 
-    padding: 10px;
+    padding: 30px;
     padding-left: 30px;
     color: #0082C3;
     text-align: center;
+    font-style: italic;
 }
 
 

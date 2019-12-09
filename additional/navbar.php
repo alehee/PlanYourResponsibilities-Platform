@@ -8,14 +8,22 @@ $navbar='
 <div id="nav" onclick="nav_hidenot()">
 	<div id="nav_profile">
 		<img src="photo/'.$id.'.png"/>
-		<p style="color:white; padding: 5px;">'.name_by_id($id).'</p>
+		<p style="padding: 5px;">'.name_by_id($id).'</p>
+		<div style="width:100%; height:5px; background-color:#ec6607;"></div>
 	</div>
-	<div id="nav_link" onclick=\'nav_classic_link("user.php")\'><span>PANEL GŁÓWNY</span></div>
+	<div id="nav_link_header">ZADANIA</div>
+	<div id="nav_link" onclick=\'nav_classic_link("main.php")\'><span>PANEL GŁÓWNY</span></div>
+	<div id="nav_link" onclick=\'nav_classic_link("user.php")\'><span>ZADANIA OGÓLNE</span></div>
+	<div id="nav_link" onclick=\'nav_classic_link("user_ri.php")\'><span>ZADANIA RI</span></div>
+	<div id="nav_link" onclick=\'nav_classic_link("user_staff.php")\'><span>ZADANIA KADROWE</span></div>
+	<div id="nav_link" onclick=\'nav_classic_link("project.php")\'><span>PANEL PROJEKTÓW</span></div>
+	<div id="nav_link_header">LINKI</div>
 	<div id="nav_link" onclick=\'nav_link("http:\/\/mail.oxylane.com")\'>GMAIL</div>
 	<div id="nav_link" onclick=\'nav_link("http:\/\/riverlakestudios.pl")\'>LINK 1</div>
 	<div id="nav_link" onclick=\'nav_link("http:\/\/wp.pl")\'>LINK 2</div>
 	<div id="nav_link" onclick=\'nav_link("http:\/\/lowcygier.pl")\'>LINK 3</div>
 	<div id="nav_link" onclick=\'nav_link("http:\/\/drive.google.com")\'>LINK 4</div>
+	<div id="nav_link_header">KONTO</div>
 	<div id="nav_link" onclick=\'nav_classic_link("logout.php")\'><span>WYLOGUJ</span></div>
 	<div id="nav_link" onclick=\'nav_classic_link("profile.php")\'><span>MÓJ PROFIL</span></div>';
 
