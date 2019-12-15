@@ -24,6 +24,7 @@
             $topic;
             $info;
             $whoadd;
+            $length;
             $end;
 
             $sql="SELECT * FROM done WHERE The_ID=$undone_job_id AND ForWho=$undone_user_id";
@@ -32,10 +33,11 @@
                 $topic = $res["Topic"];
                 $info = $res["Info"];
                 $whoadd = $res["WhoAdd"];
+                $length = $res["Length"];
                 $end = $res["End"];
             }
 
-            $sql="INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Start, End) VALUES (NULL, '$undone_job_id', '$topic', '$info', '$whoadd', '$undone_user_id', CURRENT_TIMESTAMP, '$end')";
+            $sql="INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Length, Start, End) VALUES (NULL, '$undone_job_id', '$topic', '$info', '$whoadd', '$undone_user_id', '$length', CURRENT_TIMESTAMP, '$end')";
             $conn -> query($sql);
         }
 

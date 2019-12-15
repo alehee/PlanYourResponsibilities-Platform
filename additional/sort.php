@@ -6,7 +6,7 @@
 		$sort=$_SESSION["sort"];
 		
         if($sort=="Deadline"){
-			$sort="Najstarsze";
+			$sort="Długość";
 		}
 		
 		else

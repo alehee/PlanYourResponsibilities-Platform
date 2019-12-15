@@ -15,6 +15,7 @@ if(isset($_POST['addperson_who']) && isset($_SESSION["the_job"])){
 	$addperson_whoadd;
 	$addperson_forwho=$addperson_who;
 	$addperson_deadline;
+	$addperson_length;
 
 	$sql="SELECT * FROM job WHERE The_ID='$addperson_the_job' LIMIT 1";
 	$que = $conn -> query($sql);
@@ -23,7 +24,15 @@ if(isset($_POST['addperson_who']) && isset($_SESSION["the_job"])){
 		$addperson_info=$res["Info"];
 		$addperson_whoadd=$res["WhoAdd"];
 		$addperson_deadline=$res["End"];
+		$addperson_length = $res["Length"];
 	}
+
+	if($addperson_length == 1)
+        $mail_length = "Krótkie";
+    else if($addperson_length == 2)
+        $mail_length = "Średnie";
+    else
+        $mail_length = "Długie";
 
 	$sql="SELECT Imie, Nazwisko FROM users WHERE ID=$addperson_whoadd";
     $que = mysqli_query($conn, $sql);
@@ -35,6 +44,7 @@ if(isset($_POST['addperson_who']) && isset($_SESSION["the_job"])){
     $subject = "Nowe zadanie na platformie PYR!";
 $message = "
 Zadanie od: ".$mail_whoadd."
+Długość zadania: ".$mail_length."
 
 Tytuł: ".$addperson_title."
 
@@ -44,7 +54,7 @@ Zaloguj się na riverlakestudios.pl/pyr i sprawdź szczegóły!
 Wygenerowano: ".date("Y-m-d G:i:s");
     $headers = "From: ".$from;
 	
-	$sql = "INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Start, End) VALUES (NULL, '$addperson_the_job', '$addperson_title', '$addperson_info', '$addperson_whoadd', '$addperson_forwho', CURRENT_TIMESTAMP, '$addperson_deadline')";
+	$sql = "INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Length, Start, End) VALUES (NULL, '$addperson_the_job', '$addperson_title', '$addperson_info', '$addperson_whoadd', '$addperson_forwho', '$addperson_length', CURRENT_TIMESTAMP, '$addperson_deadline')";
 	$conn -> query($sql);
 
 	$sql = "SELECT Email FROM users WHERE ID='$addperson_forwho' LIMIT 1";

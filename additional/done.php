@@ -14,6 +14,7 @@
 		$topic;
         $info;
         $whoadd;
+        $length;
         $end;
 
         $sql="SELECT * FROM job WHERE The_ID=$done_job_id AND ForWho=$done_user_id";
@@ -21,11 +22,12 @@
 		while($res = mysqli_fetch_array($que)){
 			$topic = $res["Topic"];
 			$info = $res["Info"];
-			$whoadd = $res["WhoAdd"];
+            $whoadd = $res["WhoAdd"];
+            $length = $res["Length"];
 			$end = $res["End"];
 		}
 		
-		$sql = "INSERT INTO done(ID, The_ID, Topic, Info, WhoAdd, ForWho, End, Date) VALUES (NULL, '$done_job_id', '$topic', '$info', '$whoadd', '$done_user_id', '$end', CURRENT_TIMESTAMP)";
+		$sql = "INSERT INTO done(ID, The_ID, Topic, Info, WhoAdd, ForWho, Length, End, Date) VALUES (NULL, '$done_job_id', '$topic', '$info', '$whoadd', '$done_user_id', '$length', '$end', CURRENT_TIMESTAMP)";
 		$conn -> query($sql);
 		
 		$sql = "DELETE FROM job WHERE The_ID=$done_job_id AND ForWho=$done_user_id";

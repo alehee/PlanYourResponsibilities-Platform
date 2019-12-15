@@ -60,7 +60,7 @@ $conn -> close();
             <p id="p_timer"><br></p>
         </header>
 
-        <!-- Panel akcji (wyloguj etc.) --->
+        <!-- Panel akcji --->
         <div id="div_panel">
             <div onclick="new_job()" id="new_job">DODAJ ZADANIE</div>
             <div onclick="okno_sort()" id="sort">SORTOWANIE: <?php echo $_SESSION["sort"] ?></div>
@@ -88,7 +88,7 @@ $conn -> close();
 						$sql="SELECT * FROM job WHERE ForWho=$id ORDER BY End ASC";
 					
 					else
-						$sql="SELECT * FROM job WHERE ForWho=$id ORDER BY The_ID ASC";
+						$sql="SELECT * FROM job WHERE ForWho=$id ORDER BY Length DESC";
 					
                     $que=mysqli_query($conn, $sql);
 
@@ -160,31 +160,16 @@ $conn -> close();
                         echo "<div class='job_small_info'/><img src='icons/users.png'/>".$how_many_per."</div>";
                         // -----
 
-                        // LICZNIK ZAŁĄCZNIKÓW
-                        $how_many_atta=0;
-                        $the_id = $res["The_ID"];
-                        $string = $res["Info"];
-                        $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
-                        $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
-                        $bufor = $string;
-                        while($pos = strpos($bufor, "a href=")){
-                            $bufor[$pos]="x";
-                            $how_many_atta++;
+                        // DŁUGOŚĆ ZADANIA
+                        if($res["Length"]==1){
+                            echo "<div class='job_small_info'><img src='icons/speed-1.png' style='padding:0; padding-left:12px;'/></div>";
                         }
-                        $temp_sql="SELECT Message FROM chat WHERE The_ID='$the_id'";
-                        $temp_que=mysqli_query($conn, $temp_sql);
-                        while($temp_res = mysqli_fetch_array($temp_que)){
-                            $string=$temp_res["Message"];
-                            $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
-                            $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
-                            $bufor = $string;
-                            while($pos = strpos($bufor, "a href=")){
-                                $bufor[$pos]="x";
-                                $how_many_atta++;
-                            }
+                        else if($res["Length"]==2){
+                            echo "<div class='job_small_info'><img src='icons/speed-2.png' style='padding:0; padding-left:12px;'/></div>";
                         }
-                        echo "<div class='job_small_info'><img src='icons/attachment.png'/>".$how_many_atta."</div>";
-                        echo "<div style='clear:both;'></div>";
+                        else{
+                            echo "<div class='job_small_info'><img src='icons/speed-3.png' style='padding:0; padding-left:12px;'/></div>";
+                        }
                         // -----
 
                         // INFORMACJE DODATKOWE W ZADANIU
@@ -212,10 +197,37 @@ $conn -> close();
                         // -----
 
                         // KTO DODAŁ ZADANIE
-                        echo "<div style='clear:both;'><div class='job_small_info_plus' style='width:70%;'><img src='icons/user.png'/>".name_by_id($res["WhoAdd"])."</div>";
+                        echo "<div style='clear:both;'><div class='job_small_info_plus' style='width:75%;'><img src='icons/user.png'/>".name_by_id($res["WhoAdd"])."</div>";
                         echo "</div>";
-                        echo "<div style='clear:both;'></div>";
                         // -----
+
+                        // LICZNIK ZAŁĄCZNIKÓW
+                        $how_many_atta=0;
+                        $the_id = $res["The_ID"];
+                        $string = $res["Info"];
+                        $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
+                        $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
+                        $bufor = $string;
+                        while($pos = strpos($bufor, "a href=")){
+                            $bufor[$pos]="x";
+                            $how_many_atta++;
+                        }
+                        $temp_sql="SELECT Message FROM chat WHERE The_ID='$the_id'";
+                        $temp_que=mysqli_query($conn, $temp_sql);
+                        while($temp_res = mysqli_fetch_array($temp_que)){
+                            $string=$temp_res["Message"];
+                            $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
+                            $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
+                            $bufor = $string;
+                            while($pos = strpos($bufor, "a href=")){
+                                $bufor[$pos]="x";
+                                $how_many_atta++;
+                            }
+                        }
+                        echo "<div class='job_small_info' style='width:20%'><img src='icons/attachment.png'/>".$how_many_atta."</div>";
+                        // -----
+
+                        echo "<div style='clear:both;'></div>";
 
                         echo $div_job_topic_bottom;
                         echo $div_job_bottom;
@@ -343,31 +355,16 @@ $conn -> close();
                     echo "<div class='job_small_info'/><img src='icons/users.png'/>".$how_many_per."</div>";
                     // -----
 
-                    // LICZNIK ZAŁĄCZNIKÓW
-                    $how_many_atta=0;
-                    $the_id = $res["The_ID"];
-                    $string = $res["Info"];
-                    $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
-                    $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
-                    $bufor = $string;
-                    while($pos = strpos($bufor, "a href=")){
-                        $bufor[$pos]="x";
-                        $how_many_atta++;
+                    // DŁUGOŚĆ ZADANIA
+                    if($res["Length"]==1){
+                        echo "<div class='job_small_info'><img src='icons/speed-1.png' style='padding:0; padding-left:12px;'/></div>";
                     }
-                    $temp_sql="SELECT Message FROM chat WHERE The_ID='$the_id'";
-                    $temp_que=mysqli_query($conn, $temp_sql);
-                    while($temp_res = mysqli_fetch_array($temp_que)){
-                        $string=$temp_res["Message"];
-                        $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
-                        $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
-                        $bufor = $string;
-                        while($pos = strpos($bufor, "a href=")){
-                            $bufor[$pos]="x";
-                            $how_many_atta++;
-                        }
+                    else if($res["Length"]==2){
+                        echo "<div class='job_small_info'><img src='icons/speed-2.png' style='padding:0; padding-left:12px;'/></div>";
                     }
-                    echo "<div class='job_small_info'><img src='icons/attachment.png'/>".$how_many_atta."</div>";
-                    echo "<div style='clear:both;'></div>";
+                    else{
+                        echo "<div class='job_small_info'><img src='icons/speed-3.png' style='padding:0; padding-left:12px;'/></div>";
+                    }
                     // -----
 
                     // INFORMACJE DODATKOWE W ZADANIU
@@ -393,7 +390,33 @@ $conn -> close();
                     // -----
 
                     // KTO DODAŁ ZADANIE
-                    echo "<div style='clear:both;'><div class='job_small_info_plus' style='width:70%;'><img src='icons/user.png'/>".name_by_id($res["WhoAdd"])."</div>";
+                    echo "<div style='clear:both;'><div class='job_small_info_plus' style='width:75%;'><img src='icons/user.png'/>".name_by_id($res["WhoAdd"])."</div>";
+                    // -----
+
+                    // LICZNIK ZAŁĄCZNIKÓW
+                    $how_many_atta=0;
+                    $the_id = $res["The_ID"];
+                    $string = $res["Info"];
+                    $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
+                    $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
+                    $bufor = $string;
+                    while($pos = strpos($bufor, "a href=")){
+                        $bufor[$pos]="x";
+                        $how_many_atta++;
+                    }
+                    $temp_sql="SELECT Message FROM chat WHERE The_ID='$the_id'";
+                    $temp_que=mysqli_query($conn, $temp_sql);
+                    while($temp_res = mysqli_fetch_array($temp_que)){
+                        $string=$temp_res["Message"];
+                        $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
+                        $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
+                        $bufor = $string;
+                        while($pos = strpos($bufor, "a href=")){
+                            $bufor[$pos]="x";
+                            $how_many_atta++;
+                        }
+                    }
+                    echo "<div class='job_small_info' style='width:20%'><img src='icons/attachment.png'/>".$how_many_atta."</div>";
                     // -----
 
                     echo "</div>";

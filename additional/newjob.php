@@ -21,6 +21,15 @@ if(isset($_POST['new_title'])){
     $new_info = $_POST['new_info'];
     $new_deadline = $_POST['new_deadline'];
     $new_whoadd = $_SESSION['id'];
+    $new_length = $_POST['new_length'];
+    $mail_length = "";
+
+    if($new_length == 1)
+        $mail_length = "Krótkie";
+    else if($new_length == 2)
+        $mail_length = "Średnie";
+    else
+        $mail_length = "Długie";
 
     $sql="SELECT Imie, Nazwisko FROM users WHERE ID=$new_whoadd";
     $que = mysqli_query($conn, $sql);
@@ -32,6 +41,7 @@ if(isset($_POST['new_title'])){
     $subject = "Nowe zadanie na platformie PYR!";
 $message = "
 Zadanie od: ".$mail_whoadd."
+Długość zadania: ".$mail_length."
 
 Tytuł: ".$new_title."
 
@@ -42,7 +52,7 @@ Wygenerowano: ".date("Y-m-d G:i:s");
     $headers = "From: ".$from;
 
     foreach($new_forwho_list as $forwho_id){
-        $sql = "INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Start, End) VALUES (NULL, '$the_id', '$new_title', '$new_info', '$new_whoadd', '$forwho_id', CURRENT_TIMESTAMP, '$new_deadline')";
+        $sql = "INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Length, Start, End) VALUES (NULL, '$the_id', '$new_title', '$new_info', '$new_whoadd', '$forwho_id', '$new_length', CURRENT_TIMESTAMP, '$new_deadline')";
 
         mysqli_query($conn, $sql);
 

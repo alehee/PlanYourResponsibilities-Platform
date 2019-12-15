@@ -17,6 +17,12 @@
         <form method="POST" action="additional/newjob.php">
         <div class="okno" style="padding:10px;">
             <div style="font-size:100%; text-align:center;"><b>Tytuł:</b> <input type="text" name="new_title" style="font-size:100%; width:400px;" required/> <span style="padding-left:10px;"></span> <b>Deadline:</b> <input type="date" style="font-size:100%;" name="new_deadline" required/></div>
+            <div style="font-size:100%; text-align:center;"><b>Długość zadania:</b> 
+            <select name="new_length" style="font-size:100%; width:100px; margin:10px;" required>
+                <option value="3">Krótkie</option>
+                <option value="2">Średnie</option>
+                <option value="1">Długie</option>
+            </select> </div>
 
             <div style="font-size:100%; text-align:center;"><b>Dodatkowe informacje:</b><br>
             <textarea name="new_info" style="font-size:100%; min-height:200px; width:80%; padding:5px;" /></textarea></div>
@@ -129,7 +135,19 @@
             while($temp_res = mysqli_fetch_array($temp_que)){
                 $how_many_per++;
             }
-            echo "<div class='okno_element'><img src='icons/users.png'/>".$how_many_per."</div>";
+            echo "<div class='okno_element_s'><img src='icons/users.png'/>".$how_many_per."</div>";
+            // -----
+
+            // DŁUGOŚĆ ZADANIA
+            if($res["Length"]==1){
+                echo "<div class='okno_element_s'><img src='icons/speed-1.png'/>Długie</div>";
+            }
+            else if($res["Length"]==2){
+                echo "<div class='okno_element_s'><img src='icons/speed-2.png'/>Średnie</div>";
+            }
+            else{
+                echo "<div class='okno_element_s'><img src='icons/speed-3.png'/>Krótkie</div>";
+            }
             // -----
 
             // LICZNIK ZAŁĄCZNIKÓW
@@ -155,7 +173,7 @@
                     $how_many_atta++;
                 }
             }
-            echo "<div class='okno_element'><img src='icons/attachment.png'/>".$how_many_atta."</div>";
+            echo "<div class='okno_element_s'><img src='icons/attachment.png'/>".$how_many_atta."</div>";
             // -----
 
             // KTO DODAŁ ZADANIE
@@ -375,10 +393,35 @@
         echo '<div class="okno" style="padding:10px;">';
         echo '<form action="additional/edit.php" method="POST">';
 
-        $sql="SELECT Topic, Info, End FROM job WHERE The_ID=$edit_id LIMIT 1";
+        $sql="SELECT Topic, Info, Length, End FROM job WHERE The_ID=$edit_id LIMIT 1";
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
             echo '<div style="font-size:100%; text-align:center;"><b>Tytuł:</b> <input type="text" name="edit_title" style="width:400px; max-width:70%; font-size:100%;" value="'.$res["Topic"].'" required/> <span style="padding-left:10px;"></span> <b>Deadline:</b> <input type="date" style="font-size:100%;" name="edit_deadline" value="'.$res["End"].'" required/></div>
+
+            <div style="font-size:100%; text-align:center;"><b>Długość zadania:</b> 
+            <select name="edit_length" style="font-size:100%; width:100px; margin:10px;" required>';
+            if($res["Length"]==3){
+                echo '
+                <option value="3">Krótkie</option>
+                <option value="2">Średnie</option>
+                <option value="1">Długie</option>
+                ';
+            }
+            else if($res["Length"]==2){
+                echo '
+                <option value="2">Średnie</option>
+                <option value="3">Krótkie</option>
+                <option value="1">Długie</option>
+                ';
+            }
+            else{
+                echo '
+                <option value="1">Długie</option>
+                <option value="3">Krótkie</option>
+                <option value="2">Średnie</option>
+                ';
+            }
+            echo '</select> </div>
 
             <div style="font-size:100%; text-align:center; margin:20px width:80%"><b>Dodatkowe informacje:</b><br>
             <textarea name="edit_info" style="font-size:100%; min-height:200px; width:80%; padding:5px;">'.$res["Info"].'</textarea></div>

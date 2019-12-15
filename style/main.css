@@ -215,6 +215,25 @@ p{
     margin-bottom: -2%;
 }
 
+.okno_element_s{
+    float: left;
+    min-height: 30px;
+    width: 14.5%;
+    margin: 1%;
+    background-color: #e6e6e6;
+    text-align: center;
+    margin: 1%;
+    padding: 1%;
+    border-radius: 20px;
+}
+
+.okno_element_s img{
+    height: 20px;
+    width: auto;
+    margin: 0 10px;
+    margin-bottom: -2%;
+}
+
 .okno_addperson, .okno_edit, .okno_delperson, .okno_done{
     float: left;
     min-height: 50px;
@@ -420,6 +439,7 @@ p{
     background-color: #e6e6e6;
     width: 22%;
     min-height: 20px;
+    max-height: 30px;
     margin: 1%;
     margin-bottom: 2%;
     padding: 2%;
@@ -433,6 +453,7 @@ p{
     background-color: #e6e6e6;
     min-width: 49%;
     min-height: 20px;
+    max-height: 30px;
     margin: 1%;
     margin-bottom: 2%;
     padding: 2%;
@@ -1062,6 +1083,13 @@ h2{
         margin-bottom: 0;
     }
 
+    .okno_element_s{
+        width: 31%;
+    }
+    .okno_element_s img{
+        margin-bottom: 0;
+    }
+
     .okno_addperson, .okno_edit, .okno_delperson, .okno_done{
         width:48%;
     }
@@ -1118,6 +1146,14 @@ h2{
         margin-bottom: 0;
     }
 
+    .okno_element_s{
+        width: 31%;
+    }
+
+    .okno_element_s img{
+        margin-bottom: 0;
+    }
+
     .okno_addperson, .okno_edit, .okno_delperson, .okno_done{
         width:48%;
     }
@@ -1171,6 +1207,14 @@ h2{
     }
 
     .okno_element img{
+        margin-bottom: 0;
+    }
+
+    .okno_element_s{
+        width: 31%;
+    }
+    
+    .okno_element_s img{
         margin-bottom: 0;
     }
 
