@@ -88,7 +88,7 @@ $conn -> close();
 						$sql="SELECT * FROM job WHERE ForWho=$id ORDER BY End ASC";
 					
 					else
-						$sql="SELECT * FROM job WHERE ForWho=$id ORDER BY Length DESC";
+						$sql="SELECT * FROM job WHERE ForWho=$id ORDER BY Length DESC, End ASC";
 					
                     $que=mysqli_query($conn, $sql);
 
@@ -265,7 +265,7 @@ $conn -> close();
             $sql = "SELECT * FROM job WHERE WhoAdd='$my_id_nadane' AND ForWho!='$my_id_nadane' ORDER BY End ASC";
 		
 			else
-				$sql = "SELECT * FROM job WHERE WhoAdd='$my_id_nadane' AND ForWho!='$my_id_nadane' ORDER BY The_ID ASC";
+				$sql = "SELECT * FROM job WHERE WhoAdd='$my_id_nadane' AND ForWho!='$my_id_nadane' ORDER BY Length DESC, End ASC";
 		
             $que = $conn -> query($sql);
             while($res = mysqli_fetch_array($que)){

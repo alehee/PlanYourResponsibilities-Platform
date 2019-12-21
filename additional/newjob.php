@@ -24,7 +24,7 @@ if(isset($_POST['new_title'])){
     $new_length = $_POST['new_length'];
     $mail_length = "";
 
-    if($new_length == 1)
+    if($new_length == 3)
         $mail_length = "Krótkie";
     else if($new_length == 2)
         $mail_length = "Średnie";
