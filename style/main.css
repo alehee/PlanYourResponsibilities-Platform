@@ -132,8 +132,10 @@ p{
 
 #okno_chat_message{
     border: solid #0082C3 2px;
+    background-color: white;
     border-radius: 20px;
-	width: 90%;
+    width: 90%;
+    font-size: 80%;
     margin: 10px auto;
     padding: 1%;
 }
@@ -159,6 +161,27 @@ p{
     background-color: white;
     color: rebeccapurple;
     transition: 0.1s;
+}
+
+.okno_chat_delmsg{
+    float: right; 
+    width: 22px; 
+    height: 20px;
+    padding-bottom: 18px;
+    margin-top: -15px;
+    border-radius: 100%;
+    border: 2px solid red;
+    background-color: red;
+    color: white;
+    transition: 0.1s;
+    cursor: pointer;
+}
+
+.okno_chat_delmsg:hover{
+    transition: 0.1s;
+    border: 2px solid red;
+    background-color: white;
+    color: red;
 }
 
 .okno{

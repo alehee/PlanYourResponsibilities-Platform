@@ -19,7 +19,7 @@ if(isset($_POST['report_info'])){
 	}
 
     $from = "PYR@riverlakestudios.pl";
-    $subject = "Nowe zgłoszenie na platformie PYR!";
+    $subject = "Nowe zgłoszenie na platformie PlanDeca!";
 $message = "
 Zgłoszenie od: ".$report_mail."
 

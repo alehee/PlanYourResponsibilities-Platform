@@ -55,7 +55,7 @@ $conn -> close();
 
         <header>
             <div id="nav_handle"><img src='icons/menu-3-white.png' onclick="nav_open()"/></div>
-            <h1 style="width:60%; float:left;">. : Plan Your Responsibilities : .</h1><br>
+            <h1 style="width:60%; float:left;">PlanDeca</h1><br>
             <div style="clear:both;"></div>
             <p id="p_timer"><br></p>
         </header>

@@ -234,7 +234,7 @@
 		while($res = mysqli_fetch_array($que)){
             echo '<div id="okno_chat_message"><br>';
             if($res["SentFrom"]==$_SESSION["id"]){
-                echo '<input type="button" value="x" id="'.$res["ID"].'" onclick="job_chatmsqdelete(this.id)" style="float:right; width:15px; margin-top:-15px;" title="Usuń wiadomość"/>';
+                echo '<input type="button" value="x" id="'.$res["ID"].'" class="okno_chat_delmsg" onclick="job_chatmsqdelete(this.id)" title="Usuń wiadomość"/>';
                 echo '<div style="clear:both;"></div>';
             }
             
@@ -242,17 +242,17 @@
             $string = $res['Message'];
             $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
             $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
-            echo $string;
+            echo nl2br($string);
             
             $processor_chat_id=$res['SentFrom'];
             $processor_chat_realname = name_by_id($processor_chat_id);
             
+            echo '<div style="clear:both;"></div>';
             echo '<span style="float:right; text-align:right; font-size:60%; color:gray; margin-right:30px;">'.$processor_chat_realname.', '.proper_date($res['Date']).'</span>';
             echo '<div style="clear:both;"></div>';
             echo '</div>';
         }
         
-        //echo '<div id="'.$the_id_processor.'" class="okno_chat_butt" onclick="okno_sentmessage(this.id)">WYŚLIJ WIADOMOŚĆ</div>';
         echo '<textarea style="width:90%; min-height:60px; margin:10px 5%; padding:5px; font-size:100%;" id="okno_chat_chatbox" class="okno_chat_style"/>';
         echo '<div id="'.$the_id_processor.'" class="okno_chat_butt" onclick="okno_sentmessage(this.id)">WYŚLIJ WIADOMOŚĆ</div>';
         echo "</div>";

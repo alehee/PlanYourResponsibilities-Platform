@@ -1,0 +1,2 @@
+ZMIANY POMIĘDZY WERSJĄ TESTOWĄ I NORMALNĄ:
+ - połączenia są zapisane w connection.php i func.php

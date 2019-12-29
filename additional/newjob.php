@@ -38,7 +38,7 @@ if(isset($_POST['new_title'])){
     $mail_whoadd = $res["Imie"]." ".$res["Nazwisko"];
 
     $from = "PYR@riverlakestudios.pl";
-    $subject = "Nowe zadanie na platformie PYR!";
+    $subject = "Nowe zadanie na platformie PlanDeca!";
 $message = "
 Zadanie od: ".$mail_whoadd."
 Długość zadania: ".$mail_length."
