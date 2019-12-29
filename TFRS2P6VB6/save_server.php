@@ -49,11 +49,13 @@ while($res = mysqli_fetch_array($que)){
 // -----
 // WYSYŁANIE MAILI INFORMUJĄCYH O ZBLIŻAJĄCYM SIĘ KOŃCU ZADAŃ
 
+$ilosc_zadan = 0;
 $sql = "SELECT ID, Email FROM users";
 $que = $conn -> query($sql);
 while($res = mysqli_fetch_array($que)){
+$ilosc_zadan = 0;
 $email_message = "
-Oto Twoja dzisiejsza przypominajka z platformy PYR:
+Oto Twoja dzisiejsza przypominajka z platformy:
 
 ";
 	
@@ -74,19 +76,28 @@ Oto Twoja dzisiejsza przypominajka z platformy PYR:
 $email_message=$email_message."
 $zadanie - $ile_dni dni do końca
 ";
+$ilosc_zadan++;
 		}
 		else{
 $email_message=$email_message."
 $zadanie - spóźnione!
 ";
+$ilosc_zadan++;
 		}
-	}
+    }
+    
+    if($ilosc_zadan<1){
+$email_message=$email_message."
+Dziś nie masz nic na głowie! ;)
+";
+    }
+
 $email_message=$email_message."
 
 Zaloguj się na riverlakestudios.pl/pyr i sprawdź szczegóły!
 Wygenerowano: ".date("Y-m-d G:i:s");
 	
-	mail($user_email, "PYR - przypominajka!", $email_message, "From: PYR@riverlakestudios.pl");
+	mail($user_email, "PlanDeca - przypominajka!", $email_message, "From: PYR@riverlakestudios.pl");
 }
 
 // -----
