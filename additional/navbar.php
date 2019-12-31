@@ -19,10 +19,6 @@ $navbar='
 	<div id="nav_link" onclick=\'nav_classic_link("project.php")\'><span>PANEL PROJEKTÓW</span></div>
 	<div id="nav_link_header">LINKI</div>
 	<div id="nav_link" onclick=\'nav_link("http:\/\/mail.oxylane.com")\'>GMAIL</div>
-	<div id="nav_link" onclick=\'nav_link("http:\/\/riverlakestudios.pl")\'>LINK 1</div>
-	<div id="nav_link" onclick=\'nav_link("http:\/\/wp.pl")\'>LINK 2</div>
-	<div id="nav_link" onclick=\'nav_link("http:\/\/lowcygier.pl")\'>LINK 3</div>
-	<div id="nav_link" onclick=\'nav_link("http:\/\/drive.google.com")\'>LINK 4</div>
 	<div id="nav_link_header">KONTO</div>
 	<div id="nav_link" onclick=\'nav_classic_link("logout.php")\'><span>WYLOGUJ</span></div>
 	<div id="nav_link" onclick=\'nav_classic_link("profile.php")\'><span>MÓJ PROFIL</span></div>';

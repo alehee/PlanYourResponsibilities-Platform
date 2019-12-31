@@ -40,17 +40,19 @@ if(isset($_POST['addperson_who']) && isset($_SESSION["the_job"])){
 
     $mail_whoadd = $res["Imie"]." ".$res["Nazwisko"];
 
-    $from = "PYR@riverlakestudios.pl";
-    $subject = "Nowe zadanie na platformie PlanDeca!";
+    $from = "PlanDeca@riverlakestudios.pl";
+    $subject = "[PLANDECA] Nowe zadanie!";
 $message = "
-Zadanie od: ".$mail_whoadd."
-Długość zadania: ".$mail_length."
+Od: ".$mail_whoadd."
+Długość: ".$mail_length."
 
-Tytuł: ".$addperson_title."
+Tytuł: 
+".$addperson_title."
 
-Informacje: ".$addperson_info."
+Informacje: 
+".$addperson_info."
 
-Zaloguj się na riverlakestudios.pl/pyr i sprawdź szczegóły!
+Zaloguj się na plandeca.pl i sprawdź szczegóły!
 Wygenerowano: ".date("Y-m-d G:i:s");
     $headers = "From: ".$from;
 	

@@ -3,6 +3,7 @@ session_start();
 
 require_once('additional/func.php');
 require_once('additional/navbar.php');
+require_once('additional/footer.php');
 
 if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
 {
@@ -24,6 +25,7 @@ if(!isset($_SESSION["sort"]))
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
     <body onload="time()">
+    <div class="content">
 
         <!-- Pasek z linkami --->
         <?php echo $navbar ?>
@@ -43,7 +45,7 @@ if(!isset($_SESSION["sort"]))
 
         <!-- Zadania -->
         <div id="div_aktualne">
-            <div><h2>Zadania ukończone</h2></div>
+            <div><h2>ZADANIA UKOŃCZONE</h2></div>
             <?php
                 $my_id=$_SESSION["id"];
 
@@ -160,6 +162,13 @@ if(!isset($_SESSION["sort"]))
                 mysqli_close($conn);
             ?>
         </div>
+
+    </div>
+
+        <?php
+            echo "<div style='clear:both;'></div>";
+            echo $footer;
+        ?>
 
         <!-- Div który zbiera śmieci przy jQuery -->
         <div id="thrash"></div>

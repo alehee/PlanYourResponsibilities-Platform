@@ -1,13 +1,13 @@
 <?php
 // TEN PLIK POWINIEN BYĆ WYKONYWANY RAZ DZIENNIE NA KOMPUTERZE, ABY ZAKTUALIZOWAĆ ZADANIA ORAZ WYCZYŚCIĆ TABELĘ
 
-$conn = @new mysqli("riverlakestudios.pl", "30908302_pyr", "rvrlkPYR_", "30908302_pyr");
+$conn = @new mysqli("riverlakestudios.pl", "30908302_pld", "rvrlkPLD_", "30908302_pld");
 
 $conn -> query("SET CHARSET utf8");
 $conn -> query("SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
 
 $already = 0;
-$today = date("Y-m-d");
+$today = date("d.m.Y");
 $sql = "SELECT Date FROM save_server WHERE Date='$today'";
 $que = $conn -> query($sql);
 while($res = mysqli_fetch_array($que)){
@@ -55,7 +55,7 @@ $que = $conn -> query($sql);
 while($res = mysqli_fetch_array($que)){
 $ilosc_zadan = 0;
 $email_message = "
-Oto Twoja dzisiejsza przypominajka z platformy:
+Oto Twoja dzisiejsza przypominajka:
 
 ";
 	
@@ -94,10 +94,10 @@ Dziś nie masz nic na głowie! ;)
 
 $email_message=$email_message."
 
-Zaloguj się na riverlakestudios.pl/pyr i sprawdź szczegóły!
+Zaloguj się na plandeca.pl i sprawdź szczegóły!
 Wygenerowano: ".date("Y-m-d G:i:s");
 	
-	mail($user_email, "PlanDeca - przypominajka!", $email_message, "From: PYR@riverlakestudios.pl");
+	mail($user_email, "[PLANDECA] Zadania $today", $email_message, "From: PlanDeca@riverlakestudios.pl");
 }
 
 // -----

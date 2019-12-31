@@ -47,6 +47,23 @@ p{
 
 
 
+.index_info{
+    min-height: 50px;
+    width: 70%;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #e6e6e6;
+    text-align: center;
+    font-size: 100%;
+    border-radius: 20px;
+}
+
+.index_info_text{
+    padding: 10px;
+    font-size: 110%;
+}
+
 .index_logpanel{
     border: solid 3px #f2f2f2;
     border-bottom: solid 3px #e6e6e6;
@@ -989,6 +1006,21 @@ h2{
     color: #0082C3;
     text-align: center;
     font-style: italic;
+}
+
+.content{
+    min-height: 800px;
+    width: 100%;
+}
+
+footer{
+    background-color: #0082C3;
+    height: 100px;
+    width: 100%;
+    margin-top: 80px;
+    color: white;
+    font-size: 60%;
+    padding: 15px;
 }
 
 
