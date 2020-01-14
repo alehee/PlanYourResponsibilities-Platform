@@ -1,0 +1,9 @@
+0.1.1 --- 14.01.2020
+
+Nowości:
+- niektóre opcje zadania teraz są schowane w przycisku "więcej opcji"
+- drobna poprawa stylu strony
+
+Naprawione błędy:
+- save_server już nie usuwa zadań, które jeszcze istnieją
+- zabezpieczenie przed dwoma takimi samymi zadaniami

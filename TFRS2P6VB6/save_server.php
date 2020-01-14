@@ -108,10 +108,17 @@ $que = $conn -> query($sql);
 while($res = mysqli_fetch_array($que)){
 	$done_date = $res["Date"];
 	$done_the_id = $res["The_ID"];
-	$done_forwho = $res["ForWho"];
+    $done_forwho = $res["ForWho"];
+    
+    $all_jobs_done = 1;
+    $temp_sql = "SELECT ID FROM job WHERE The_ID='$done_the_id'";
+    $temp_que = $conn -> query($temp_sql);
+    while($temp_res = mysqli_fetch_array($temp_que)){
+        $all_jobs_done = 0;
+    }
 	
 	$done_difference = checkdays($done_date);
-	if($done_difference<-7){
+	if($done_difference<-7 && $all_jobs_done==1){
 		$temp_sql = "DELETE FROM done WHERE The_ID='$done_the_id' AND ForWho='$done_forwho'";
 		$conn -> query($temp_sql);
 		$temp_sql = "DELETE FROM job_red WHERE The_ID='$done_the_id' AND ForWho='$done_forwho'";

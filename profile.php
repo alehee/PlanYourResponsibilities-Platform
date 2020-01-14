@@ -45,8 +45,7 @@ if(!isset($_SESSION["sort"]))
                 <div class="profile_img_button" onclick="open_form()"><b>ZMIEŃ ZDJĘCIE</b></div>
                 <form class="profile_img_form" id="img_form" action="additional/change_acc.php" method="POST" enctype="multipart/form-data">
                     <b style='color:red;'>PAMIĘTAJ ŻE ZDJĘCIE POWINNO BYĆ KWADRATOWE</b><br>
-                    <b>ZDJĘCIE (.png): </b><br>
-                    <input type="file" accept="image/png" name="photo"/><br>
+                    <input type="file" accept="image/*" name="photo"/><br>
                     <a href="https://imageresizer.com" target="_blank">LINK DO EDYTORA ZDJĘĆ</a><br>
                     <input type="submit" class="profile_img_button_send" value="PRZEŚLIJ"/>
                 </form>
@@ -55,6 +54,9 @@ if(!isset($_SESSION["sort"]))
                 <?php 
                     require_once("connection.php");
                     $conn = @new mysqli($host, $user_db, $password_db, $db_name);
+
+                    mysqli_query($conn, "SET CHARSET utf8");
+                    mysqli_query($conn, "SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
 
                     $login;
                     $password;

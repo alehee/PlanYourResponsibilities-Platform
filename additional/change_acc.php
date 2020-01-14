@@ -65,7 +65,8 @@ else if(isset($_GET["email"])){
 else if(isset($_FILES['photo'])){
     $plik_tmp = $_FILES['photo']['tmp_name'];
     if(is_uploaded_file($plik_tmp)){
-        move_uploaded_file($plik_tmp, "../photo/".$id.".png");
+        //move_uploaded_file($plik_tmp, "../photo/".$id.".png");
+        imagepng(imagecreatefromstring(file_get_contents($plik_tmp)), "../photo/".$id.".png");
     }
 
     unset($_FILES['photo']);

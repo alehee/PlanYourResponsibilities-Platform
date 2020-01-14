@@ -29,7 +29,7 @@
 
             <div style="font-size:100%; text-align:center;"><b>Dla kogo:</b></div>
         <div id="new_job_forwho" style="width:98%; min-height:50px; background-color:#e6e6e6; border-radius:20px; margin:1%; text-align:center; padding-top:10px; padding-bottom:10px;">';
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial FROM users ORDER BY Dzial ASC";
+        $sql = "SELECT ID, Imie, Nazwisko, Dzial FROM users ORDER BY Nazwisko ASC";
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
             echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" class="'.$res["Dzial"].'" name="new_forwho[]" value="'.$res["ID"].'"';
@@ -207,13 +207,6 @@
             // PANEL PRZYCISKÓW
             echo '<div id="div_panel">';
                 echo '<div id="'.$the_id_processor.'" class="okno_addperson" onclick="job_addperson(this.id)">DODAJ OSOBĘ</div>';
-                $temp_sql="SELECT ID FROM job WHERE The_ID=$the_id_processor AND WhoAdd=$user_id_processor LIMIT 1";
-                $temp_que = mysqli_query($conn, $temp_sql);
-                while($temp = mysqli_fetch_array($temp_que)){
-                    echo '<div id="'.$the_id_processor.'" class="okno_edit" onclick="job_edit(this.id)">EDYTUJ ZADANIE</div>';
-                    echo '<div id="'.$the_id_processor.'" class="okno_delperson" onclick="job_delperson(this.id)">USUŃ OSOBĘ</div>';
-                }
-
                 $processor_forme=0;
                 foreach($processor_forwho_array as $x){
                     if($x == $_SESSION['id'])
@@ -222,6 +215,18 @@
                 if($processor_forme==1){
                 echo '<div id="'.$the_id_processor.'" class="okno_done" onclick="job_done(this.id)">ZAKOŃCZ</div>';
                 }
+
+                $temp_sql="SELECT ID FROM job WHERE The_ID=$the_id_processor AND WhoAdd=$user_id_processor LIMIT 1";
+                $temp_que = mysqli_query($conn, $temp_sql);
+                while($temp = mysqli_fetch_array($temp_que)){
+                    echo '<div id="'.$the_id_processor.'" class="okno_edit" onclick="job_edit(this.id)">EDYTUJ ZADANIE</div>';
+                    echo '<div id="okno_more_options_button" onclick="$(\'#okno_more_options\').slideToggle(\'slow\');">WIĘCEJ OPCJI</div>';
+                    echo '<div id="okno_more_options">';
+                        echo '<div id="'.$the_id_processor.'" class="okno_delperson" onclick="job_delperson(this.id)">USUŃ OSOBĘ</div>';
+                        echo '<div id="'.$the_id_processor.'" class="okno_deljob" onclick="job_deljob(this.id)">USUŃ CAŁE ZADANIE</div>';
+                    echo '</div>';
+                }
+
             echo '</div>';
             echo '<div style="clear:both;"></div>';
             // -----
@@ -291,7 +296,7 @@
 		echo '<form action="additional/addperson.php" method="POST">';
         echo '<div style="width:98%; min-height:50px; background-color:#e6e6e6; border-radius:20px; margin:1%; text-align:center; font-weight:800; padding-top:10px; font-size:150%;">DODAJ NOWĄ OSOBĘ DO ZADANIA</div>';
         echo '<div id="new_job_forwho">';
-        $sql = "SELECT ID, Login, Imie, Nazwisko FROM users ORDER BY Dzial ASC";
+        $sql = "SELECT ID, Login, Imie, Nazwisko FROM users ORDER BY Nazwisko ASC";
         $que = mysqli_query($conn, $sql);
         $anyone=0;
         while($res = mysqli_fetch_array($que)){
@@ -353,7 +358,7 @@
 		echo '<form action="additional/delperson.php" method="POST">';
         echo '<div style="width:98%; min-height:50px; background-color:#e6e6e6; border-radius:20px; margin:1%; text-align:center; font-weight:800; padding-top:10px; font-size:150%;">USUŃ OSOBĘ Z ZADANIA</div>';
         echo '<div id="new_job_forwho">';
-        $sql = "SELECT ID, Login, Imie, Nazwisko FROM users  ORDER BY Dzial ASC";
+        $sql = "SELECT ID, Login, Imie, Nazwisko FROM users  ORDER BY Nazwisko ASC";
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
 			$is_out=1;

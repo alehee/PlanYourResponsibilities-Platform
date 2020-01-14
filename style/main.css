@@ -210,6 +210,7 @@ p{
     font-size: 60%;
     text-align: left;
     padding-bottom: 20px;
+    word-wrap: break-word;
 }
 
 .okno a{
@@ -274,7 +275,34 @@ p{
     margin-bottom: -2%;
 }
 
-.okno_addperson, .okno_edit, .okno_delperson, .okno_done{
+#okno_more_options_button{
+    clear: both;
+    width: 98%;
+    margin: 10px 1%;
+    background-color: gray;
+    border: 2px solid gray;
+    min-height: 30px;
+    color: white;
+    cursor: pointer;
+    border-radius: 20px;
+    padding: 5px;
+    padding-top: 8px;
+    margin: 5px 1%;
+    transition: 0.1s;
+    font-size: 80%;
+}
+
+#okno_more_options_button:hover{
+    background-color: white;
+    color: gray;
+    transition: 0.1s;
+}
+
+#okno_more_options{
+    display: none;
+}
+
+.okno_addperson, .okno_edit, .okno_delperson, .okno_done, .okno_deljob{
     float: left;
     min-height: 50px;
     color: white;
@@ -304,7 +332,12 @@ p{
     border: 2px solid #0082C3;
 }
 
-.okno_addperson:hover, .okno_edit:hover, .okno_delperson:hover, .okno_done:hover{
+.okno_deljob{
+    background-color: black;
+    border: 2px solid black;
+}
+
+.okno_addperson:hover, .okno_edit:hover, .okno_delperson:hover, .okno_done:hover, .okno_deljob:hover{
     border: 2px solid green;
     background-color: white;
     color: green;
@@ -324,6 +357,11 @@ p{
 .okno_done:hover{
     border: 2px solid #0082C3;
     color: #0082C3;
+}
+
+.okno_deljob:hover{
+    border: 2px solid black;
+    color: black;
 }
 
 .okno_addperson_butt, .okno_delperson_butt, .okno_edit_butt{
@@ -421,6 +459,7 @@ p{
     cursor: pointer;
     border-radius: 20px;
     border: solid 1px #0082C3;
+    word-wrap: break-word;
 }
 
 .job_red .job_topic{
@@ -637,10 +676,10 @@ p{
 }
 
 #nav_profile{
-    padding-top: 10px;
+    padding-top: 15px;
     min-height: 200px;
     width: 100%;
-    font-size: 150%;
+    font-size: 100%;
     font-weight: 800;
     background-color: #f2f2f2;
     color: #ec6607;
@@ -1072,7 +1111,7 @@ footer{
         top: 10%;
     }
 
-    .okno_addperson, .okno_edit, .okno_delperson, .okno_done{
+    .okno_addperson, .okno_edit, .okno_delperson, .okno_done, .okno_deljob{
         width:23%;
     }
 
@@ -1102,7 +1141,7 @@ footer{
         top: 10%;
     }
 
-    .okno_addperson, .okno_edit, .okno_delperson, .okno_done{
+    .okno_addperson, .okno_edit, .okno_delperson, .okno_done, .okno_deljob{
         width:23%;
     }
 
@@ -1145,7 +1184,7 @@ footer{
         margin-bottom: 0;
     }
 
-    .okno_addperson, .okno_edit, .okno_delperson, .okno_done{
+    .okno_addperson, .okno_edit, .okno_delperson, .okno_done, .okno_deljob{
         width:48%;
     }
 
@@ -1209,7 +1248,7 @@ footer{
         margin-bottom: 0;
     }
 
-    .okno_addperson, .okno_edit, .okno_delperson, .okno_done{
+    .okno_addperson, .okno_edit, .okno_delperson, .okno_done, .okno_deljob{
         width:48%;
     }
 
@@ -1273,7 +1312,7 @@ footer{
         margin-bottom: 0;
     }
 
-    .okno_addperson, .okno_edit, .okno_delperson, .okno_done{
+    .okno_addperson, .okno_edit, .okno_delperson, .okno_done, .okno_deljob{
         width:48%;
     }
 

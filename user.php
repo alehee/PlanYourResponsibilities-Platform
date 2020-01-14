@@ -16,7 +16,7 @@ if(!isset($_SESSION["sort"]))
     $_SESSION["sort"]='Deadline';
     
 if(isset($_SESSION["error"])){
-    echo '<script>confirm("'.$_SESSION["error"].'")</script>';
+    echo '<script>alert("'.$_SESSION["error"].'")</script>';
     unset($_SESSION["error"]);
 }
 
@@ -132,15 +132,16 @@ $conn -> close();
                             {
                                 if($i>80 && $topic[$i]==" ")
                                 {
-                                    echo "...</b>";
+                                    $bufor=$bufor."...</b>";
                                     $i=99;
                                 }
                                 else 
-                                    echo $topic[$i];
+                                    $bufor=$bufor.$topic[$i];
                             }
                         }
                         else
                             $bufor=$topic;
+
                         echo "<b>".$bufor."</b><br><br>";
                         // -----
 
@@ -372,21 +373,23 @@ $conn -> close();
                     // INFORMACJE DODATKOWE W ZADANIU
                     $job_info = $res["Info"];
                     $bufor = "";
+
                     if(strlen($job_info)>100)
                     {
                             for($i=0; $i<100; $i++)
                             {
                                 if($i>80 && $job_info[$i]==" ")
                                 {
-                                    echo "...";
+                                    $bufor=$bufor."...";
                                     $i=99;
                                 }
                                 else 
-                                    echo $job_info[$i];
+                                    $bufor=$bufor.$job_info[$i];
                             }
                     }
                     else
                         $bufor=$job_info;
+
                     echo "<div class='job_info'>".$bufor."</div>";
                     echo "<div style='clear:both;'></div>";
                     // -----
@@ -569,11 +572,22 @@ $conn -> close();
             });
 		}
 
-        //Funkcja dodaje osoby do zadania
+        //Funkcja usuwa osoby z zadania
 		function job_delperson(delperson_id){
 			$.get("additional/processor.php", {delperson_id: delperson_id}, function(data){
                     $('#okno_job').html(data);
             });
+		}
+
+        //Funkcja usuwa całe zadanie
+		function job_deljob(deljob_id){
+            var can_delete = confirm("Czy na pewno chcesz trwale usunąć te zadanie (nie trafi ono do wykonanych zadań)?");
+            
+            if(can_delete==true){
+                $.get("additional/deljob.php", {deljob_id: deljob_id}, function(data){
+                        $('#thrash').html(data);
+                });
+            }
 		}
 		
 		//Funkcja wysyła wiadomość na chat

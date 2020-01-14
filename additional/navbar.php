@@ -19,6 +19,8 @@ $navbar='
 	<div id="nav_link" onclick=\'nav_classic_link("project.php")\'><span>PANEL PROJEKTÓW</span></div>
 	<div id="nav_link_header">LINKI</div>
 	<div id="nav_link" onclick=\'nav_link("http:\/\/mail.oxylane.com")\'>GMAIL</div>
+	<div id="nav_link" onclick=\'nav_link("https:\/\/sites.google.com\/decathlon.com\/menadzer-car-gliwice\/")\'>TECZKA MENADŻERA</div>
+	<div id="nav_link" onclick=\'nav_link("https:\/\/sites.google.com\/decathlon.com\/cargliwice\/strona-g%C5%82%C3%B3wna?authuser=0")\'>CAR GLIWICE</div>
 	<div id="nav_link_header">KONTO</div>
 	<div id="nav_link" onclick=\'nav_classic_link("logout.php")\'><span>WYLOGUJ</span></div>
 	<div id="nav_link" onclick=\'nav_classic_link("profile.php")\'><span>MÓJ PROFIL</span></div>';

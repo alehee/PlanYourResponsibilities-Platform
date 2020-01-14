@@ -24,6 +24,14 @@ if(isset($_POST['new_title'])){
     $new_length = $_POST['new_length'];
     $mail_length = "";
 
+    // SPRAWDŹ CZY TAKIE ZADANIE JUŻ NIE ISTNIEJE
+    $already_exist = 0;
+    $sql = "SELECT ID FROM job WHERE Topic='$new_title'";
+    $que = mysqli_query($conn, $sql);
+    while($res = mysqli_fetch_array($que)){
+        $already_exist = 1;
+    }
+
     if($new_length == 3)
         $mail_length = "Krótkie";
     else if($new_length == 2)
@@ -53,20 +61,30 @@ Zaloguj się na plandeca.pl i sprawdź szczegóły!
 Wygenerowano: ".date("Y-m-d G:i:s");
     $headers = "From: ".$from;
 
-    foreach($new_forwho_list as $forwho_id){
-        $sql = "INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Length, Start, End) VALUES (NULL, '$the_id', '$new_title', '$new_info', '$new_whoadd', '$forwho_id', '$new_length', CURRENT_TIMESTAMP, '$new_deadline')";
+    // JEŻELI ISTNIEJE JUŻ TAKIE ZADANIE TO OMIJA
+    if($already_exist == 0){
+        foreach($new_forwho_list as $forwho_id){
+            $sql = "INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Length, Start, End) VALUES (NULL, '$the_id', '$new_title', '$new_info', '$new_whoadd', '$forwho_id', '$new_length', CURRENT_TIMESTAMP, '$new_deadline')";
 
-        mysqli_query($conn, $sql);
+            mysqli_query($conn, $sql);
 
-        $sql = "SELECT Email FROM users WHERE ID='$forwho_id' LIMIT 1";
-        $que = mysqli_query($conn, $sql);
+            $sql = "SELECT Email FROM users WHERE ID='$forwho_id' LIMIT 1";
+            $que = mysqli_query($conn, $sql);
 
-        while($res = mysqli_fetch_array($que)){
-            $to = $res["Email"];
+            while($res = mysqli_fetch_array($que)){
+                $to = $res["Email"];
 
-        mail($to, $subject, $message, $headers);
+            mail($to, $subject, $message, $headers);
+            }
         }
     }
+
+    else{
+        $_SESSION["error"] = "Takie zadanie już istnieje... Zmień temat lub dodaj osoby do już istniejącego zadania!";
+        unset($_POST["new_title"]);
+        header("location:../user.php");
+    }
+
     unset($_POST["new_title"]);
     header("location:../user.php");
 }
