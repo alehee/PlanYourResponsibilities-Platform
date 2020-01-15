@@ -53,15 +53,20 @@ else if(isset($_POST["log_login"]) && isset($_POST["log_password"]) && isset($_P
         </header>
 
         <div class="index_info">
-            <h1 style="color:#0082C3; padding-top:10px;">Witaj na platformie!</h1>
-            <h5 style="color:#0082C3; padding-bottom:10px;">Aktualna wersja: 0.1</h5>
+            <h1 style="color:#0082C3; padding-top:10px;">Nowości na platformie!</h1>
+            <h5 style="color:#0082C3; padding-bottom:10px;">Aktualna wersja: 0.1.1</h5>
             <div class="index_info_text">
-                Jest mi bardzo miło powitać Cię na platformie!<br>
-                Tutaj będą się pojawiały wszystkie informacje o nowościach platformy.<br><br>
-
+                Dzięki wielkie za każdy feedback! Cieszę się, że działacie z platformą!<br>
+                W oparciu o wasze opinie dodałem kilka nowych elementów:<br><br>
+            <span style="font-size:90%; color:green;">
+                - niektóre opcje zadania teraz są schowane w przycisku "więcej opcji"<br>
+                - przypomnienie o zadaniach przychodzi teraz tylko gdy jest jakieś do wykonania<br>
+                - osoby, które zakończyły zadanie są wypisane w oknie zadania na zielono<br>
+                - drobna poprawa stylu strony<br>
+                - naprawa mniejszych i większych błędów<br><br>
+            </span>
                 <span style="color:gray;">
-                Pamiętaj, że platforma jest nadal rozwijana i może zawierać błędy!<br>
-                Daj znać o każdym problemie w sekcji "Zgłoś Usterkę", a ja naprawię to jak najszybciej! ;)<br>
+                Platforma jest nadal rozwijana, daj znać o każdym problemie w sekcji "Zgłoś Usterkę"!<br>
                 </span>
             </div>
             <h2 style="color:#0082C3; padding:10px; font-style: normal;">Miłego użytkowania!</h2>

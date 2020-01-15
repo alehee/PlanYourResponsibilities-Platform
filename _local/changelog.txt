@@ -1,9 +1,21 @@
-0.1.1 --- 14.01.2020
+0.2.0 --- 
+
+Nowości:
+- pinezka na zadaniu, które jest nowe, lub ma nową zawartość
+
+Naprawione błędy:
+- źle usuwane osoby przez delperson.php
+
+0.1.1 --- 15.01.2020
 
 Nowości:
 - niektóre opcje zadania teraz są schowane w przycisku "więcej opcji"
+- przypomnienie o zadaniach przychodzi teraz tylko gdy jest jakieś do wykonania
+- osoby, które zakończyły zadanie są wypisane w oknie zadania na zielono
 - drobna poprawa stylu strony
 
 Naprawione błędy:
 - save_server już nie usuwa zadań, które jeszcze istnieją
+- save_server czyści także wiadomości z chatu
 - zabezpieczenie przed dwoma takimi samymi zadaniami
+- dodanie job_index do bazy danych która zlicza ilość zadań

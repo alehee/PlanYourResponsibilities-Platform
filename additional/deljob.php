@@ -18,12 +18,15 @@ if(isset($_GET['deljob_id'])){
 	$sql = "DELETE FROM done WHERE The_ID='$deljob'";
 	$conn -> query($sql);
 
+	$sql = "DELETE FROM chat WHERE The_ID='$deljob'";
+	$conn -> query($sql);
+
 	$conn -> close();
     unset($_GET["deljob_id"]);
-    header("location:../user.php");
+    echo '<script>window.location.reload()</script>';
 }
 
 else
-    header("location:../user.php");
+	echo '<script>window.location.reload()</script>';
 
 ?>

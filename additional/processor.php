@@ -62,15 +62,27 @@
 
         $the_id_processor = $_GET['elem'];
         $user_id_processor = $_SESSION['id'];
+        $whoadd_processor;
 
         mysqli_query($conn, "SET CHARSET utf8");
         mysqli_query($conn, "SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
 
+        // WYŚLIJ INFORMACJE ŻE ODWIEDZIŁ ZADANIE
+        $sql = "UPDATE job SET Visited=CURRENT_TIMESTAMP WHERE The_ID=$the_id_processor AND ForWho=$user_id_processor";
+        mysqli_query($conn, $sql);
+
         $sql = "SELECT * FROM job WHERE The_ID=$the_id_processor LIMIT 1";
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
+
+            // WYSYŁA INFORMACJE ŻE TWÓRCA ZADANIA ODWIEDZIŁ JE
+            if($user_id_processor == $res["WhoAdd"]){
+                $temp_sql = "UPDATE job SET Visited_Admin=CURRENT_TIMESTAMP WHERE The_ID=$the_id_processor";
+                mysqli_query($conn, $temp_sql);
+            }
         
             $processor_forwho_array = array();
+            $whoadd_processor = $res["WhoAdd"];
 
             // ZMIENIA STYL OKNA
             $days_left = how_many_days_left($res["End"]);
@@ -131,6 +143,11 @@
             $the_id = $res["The_ID"];
             $how_many_per=0;
             $temp_sql="SELECT ForWho FROM job WHERE The_ID=$the_id";
+            $temp_que=mysqli_query($conn, $temp_sql);
+            while($temp_res = mysqli_fetch_array($temp_que)){
+                $how_many_per++;
+            }
+            $temp_sql="SELECT ForWho FROM done WHERE The_ID=$the_id";
             $temp_que=mysqli_query($conn, $temp_sql);
             while($temp_res = mysqli_fetch_array($temp_que)){
                 $how_many_per++;
@@ -200,6 +217,12 @@
                 echo "<li>".name_by_id($other_forwho)."</li>";
 				array_push($processor_forwho_array, $other_forwho);
             }
+            $temp_sql = "SELECT ForWho FROM done WHERE The_ID='$the_id_processor'";
+            $temp_que = mysqli_query($conn, $temp_sql);
+            while($temp = mysqli_fetch_array($temp_que)){
+                $other_forwho = $temp["ForWho"];
+                echo "<li class='done_job_li'>".name_by_id($other_forwho)."</li>";
+            }
             echo "</ul>";
             echo "<div style='clear:both;'/></div>";
             // -----
@@ -234,10 +257,20 @@
 		
         // CHAT
         echo "<div style='padding-top:30px;'>";
+
 		$sql="SELECT * FROM chat WHERE The_ID=$the_id_processor ORDER BY Date ASC";
 		$que = mysqli_query($conn, $sql);
 		while($res = mysqli_fetch_array($que)){
-            echo '<div id="okno_chat_message"><br>';
+            echo '<div id="okno_chat_message"';
+
+            // ZMIENIA KOLOR OKIENKA CHATU W ZALEŻNOŚCI OD TEGO ILE DNI DO KOŃCA
+            if($days_left<=0)
+                echo ' style="border:2px solid red"><br>';
+            else if($days_left<3)
+                echo ' style="border:2px solid #ffbf00"><br>';
+            else
+                echo '><br>';
+
             if($res["SentFrom"]==$_SESSION["id"]){
                 echo '<input type="button" value="x" id="'.$res["ID"].'" class="okno_chat_delmsg" onclick="job_chatmsqdelete(this.id)" title="Usuń wiadomość"/>';
                 echo '<div style="clear:both;"></div>';
@@ -440,7 +473,7 @@
 
         unset($_GET['edit_id']);
     }
-	
-	mysqli_close($conn);
+
+    mysqli_close($conn);
 ?>
 

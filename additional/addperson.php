@@ -56,8 +56,11 @@ Zaloguj się na plandeca.pl i sprawdź szczegóły!
 Wygenerowano: ".date("Y-m-d G:i:s");
     $headers = "From: ".$from;
 	
-	$sql = "INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Length, Start, End) VALUES (NULL, '$addperson_the_job', '$addperson_title', '$addperson_info', '$addperson_whoadd', '$addperson_forwho', '$addperson_length', CURRENT_TIMESTAMP, '$addperson_deadline')";
+	$sql = "INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Length, Start, Visited, Visited_Admin, End) VALUES (NULL, '$addperson_the_job', '$addperson_title', '$addperson_info', '$addperson_whoadd', '$addperson_forwho', '$addperson_length', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '$addperson_deadline')";
 	$conn -> query($sql);
+
+	$sql = "DELETE FROM done WHERE ForWho='$addperson_forwho' AND The_ID='$addperson_the_job'";
+	mysqli_query($conn, $sql);
 
 	$sql = "SELECT Email FROM users WHERE ID='$addperson_forwho' LIMIT 1";
     $que = mysqli_query($conn, $sql);

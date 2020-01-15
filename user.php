@@ -99,18 +99,41 @@ $conn -> close();
                         $days_left = how_many_days_left($res["End"]);
                         $div_job_top="";
 
+                        // NIEODCZYTANE WIADOMOŚCI I CZY JEST NOWE
+                        $the_id_chat_msg = $res["The_ID"];
+                        if($id != $res["WhoAdd"])
+                            $chat_msg_visited = $res["Visited"];
+                        else
+                            $chat_msg_visited = $res["Visited_Admin"];
+                        $unread_msg_exist = 0;
+                        $temp_sql="SELECT ID FROM chat WHERE The_ID='$the_id_chat_msg' AND SentFrom!=$id AND Date > '$chat_msg_visited' ORDER BY Date DESC";
+                        $temp_que = mysqli_query($conn, $temp_sql);
+                        while($temp_res = mysqli_fetch_array($temp_que))
+                            $unread_msg_exist = 1;
+
+                        $temp_sql = "SELECT ID FROM job WHERE The_ID='$the_id_chat_msg' AND WhoAdd!=$id AND Start >= '$chat_msg_visited'";
+                        $temp_que = mysqli_query($conn, $temp_sql);
+                        while($temp_res = mysqli_fetch_array($temp_que))
+                            $unread_msg_exist = 1;
+
                         if($days_left<=0){
                             $div_job_top='<div class="job_red job" id="'.$res["The_ID"].'">';
+                            if($unread_msg_exist == 1)
+                                $div_job_top=$div_job_top."<img class='job_unread_msg' src='icons/pin-red.png'/>";
                             $div_job_topic_top = '<div class="job_topic_justbg"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
                             $div_job_topic_bottom = '</div></div><input type="button" class="job_button" id="'.$res["The_ID"].'" value="Zakończ" onclick="job_done(this.id)" onmouseover="job_topic_radius(this.id)" onmouseout="job_topic_radius_fix(this.id)"/>';
                         }
                         else if($days_left<3){
                             $div_job_top='<div class="job_yellow job" id="'.$res["The_ID"].'">';
+                            if($unread_msg_exist == 1)
+                                $div_job_top=$div_job_top."<img class='job_unread_msg' src='icons/pin-red.png'/>";
                             $div_job_topic_top = '<div class="job_topic_justbg"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
                             $div_job_topic_bottom = '</div></div><input type="button" class="job_button" id="'.$res["The_ID"].'" value="Zakończ" onclick="job_done(this.id)" onmouseover="job_topic_radius(this.id)" onmouseout="job_topic_radius_fix(this.id)"/>';
                         }
                         else{
                             $div_job_top='<div class="job" id="'.$res["The_ID"].'">';
+                            if($unread_msg_exist == 1)
+                                $div_job_top=$div_job_top."<img class='job_unread_msg' src='icons/pin-red.png'/>";
                             $div_job_topic_top = '<div class="job_topic_justbg"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
                             $div_job_topic_bottom = '</div><input type="button" class="job_button" id="'.$res["The_ID"].'" value="Zakończ" onclick="job_done(this.id)"/></div>';
                         }
@@ -156,6 +179,11 @@ $conn -> close();
                         $the_id = $res["The_ID"];
                         $how_many_per=0;
                         $temp_sql="SELECT ForWho FROM job WHERE The_ID=$the_id";
+                        $temp_que=mysqli_query($conn, $temp_sql);
+                        while($temp_res = mysqli_fetch_array($temp_que)){
+                            $how_many_per++;
+                        }
+                        $temp_sql="SELECT ForWho FROM done WHERE The_ID=$the_id";
                         $temp_que=mysqli_query($conn, $temp_sql);
                         while($temp_res = mysqli_fetch_array($temp_que)){
                             $how_many_per++;
@@ -295,18 +323,41 @@ $conn -> close();
                     $days_left = how_many_days_left($res["End"]);
                     $div_job_top="";
 
+                    // NIEODCZYTANE WIADOMOŚCI I CZY JEST NOWE
+                    $the_id_chat_msg = $res["The_ID"];
+                    if($id != $res["WhoAdd"])
+                        $chat_msg_visited = $res["Visited"];
+                    else
+                        $chat_msg_visited = $res["Visited_Admin"];
+                    $unread_msg_exist = 0;
+                    $temp_sql="SELECT ID FROM chat WHERE The_ID='$the_id_chat_msg' AND SentFrom!=$id AND Date > '$chat_msg_visited' ORDER BY Date DESC";
+                    $temp_que = mysqli_query($conn, $temp_sql);
+                    while($temp_res = mysqli_fetch_array($temp_que))
+                        $unread_msg_exist = 1;
+
+                    $temp_sql = "SELECT ID FROM job WHERE The_ID='$the_id_chat_msg' AND WhoAdd!=$id AND Start >= '$chat_msg_visited'";
+                    $temp_que = mysqli_query($conn, $temp_sql);
+                    while($temp_res = mysqli_fetch_array($temp_que))
+                        $unread_msg_exist = 1;
+
                     if($days_left<=0){
                         $div_job_top='<div class="job_red job" id="'.$res["The_ID"].'">';
+                        if($unread_msg_exist == 1)
+                                $div_job_top=$div_job_top."<img class='job_unread_msg' src='icons/pin-red.png'/>";
                         $div_job_topic_top = '<div class="job_topic_justbg"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
                         $div_job_topic_bottom = '</div></div>';
                     }
                     else if($days_left<3){
                         $div_job_top='<div class="job_yellow job" id="'.$res["The_ID"].'">';
+                        if($unread_msg_exist == 1)
+                                $div_job_top=$div_job_top."<img class='job_unread_msg' src='icons/pin-red.png'/>";
                         $div_job_topic_top = '<div class="job_topic_justbg"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
                         $div_job_topic_bottom = '</div></div>';
                     }
                     else{
                         $div_job_top='<div class="job" id="'.$res["The_ID"].'">';
+                        if($unread_msg_exist == 1)
+                                $div_job_top=$div_job_top."<img class='job_unread_msg' src='icons/pin-red.png'/>";
                         $div_job_topic_top = '<div class="job_topic_justbg"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
                         $div_job_topic_bottom = '</div></div>';
                     }
@@ -351,6 +402,11 @@ $conn -> close();
                     $the_id = $res["The_ID"];
                     $how_many_per=0;
                     $temp_sql="SELECT ForWho FROM job WHERE The_ID=$the_id";
+                    $temp_que=mysqli_query($conn, $temp_sql);
+                    while($temp_res = mysqli_fetch_array($temp_que)){
+                        $how_many_per++;
+                    }
+                    $temp_sql="SELECT ForWho FROM done WHERE The_ID=$the_id";
                     $temp_que=mysqli_query($conn, $temp_sql);
                     while($temp_res = mysqli_fetch_array($temp_que)){
                         $how_many_per++;

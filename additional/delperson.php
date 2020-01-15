@@ -13,7 +13,8 @@ if(isset($_POST['delperson_who']) && isset($_SESSION["the_job"])){
 	// WRZUCENIE ZADANIA DO WYKONANYCH
 	$topic;
     $info;
-    $whoadd;
+	$whoadd;
+	$length;
     $end;
 	$sql="SELECT * FROM job WHERE The_ID=$delperson_the_job AND ForWho=$delperson_who";
 	$que = $conn-> query($sql);
@@ -21,11 +22,9 @@ if(isset($_POST['delperson_who']) && isset($_SESSION["the_job"])){
 		$topic = $res["Topic"];
 		$info = $res["Info"];
 		$whoadd = $res["WhoAdd"];
+		$length = $res["Length"];
 		$end = $res["End"];
 	}
-		
-	$sql = "INSERT INTO done(ID, The_ID, Topic, Info, WhoAdd, ForWho, End, Date) VALUES (NULL, '$delperson_the_job', '$topic', '$info', '$whoadd', '$delperson_who', '$end', CURRENT_TIMESTAMP)";
-	$conn -> query($sql);
 	
 	$sql = "DELETE FROM job WHERE The_ID='$delperson_the_job' AND ForWho='$delperson_who'";
 	$conn -> query($sql);

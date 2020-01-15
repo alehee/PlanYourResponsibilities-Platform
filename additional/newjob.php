@@ -4,7 +4,6 @@ session_start();
 if(isset($_POST['new_title'])){
 
     $new_forwho_list = $_POST['new_forwho'];
-    $the_id = 1;
 
     require_once("../connection.php");
     $conn = mysqli_connect($host, $user_db, $password_db, $db_name);
@@ -12,10 +11,14 @@ if(isset($_POST['new_title'])){
     mysqli_query($conn, "SET CHARSET utf8");
     mysqli_query($conn, "SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
 
-    $sql = "SELECT The_ID FROM job ORDER BY The_ID DESC";
+    // POBIERA OSTATNI NUMER ZADANIA JEDNOSTKI I WSTAWIA KOLEJNY NUMER DO BAZY
+    $new_jednostka = $_SESSION["city"];
+    $sql = "SELECT The_ID FROM job_index WHERE Jednostka='$new_jednostka'";
     $que = mysqli_query($conn, $sql);
     $res = mysqli_fetch_array($que);
-    $the_id = $the_id + $res['The_ID'];
+    $the_id = 1 + $res['The_ID'];
+    $sql = "UPDATE job_index SET The_ID=$the_id WHERE Jednostka='$new_jednostka'";
+    mysqli_query($conn, $sql);
 
     $new_title = $_POST['new_title'];
     $new_info = $_POST['new_info'];
@@ -64,7 +67,7 @@ Wygenerowano: ".date("Y-m-d G:i:s");
     // JEŻELI ISTNIEJE JUŻ TAKIE ZADANIE TO OMIJA
     if($already_exist == 0){
         foreach($new_forwho_list as $forwho_id){
-            $sql = "INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Length, Start, End) VALUES (NULL, '$the_id', '$new_title', '$new_info', '$new_whoadd', '$forwho_id', '$new_length', CURRENT_TIMESTAMP, '$new_deadline')";
+            $sql = "INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Length, Start, Visited, Visited_Admin, End) VALUES (NULL, '$the_id', '$new_title', '$new_info', '$new_whoadd', '$forwho_id', '$new_length', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '$new_deadline')";
 
             mysqli_query($conn, $sql);
 

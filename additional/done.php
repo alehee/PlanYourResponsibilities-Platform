@@ -27,7 +27,7 @@
 			$end = $res["End"];
 		}
 		
-		$sql = "INSERT INTO done(ID, The_ID, Topic, Info, WhoAdd, ForWho, Length, End, Date) VALUES (NULL, '$done_job_id', '$topic', '$info', '$whoadd', '$done_user_id', '$length', '$end', CURRENT_TIMESTAMP)";
+		$sql = "INSERT INTO done(ID, The_ID, Topic, Info, WhoAdd, ForWho, Length, Visited, Visited_Admin, End, Date) VALUES (NULL, '$done_job_id', '$topic', '$info', '$whoadd', '$done_user_id', '$length', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '$end', CURRENT_TIMESTAMP)";
 		$conn -> query($sql);
 		
 		$sql = "DELETE FROM job WHERE The_ID=$done_job_id AND ForWho=$done_user_id";

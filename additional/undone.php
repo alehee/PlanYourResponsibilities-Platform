@@ -37,7 +37,7 @@
                 $end = $res["End"];
             }
 
-            $sql="INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Length, Start, End) VALUES (NULL, '$undone_job_id', '$topic', '$info', '$whoadd', '$undone_user_id', '$length', CURRENT_TIMESTAMP, '$end')";
+            $sql="INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Length, Start, Visited, Visited_Admin, End) VALUES (NULL, '$undone_job_id', '$topic', '$info', '$whoadd', '$undone_user_id', '$length', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '$end')";
             $conn -> query($sql);
         }
 

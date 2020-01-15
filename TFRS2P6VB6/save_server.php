@@ -63,11 +63,19 @@ Oto Twoja dzisiejsza przypominajka:
 	$user_email = $res["Email"];
 	$user_jobs = array();
 	$temp_sql = "SELECT * FROM job WHERE ForWho='$user_id' ORDER BY End DESC";
-	$temp_que = $conn -> query($temp_sql);
+    $temp_que = $conn -> query($temp_sql);
+    // W ZALEŻNOŚCI OD DŁUGOŚCI ZADANIA SĄ INNE WARUNKI CZY WYŚLE SIĘ ZADANIE
 	while($temp_res = mysqli_fetch_array($temp_que)){
 		$user_topic = $temp_res["Topic"];
-		$days_left = checkdays($temp_res["End"]);
-		if($days_left < 3){
+        $days_left = checkdays($temp_res["End"]);
+        $job_length = $temp_res["Length"];
+		if($days_left < 3 && $job_length == 3){
+			$user_jobs[$user_topic] = $days_left;
+        }
+        else if($days_left < 4 && $job_length == 2){
+			$user_jobs[$user_topic] = $days_left;
+        }
+        else if($days_left < 6 && $job_length == 1){
 			$user_jobs[$user_topic] = $days_left;
 		}
 	}
@@ -86,10 +94,9 @@ $ilosc_zadan++;
 		}
     }
     
+    // JEŻELI NIE MA ZADAŃ DO WYKONANIA TO NIE WYSYŁAJ MAILA
     if($ilosc_zadan<1){
-$email_message=$email_message."
-Dziś nie masz nic na głowie! ;)
-";
+        $user_email = "none";
     }
 
 $email_message=$email_message."
@@ -103,12 +110,11 @@ Wygenerowano: ".date("Y-m-d G:i:s");
 // -----
 // CZYSZCZENIE TABEL
 
-$sql = "SELECT The_ID, Date, ForWho FROM done";
+$sql = "SELECT The_ID, Date FROM done";
 $que = $conn -> query($sql);
 while($res = mysqli_fetch_array($que)){
 	$done_date = $res["Date"];
 	$done_the_id = $res["The_ID"];
-    $done_forwho = $res["ForWho"];
     
     $all_jobs_done = 1;
     $temp_sql = "SELECT ID FROM job WHERE The_ID='$done_the_id'";
@@ -117,11 +123,14 @@ while($res = mysqli_fetch_array($que)){
         $all_jobs_done = 0;
     }
 	
-	$done_difference = checkdays($done_date);
+    $done_difference = checkdays($done_date);
+    
 	if($done_difference<-7 && $all_jobs_done==1){
-		$temp_sql = "DELETE FROM done WHERE The_ID='$done_the_id' AND ForWho='$done_forwho'";
+		$temp_sql = "DELETE FROM done WHERE The_ID='$done_the_id'";
 		$conn -> query($temp_sql);
-		$temp_sql = "DELETE FROM job_red WHERE The_ID='$done_the_id' AND ForWho='$done_forwho'";
+		$temp_sql = "DELETE FROM job_red WHERE The_ID='$done_the_id'";
+        $conn -> query($temp_sql);
+        $temp_sql = "DELETE FROM chat WHERE The_ID='$done_the_id'";
 		$conn -> query($temp_sql);
 	}
 }

@@ -61,7 +61,7 @@ p{
 
 .index_info_text{
     padding: 10px;
-    font-size: 110%;
+    font-size: 90%;
 }
 
 .index_logpanel{
@@ -201,6 +201,16 @@ p{
     color: red;
 }
 
+.okno_chat_unread_msg{
+    float: left;
+    width: 25px;
+    height: 25px;
+    margin-bottom: -25px;
+    margin-top: -30px;
+    margin-right: 10px;
+    font-size: 90%;
+}
+
 .okno{
     background-color: #f2f2f2;
     width: 100%;
@@ -231,6 +241,19 @@ p{
 .okno ul li::before{
     content: "\2022";
     color: #0082C3;
+    font-weight: bold;
+    display: inline-block; 
+    width: 1em;
+    margin-left: -1em;
+}
+
+.okno .done_job_li{
+    color: #00ff00;
+}
+
+.okno .done_job_li::before{
+    content: "\2022";
+    color: #00ff00;
     font-weight: bold;
     display: inline-block; 
     width: 1em;
@@ -557,6 +580,16 @@ p{
     font-weight: 800;
     padding-top: 5%;
     padding-bottom: 13%;
+}
+
+.job_unread_msg{
+    float: right;
+    width: 25px;
+    height: 25px;
+    margin-bottom: -25px;
+    margin-top: -30px;
+    margin-right: 10px;
+    font-size: 90%;
 }
 
 
