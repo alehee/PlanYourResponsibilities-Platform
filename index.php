@@ -42,7 +42,7 @@ else if(isset($_POST["log_login"]) && isset($_POST["log_password"]) && isset($_P
     <head>
         <meta charset="utf-8"/>
         <title>Zaloguj</title>
-        <link rel="stylesheet" href="style/main.css"/>
+        <link rel="stylesheet" href="style/main.css?version=0.1.1"/>
     </head>
     <body>
 

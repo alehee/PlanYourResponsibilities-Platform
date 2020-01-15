@@ -19,7 +19,7 @@ session_destroy();
     <head>
         <meta charset="utf-8"/>
         <title>Wylogowano</title>
-        <link rel="stylesheet" href="style/main.css"/>
+        <link rel="stylesheet" href="style/main.css?version=0.1.1"/>
     </head>
     <body>
         <header>

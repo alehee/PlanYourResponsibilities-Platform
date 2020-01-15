@@ -14,5 +14,6 @@ if(isset($_GET["msg_id"])){
 }
 
 $conn -> close();
-header("location:../user.php");
+echo "<script>window.location.reload()</script>";
+//header("location:../user.php");
 ?>

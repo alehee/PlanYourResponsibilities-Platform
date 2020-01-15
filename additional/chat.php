@@ -38,12 +38,15 @@ if(isset($_GET['message'])){
 
     unset($_GET['message']);
 	$conn ->close();
-    header("location:../user.php");
+
+	echo "<script>window.location.reload()</script>";
+    //header("location:../user.php");
 }
 
 else{
 	$conn ->close();
-    header("location:../user.php");
+	echo "<script>window.location.reload()</script>";
+    //header("location:../user.php");
 }
 
 ?>
