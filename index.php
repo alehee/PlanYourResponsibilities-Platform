@@ -17,7 +17,7 @@ else if(isset($_POST["log_login"]) && isset($_POST["log_password"]) && isset($_P
 
     require_once "connection.php";
     $conn = mysqli_connect($host, $user_db, $password_db, $db_name);
-    $sql = "SELECT ID, Login FROM users WHERE Login='$login' AND Password='$pass'";
+    $sql = "SELECT ID, Login, Rola FROM users WHERE Login='$login' AND Password='$pass'";
     $que = mysqli_query($conn, $sql);
     $res = mysqli_fetch_array($que);
 
@@ -26,6 +26,7 @@ else if(isset($_POST["log_login"]) && isset($_POST["log_password"]) && isset($_P
         $_SESSION["log"]=$login;
         $_SESSION["id"]=$res["ID"];
         $_SESSION["city"]=$city;
+        $_SESSION["rola"]=$res["Rola"];
         header("location:user.php");
         exit();
     }

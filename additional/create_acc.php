@@ -15,6 +15,7 @@ if(isset($_POST["imie"])){
 	$password = $_POST["password"];
 	$email = $_POST["email"];
 	$dzial = $_POST["dzial"];
+	$rola = $_POST["rola"];
 	$city = $_SESSION["city"];
 
 	$is_ok=1;
@@ -27,7 +28,7 @@ if(isset($_POST["imie"])){
 	}
 
 	if($is_ok==1){
-		$sql = "INSERT INTO users(ID, Login, Password, Imie, Nazwisko, Dzial, Email, Jednostka, Activity, Spoznien) VALUES(NULL, '$login', '$password', '$imie', '$nazwisko', '$dzial', '$email', '$city', CURRENT_TIMESTAMP, '0')";
+		$sql = "INSERT INTO users(ID, Login, Password, Imie, Nazwisko, Dzial, Rola, Email, Jednostka, Activity, Spoznien) VALUES(NULL, '$login', '$password', '$imie', '$nazwisko', '$dzial', '$rola', '$email', '$city', CURRENT_TIMESTAMP, '0')";
 		$conn -> query($sql);
 
 		$user_id;
@@ -58,6 +59,7 @@ if(isset($_POST["imie"])){
 	unset($_POST["email"]);
 	unset($_FILES["photo"]);
 	unset($_POST["dzial"]);
+	unset($_POST["rola"]);
 	
     header("location:../user.php");
 }

@@ -29,6 +29,19 @@
 
             <div style="font-size:100%; text-align:center;"><b>Dla kogo:</b></div>
         <div id="new_job_forwho" style="width:98%; min-height:50px; background-color:#e6e6e6; border-radius:20px; margin:1%; text-align:center; padding-top:10px; padding-bottom:10px;">';
+
+        // PODZIAŁ OSÓB NA DZIAŁY
+        echo '
+            <div class="new_job_forwho_dzial" id="new_job_forwho_inesis">INESIS</div>
+                <div class="new_job_forwho_dzial_list" id="new_job_forwho_inesis_list">
+
+                </div>
+            <div class="new_job_forwho_dzial" id="new_job_forwho_domyos">DOMYOS</div>
+                <div class="new_job_forwho_dzial_list" id="new_job_forwho_domyos_list">
+                
+                </div>
+        ';
+
         $sql = "SELECT ID, Imie, Nazwisko, Dzial FROM users ORDER BY Nazwisko ASC";
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
@@ -37,6 +50,7 @@
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
         }
+
         echo '
             <div style="clear:both;"></div>
             <div style="margin:10px;">

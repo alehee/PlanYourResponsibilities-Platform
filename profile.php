@@ -63,12 +63,13 @@ if(!isset($_SESSION["sort"]))
                     $imie;
                     $nazwisko;
                     $dzial;
+                    $rola;
                     $email;
                     $jednostka;
                     $activity;
 
                     $id = $_SESSION["id"];
-                    $sql = "SELECT Login, Password, Imie, Nazwisko, Dzial, Email, Jednostka, Activity FROM users WHERE ID='$id' LIMIT 1";
+                    $sql = "SELECT Login, Password, Imie, Nazwisko, Dzial, Rola, Email, Jednostka, Activity FROM users WHERE ID='$id' LIMIT 1";
                     $que = $conn -> query($sql);
                     while($res = mysqli_fetch_array($que)){
                         $login = $res["Login"];
@@ -76,26 +77,69 @@ if(!isset($_SESSION["sort"]))
                         $imie = $res["Imie"];
                         $nazwisko = $res["Nazwisko"];
                         $dzial = $res["Dzial"];
+                        $rola = $res["Rola"];
                         $email = $res["Email"];
                         $jednostka = $res["Jednostka"];
                         $activity = $res["Activity"];
                     }
 
                     switch($dzial){
-                        case 'nskl':
-                            $dzial = "Niski Skład";
-                        break;
                         case 'wskl':
                             $dzial = "Wysoki Skład";
+                        break;
+                        case 'btwn':
+                            $dzial = "B'Twin";
+                        break;
+                        case 'quec':
+                            $dzial = "Quechua";
+                        break;
+                        case 'kale':
+                            $dzial = "Kalenji";
+                        break;
+                        case 'domy':
+                            $dzial = "Domyos";
+                        break;
+                        case 'ines':
+                            $dzial = "Inesis";
+                        break;
+                        case 'sube':
+                            $dzial = "Subea";
                         break;
                         case 'ecom':
                             $dzial = "E-commerce";
                         break;
+                        case 'geol':
+                            $dzial = "Geologic";
+                        break;
                         case 'ramp':
                             $dzial = "Rampa";
                         break;
-                        case 'resz':
-                            $dzial = "Reszta";
+                        case 'kadr':
+                            $dzial = "Kadry";
+                        break;
+                        default:
+                            $dzial = "Niezdefiniowany";
+                        break;
+                    }
+
+                    switch($rola){
+                        case 'prac':
+                            $rola = "Pracownik Zespołu Logistycznego";
+                        break;
+                        case 'szko':
+                            $rola = "Szkoleniowiec";
+                        break;
+                        case 'kier':
+                            $rola = "Kierownik";
+                        break;
+                        case 'staz':
+                            $rola = "Stażysta";
+                        break;
+                        case 'inna':
+                            $rola = "Inna";
+                        break;
+                        default:
+                            $rola = "Niezdefiniowany";
                         break;
                     }
 
@@ -115,7 +159,8 @@ if(!isset($_SESSION["sort"]))
                     echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%; color:#0082C3;'>HASŁO: </b>$password<span class='panel_info_zmien' onclick='change_password()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
                     echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%; color:#0082C3;'>E-MAIL: </b>$email<span class='panel_info_zmien' onclick='change_email()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
                     echo "<div style='clear:both;'></div>";
-                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%; color:#0082C3;'>GRUPA: </b>$dzial</div>";
+                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%; color:#0082C3;'>DZIAŁ: </b>$dzial</div>";
+                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%; color:#0082C3;'>ROLA: </b>$rola</div>";
                     echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%; color:#0082C3;'>JEDNOSTKA: </b>$jednostka</div>";
                     echo "<div style='clear:both;'></div>";
                     echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%; color:#0082C3;'>OSTATNIA AKTYWNOŚĆ: </b>$activity</div>";

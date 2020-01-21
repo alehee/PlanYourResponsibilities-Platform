@@ -49,13 +49,28 @@ if(!isset($_SESSION["sort"]))
                 <input type="file" accept="image/*" name="photo"/><br>
                 <a href="https://imageresizer.com" target="_blank">LINK DO EDYTORA ZDJĘĆ</a>
             </div>
-            <div style="text-align:center; margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0082C3;'>GRUPA: </b>
+            <div style="text-align:center; margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0082C3;'>DZIAŁ: </b>
             <select name="dzial" style="font-size:100%;" required>
-                <option value="nskl">Niski Skład</option>
                 <option value="wskl">Wysoki Skład</option>
+                <option value="btwn">B'Twin</option>
+                <option value="quec">Quechua</option>
+                <option value="kale">Kalenji</option>
+                <option value="domy">Domyos</option>
+                <option value="ines">Inesis</option>
+                <option value="sube">Subea</option>
                 <option value="ecom">E-commerce</option>
+                <option value="geol">Geologic</option>
                 <option value="ramp">Rampa</option>
-                <option value="resz">Reszta</option>
+                <option value="kadr">Kadry</option>
+            </select>
+            </div>
+            <div style="text-align:center; margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0082C3;'>ROLA: </b>
+            <select name="rola" style="font-size:100%;" required>
+                <option value="prac">Pracownik ZL</option>
+                <option value="szko">Szkoleniowiec</option>
+                <option value="kier">Kierownik</option>
+                <option value="staz">Stażysta</option>
+                <option value="inna">Inna</option>
             </select>
             </div>
             <div style="text-align:center; margin:10px;"><input type="submit" class="create_panel_butt" value="UTWÓRZ UŻYTKOWNIKA"/></div>
