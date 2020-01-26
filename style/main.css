@@ -610,7 +610,10 @@ p{
 }
 
 .new_job_forwho_dzial{
-
+    height: 20px;
+    width: 50%;
+    float: left;
+    background-color: aqua;
 }
 
 .new_job_forwho_dzial_list{
