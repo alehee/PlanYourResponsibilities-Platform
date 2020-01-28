@@ -611,14 +611,24 @@ p{
 
 .new_job_forwho_dzial{
     height: 20px;
-    width: 50%;
-    float: left;
     background-color: aqua;
 }
 
 .new_job_forwho_dzial_list{
-    
+    min-height: 50px;
+    background-color: red;
 }
+
+.new_job_forwho_dzial_left{
+    width: 50%;
+    float: left;
+}
+
+.new_job_forwho_dzial_right{
+    width: 50%;
+    float: right;
+}
+
 
 #new_job_forwho_inesis{
 
