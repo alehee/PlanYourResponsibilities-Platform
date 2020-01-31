@@ -512,7 +512,7 @@ $conn -> close();
         // Musi tu być bo nie działa skrypt
         document.getElementById("okno_background").style.display="none";
         document.getElementById("nav_background").style.display="none";
-
+        
         // Skrypty nav
 
         var okno=0;
@@ -617,7 +617,7 @@ $conn -> close();
                 document.getElementById("okno_job").style.backgroundColor="#0082C3";
                 document.getElementById("okno_job").style.border="5px solid #0082C3";
             }
-            
+            new_job_forwho_toggle_option = 0;
             okno=0;
         }
 		

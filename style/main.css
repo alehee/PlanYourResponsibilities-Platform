@@ -609,41 +609,58 @@ p{
     min-height: 10px;
 }
 
+#new_job_forwho_toggle{
+    width: 150px;
+    height: 25px;
+    padding-top: 4px;
+    float: right;
+    text-align: center;
+    font-size: 70%;
+    background-color: #0082C3;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
 .new_job_forwho_dzial{
-    height: 20px;
+    height: 30px;
+    padding-top: 5px;
+    border-radius: 20px;
     background-color: aqua;
+    margin:5px 0;
+    cursor: pointer;
 }
 
 .new_job_forwho_dzial_list{
-    min-height: 50px;
-    background-color: red;
+    min-height: 30px;
+    display: none;
 }
 
 .new_job_forwho_dzial_left{
-    width: 50%;
+    width: 49%;
     float: left;
+    margin: 0.5%;
 }
 
 .new_job_forwho_dzial_right{
-    width: 50%;
+    width: 49%;
     float: right;
+    margin: 0.5%;
 }
 
-
-#new_job_forwho_inesis{
-
+.new_job_forwho_rola{
+    height: 30px;
+    padding-top: 5px;
+    border-radius: 20px;
+    background-color: blue;
+    color: white;
+    margin:5px 0;
+    cursor: pointer;
 }
 
-#new_job_forwho_inesis_list{
-    
-}
-
-#new_job_forwho_domyos{
-
-}
-
-#new_job_forwho_domyos_list{
-    
+.new_job_forwho_rola_list{
+    min-height: 30px;
+    display: none;
 }
 
 .new_job_dzial_butt{
