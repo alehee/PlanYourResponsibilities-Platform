@@ -67,17 +67,27 @@ Wygenerowano: ".date("Y-m-d G:i:s");
     // JEŻELI ISTNIEJE JUŻ TAKIE ZADANIE TO OMIJA
     if($already_exist == 0){
         foreach($new_forwho_list as $forwho_id){
-            $sql = "INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Length, Start, Visited, Visited_Admin, End) VALUES (NULL, '$the_id', '$new_title', '$new_info', '$new_whoadd', '$forwho_id', '$new_length', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '$new_deadline')";
+            $forwho_error = 0;
 
-            mysqli_query($conn, $sql);
-
-            $sql = "SELECT Email FROM users WHERE ID='$forwho_id' LIMIT 1";
+            $sql = "SELECT ID FROM job WHERE The_ID='$the_id' AND ForWho='$forwho_id'";
             $que = mysqli_query($conn, $sql);
-
             while($res = mysqli_fetch_array($que)){
-                $to = $res["Email"];
+                $forwho_error = 1;
+            }
 
-            mail($to, $subject, $message, $headers);
+            if($forwho_error == 0){
+                $sql = "INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Length, Start, Visited, Visited_Admin, End) VALUES (NULL, '$the_id', '$new_title', '$new_info', '$new_whoadd', '$forwho_id', '$new_length', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '$new_deadline')";
+
+                mysqli_query($conn, $sql);
+
+                $sql = "SELECT Email FROM users WHERE ID='$forwho_id' LIMIT 1";
+                $que = mysqli_query($conn, $sql);
+
+                while($res = mysqli_fetch_array($que)){
+                    $to = $res["Email"];
+
+                mail($to, $subject, $message, $headers);
+                }
             }
         }
     }

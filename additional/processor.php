@@ -30,20 +30,21 @@
             <div style="font-size:100%; text-align:center;"><b>Dla kogo:</b></div>
         <div id="new_job_forwho" style="width:98%; min-height:50px; background-color:#e6e6e6; border-radius:20px; margin:1%; text-align:center; padding-top:10px; padding-bottom:10px;">
         <div id="new_job_forwho_toggle" onclick="new_job_forwho_toggle()">PRZEŁĄCZ WIDOK</div>
+        <div id="new_job_forwho_toggle" onclick="new_job_forwho_open_close()">OTWÓRZ/ZAMKNIJ ZAKŁADKI</div>
         <div style="clear:both;"></div>';
 
         // PODZIAŁ OSÓB NA DZIAŁY LEWO
         echo '<div class="new_job_forwho_dzial_left">';
 
         // INESIS
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial FROM users WHERE Dzial='ines' ORDER BY Rola ASC";
+        $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='ines' ORDER BY Rola ASC";
         echo '
             <div class="new_job_forwho_dzial" id="new_job_forwho_inesis" onclick="$(\'#new_job_forwho_inesis_list\').slideToggle(1);">INESIS</div>
                 <div class="new_job_forwho_dzial_list" id="new_job_forwho_inesis_list">';
 
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" class="'.$res["Dzial"].'" name="new_forwho[]" value="'.$res["ID"].'"';
+            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].');" class="'.$res["Dzial"].' '.$res["ID"].'" name="new_forwho[]" value="'.$res["ID"].'"';
                 if($res["ID"]==$_SESSION["id"])
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
@@ -58,7 +59,7 @@
 
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" class="'.$res["Dzial"].'" name="new_forwho[]" value="'.$res["ID"].'"';
+            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].');" class="'.$res["Dzial"].' '.$res["ID"].'" name="new_forwho[]" value="'.$res["ID"].'"';
                 if($res["ID"]==$_SESSION["id"])
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
@@ -73,7 +74,7 @@
 
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" class="'.$res["Dzial"].'" name="new_forwho[]" value="'.$res["ID"].'"';
+            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].');" class="'.$res["Dzial"].' '.$res["ID"].'" name="new_forwho[]" value="'.$res["ID"].'"';
                 if($res["ID"]==$_SESSION["id"])
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
@@ -88,7 +89,7 @@
 
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" class="'.$res["Dzial"].'" name="new_forwho[]" value="'.$res["ID"].'"';
+            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].');" class="'.$res["Dzial"].' '.$res["ID"].'" name="new_forwho[]" value="'.$res["ID"].'"';
                 if($res["ID"]==$_SESSION["id"])
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
@@ -103,7 +104,7 @@
 
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" class="'.$res["Dzial"].'" name="new_forwho[]" value="'.$res["ID"].'"';
+            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].');" class="'.$res["Dzial"].' '.$res["ID"].'" name="new_forwho[]" value="'.$res["ID"].'"';
                 if($res["ID"]==$_SESSION["id"])
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
@@ -113,14 +114,14 @@
 
 
         // KIEROWNICY
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial FROM users WHERE Rola='kier' ORDER BY Rola ASC";
+        $sql = "SELECT ID, Imie, Nazwisko, Rola FROM users WHERE Rola='kier' ORDER BY Rola ASC";
         echo '
             <div class="new_job_forwho_rola" id="new_job_forwho_kierownicy"onclick="$(\'#new_job_forwho_kierownicy_list\').slideToggle(1);">KIEROWNICY</div>
                 <div class="new_job_forwho_rola_list" id="new_job_forwho_kierownicy_list">';
 
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" class="'.$res["Dzial"].'" name="new_forwho[]" value="'.$res["ID"].'"';
+            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].');" class="'.$res["Rola"].' '.$res["ID"].'" name="new_forwho[]" value="'.$res["ID"].'"';
                 if($res["ID"]==$_SESSION["id"])
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
@@ -128,14 +129,14 @@
         echo '</div>';
 
         // STAŻYŚCI
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial FROM users WHERE Rola='staz' ORDER BY Rola ASC";
+        $sql = "SELECT ID, Imie, Nazwisko, Rola FROM users WHERE Rola='staz' ORDER BY Rola ASC";
         echo '
             <div class="new_job_forwho_rola" id="new_job_forwho_stazysci"onclick="$(\'#new_job_forwho_stazysci_list\').slideToggle(1);">STAŻYŚCI</div>
                 <div class="new_job_forwho_rola_list" id="new_job_forwho_stazysci_list">';
 
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" class="'.$res["Dzial"].'" name="new_forwho[]" value="'.$res["ID"].'"';
+            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].');" class="'.$res["Rola"].' '.$res["ID"].'" name="new_forwho[]" value="'.$res["ID"].'"';
                 if($res["ID"]==$_SESSION["id"])
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
@@ -143,14 +144,14 @@
         echo '</div>';
 
         // INNA
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial FROM users WHERE Rola='inna' ORDER BY Rola ASC";
+        $sql = "SELECT ID, Imie, Nazwisko, Rola FROM users WHERE Rola='inna' ORDER BY Rola ASC";
         echo '
             <div class="new_job_forwho_rola" id="new_job_forwho_inna"onclick="$(\'#new_job_forwho_inna_list\').slideToggle(1);">INNA</div>
                 <div class="new_job_forwho_rola_list" id="new_job_forwho_inna_list">';
 
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" class="'.$res["Dzial"].'" name="new_forwho[]" value="'.$res["ID"].'"';
+            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].');" class="'.$res["Rola"].' '.$res["ID"].'" name="new_forwho[]" value="'.$res["ID"].'"';
                 if($res["ID"]==$_SESSION["id"])
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
@@ -173,7 +174,7 @@
 
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" class="'.$res["Dzial"].'" name="new_forwho[]" value="'.$res["ID"].'"';
+            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].');" class="'.$res["Dzial"].' '.$res["ID"].'" name="new_forwho[]" value="'.$res["ID"].'"';
                 if($res["ID"]==$_SESSION["id"])
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
@@ -188,7 +189,7 @@
 
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" class="'.$res["Dzial"].'" name="new_forwho[]" value="'.$res["ID"].'"';
+            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].');" class="'.$res["Dzial"].' '.$res["ID"].'" name="new_forwho[]" value="'.$res["ID"].'"';
                 if($res["ID"]==$_SESSION["id"])
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
@@ -203,7 +204,7 @@
 
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" class="'.$res["Dzial"].'" name="new_forwho[]" value="'.$res["ID"].'"';
+            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', \'error\');" class="'.$res["Dzial"].' '.$res["ID"].'" name="new_forwho[]" value="'.$res["ID"].'"';
                 if($res["ID"]==$_SESSION["id"])
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
@@ -218,7 +219,7 @@
 
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" class="'.$res["Dzial"].'" name="new_forwho[]" value="'.$res["ID"].'"';
+            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', \'error\');" class="'.$res["Dzial"].' '.$res["ID"].'" name="new_forwho[]" value="'.$res["ID"].'"';
                 if($res["ID"]==$_SESSION["id"])
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
@@ -233,7 +234,7 @@
 
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" class="'.$res["Dzial"].'" name="new_forwho[]" value="'.$res["ID"].'"';
+            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', \'error\');" class="'.$res["Dzial"].' '.$res["ID"].'" name="new_forwho[]" value="'.$res["ID"].'"';
                 if($res["ID"]==$_SESSION["id"])
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
@@ -248,22 +249,24 @@
 
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" class="'.$res["Dzial"].'" name="new_forwho[]" value="'.$res["ID"].'"';
+            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', \'error\');" class="'.$res["Dzial"].' '.$res["ID"].'" name="new_forwho[]" value="'.$res["ID"].'"';
                 if($res["ID"]==$_SESSION["id"])
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
         }
         echo '</div>';
 
+
+
         // SZKOLENIOWCY
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial FROM users WHERE Rola='szko' ORDER BY Rola ASC";
+        $sql = "SELECT ID, Imie, Nazwisko, Rola FROM users WHERE Rola='szko' ORDER BY Rola ASC";
         echo '
             <div class="new_job_forwho_rola" id="new_job_forwho_szkoleniowcy"onclick="$(\'#new_job_forwho_szkoleniowcy_list\').slideToggle(1);">SZKOLENIOWCY</div>
                 <div class="new_job_forwho_rola_list" id="new_job_forwho_szkoleniowcy_list">';
 
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" class="'.$res["Dzial"].'" name="new_forwho[]" value="'.$res["ID"].'"';
+            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].');" class="'.$res["Rola"].' '.$res["ID"].'" name="new_forwho[]" value="'.$res["ID"].'"';
                 if($res["ID"]==$_SESSION["id"])
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
@@ -271,14 +274,14 @@
         echo '</div>';
 
         // PRACOWNICY
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial FROM users WHERE Rola='prac' ORDER BY Rola ASC";
+        $sql = "SELECT ID, Imie, Nazwisko, Rola FROM users WHERE Rola='prac' ORDER BY Rola ASC";
         echo '
             <div class="new_job_forwho_rola" id="new_job_forwho_pracownicy"onclick="$(\'#new_job_forwho_pracownicy_list\').slideToggle(1);">PRACOWNICY</div>
                 <div class="new_job_forwho_rola_list" id="new_job_forwho_pracownicy_list">';
 
         $que = mysqli_query($conn, $sql);
         while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" class="'.$res["Dzial"].'" name="new_forwho[]" value="'.$res["ID"].'"';
+            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].');" class="'.$res["Rola"].' '.$res["ID"].'" name="new_forwho[]" value="'.$res["ID"].'"';
                 if($res["ID"]==$_SESSION["id"])
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";

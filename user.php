@@ -512,6 +512,8 @@ $conn -> close();
         // Musi tu być bo nie działa skrypt
         document.getElementById("okno_background").style.display="none";
         document.getElementById("nav_background").style.display="none";
+        var new_job_forwho_toggle_variable = 0;
+        var new_job_forwho_close_open_variable = 0;
         
         // Skrypty nav
 
@@ -607,6 +609,8 @@ $conn -> close();
             if(document.getElementById("okno_background").style.display=="none"){
                 document.getElementById("okno_background").style.display="inline";
                 document.body.style.overflowY="hidden";
+                new_job_forwho_toggle_variable = 0;
+                new_job_forwho_close_open_variable = 0;
                 $.get("additional/processor.php", {elem: elem}, function(data){
                     $('#okno_job').html(data);
                 });
@@ -616,6 +620,8 @@ $conn -> close();
                 document.getElementById("okno_background").style.display="none";
                 document.getElementById("okno_job").style.backgroundColor="#0082C3";
                 document.getElementById("okno_job").style.border="5px solid #0082C3";
+                new_job_forwho_toggle_variable = 0;
+                new_job_forwho_close_open_variable = 0;
             }
             new_job_forwho_toggle_option = 0;
             okno=0;
@@ -803,6 +809,107 @@ $conn -> close();
                     }
                 }
             }
+        }
+
+        // Funkcja przełącza widok zaznaczania osób
+        function new_job_forwho_toggle(){
+
+            var role = document.getElementsByClassName("new_job_forwho_rola");
+            var role_list = document.getElementsByClassName("new_job_forwho_rola_list");
+            var dzialy = document.getElementsByClassName("new_job_forwho_dzial");
+            var dzialy_list = document.getElementsByClassName("new_job_forwho_dzial_list");
+
+            var inesis = document.getElementsByClassName("ines");
+            var domyos = document.getElementsByClassName("domy");
+            var quechua = document.getElementsByClassName("quec");
+            var kalenji = document.getElementsByClassName("kale");
+            var subea = document.getElementsByClassName("sube");
+            var wysoki = document.getElementsByClassName("rpal");
+            var btwin = document.getElementsByClassName("btwn");
+            var ecommerce = document.getElementsByClassName("ecom");
+            var rampa = document.getElementsByClassName("ramp");
+            var geologic = document.getElementsByClassName("geol");
+            var kadry = document.getElementsByClassName("kadr");
+            var kierownicy = document.getElementsByClassName("kier");
+            var stazysci = document.getElementsByClassName("staz");
+            var inna = document.getElementsByClassName("inna");
+            var szkoleniowcy = document.getElementsByClassName("szko");
+            var pracownicy = document.getElementsByClassName("prac");
+
+            if(new_job_forwho_toggle_variable == 0){
+                for(i=0; i<role.length; i++){
+                    role[i].style.display = "block";
+                }
+                for(i=0; i<dzialy.length; i++){
+                    dzialy[i].style.display = "none";
+                    dzialy_list[i].style.display = "none";
+                }
+                new_job_forwho_toggle_variable = 1;
+                new_job_forwho_close_open_variable = 0;
+            }
+            else{
+                for(i=0; i<role.length; i++){
+                    role[i].style.display = "none";
+                    role_list[i].style.display = "none";
+                }
+                for(i=0; i<dzialy.length; i++){
+                    dzialy[i].style.display = "block";
+                }
+                new_job_forwho_toggle_variable = 0;
+                new_job_forwho_close_open_variable = 0;
+            }
+        }
+
+        // Funkcja otwiera wszystkie zakładki osób
+        function new_job_forwho_open_close(){
+            var role_list = document.getElementsByClassName("new_job_forwho_rola_list");
+            var dzialy_list = document.getElementsByClassName("new_job_forwho_dzial_list");
+
+            if(new_job_forwho_close_open_variable == 0 && new_job_forwho_toggle_variable == 0){
+                for(i=0; i<dzialy_list.length; i++){
+                    dzialy_list[i].style.display = "block";
+                }
+                new_job_forwho_close_open_variable = 1;
+            }
+            else if(new_job_forwho_close_open_variable == 1 && new_job_forwho_toggle_variable == 0){
+                for(i=0; i<dzialy_list.length; i++){
+                    dzialy_list[i].style.display = "none";
+                }
+                new_job_forwho_close_open_variable = 0;
+            }
+            else if(new_job_forwho_close_open_variable == 0 && new_job_forwho_toggle_variable == 1){
+                for(i=0; i<role_list.length; i++){
+                    role_list[i].style.display = "block";
+                }
+                new_job_forwho_close_open_variable = 1;
+            }
+            else if(new_job_forwho_close_open_variable == 1 && new_job_forwho_toggle_variable == 1){
+                for(i=0; i<role_list.length; i++){
+                    role_list[i].style.display = "none";
+                }
+                new_job_forwho_close_open_variable = 0;
+            }
+        }
+
+        // Funkcja zaznacza osoby w obu trybach
+        function new_job_forwho_check(passed_id, passed_info){
+            var changed_id = document.getElementsByClassName(passed_id);
+
+            var option = 0;
+
+            if(new_job_forwho_toggle_variable == 0 && passed_info != "error")
+                option = 1;
+
+                if(changed_id[option].checked == false){
+                    for(i=0; i<changed_id.length; i++){
+                        changed_id[i].checked = true;
+                    }
+                }
+                else{
+                    for(i=0; i<changed_id.length; i++){
+                            changed_id[i].checked = false;
+                        }
+                }
         }
 
         // -----
