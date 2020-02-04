@@ -121,14 +121,14 @@ $conn -> close();
                             if($unread_msg_exist == 1)
                                 $div_job_top=$div_job_top."<img class='job_unread_msg' src='icons/pin-red.png'/>";
                             $div_job_topic_top = '<div class="job_topic_justbg"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
-                            $div_job_topic_bottom = '</div></div><input type="button" class="job_button" id="'.$res["The_ID"].'" value="Zakończ" onclick="job_done(this.id)" onmouseover="job_topic_radius(this.id)" onmouseout="job_topic_radius_fix(this.id)"/>';
+                            $div_job_topic_bottom = '</div></div><input type="button" class="job_button" id="'.$res["The_ID"].'" value="Zakończ" onclick="job_done(this.id)"/>';
                         }
                         else if($days_left<3){
                             $div_job_top='<div class="job_yellow job" id="'.$res["The_ID"].'">';
                             if($unread_msg_exist == 1)
                                 $div_job_top=$div_job_top."<img class='job_unread_msg' src='icons/pin-red.png'/>";
                             $div_job_topic_top = '<div class="job_topic_justbg"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
-                            $div_job_topic_bottom = '</div></div><input type="button" class="job_button" id="'.$res["The_ID"].'" value="Zakończ" onclick="job_done(this.id)" onmouseover="job_topic_radius(this.id)" onmouseout="job_topic_radius_fix(this.id)"/>';
+                            $div_job_topic_bottom = '</div></div><input type="button" class="job_button" id="'.$res["The_ID"].'" value="Zakończ" onclick="job_done(this.id)"/>';
                         }
                         else{
                             $div_job_top='<div class="job" id="'.$res["The_ID"].'">';
@@ -514,6 +514,7 @@ $conn -> close();
         document.getElementById("nav_background").style.display="none";
         var new_job_forwho_toggle_variable = 0;
         var new_job_forwho_close_open_variable = 0;
+        var new_job_forwho_peoplenumber = 1;
         
         // Skrypty nav
 
@@ -611,6 +612,7 @@ $conn -> close();
                 document.body.style.overflowY="hidden";
                 new_job_forwho_toggle_variable = 0;
                 new_job_forwho_close_open_variable = 0;
+                new_job_forwho_peoplenumber = 1;
                 $.get("additional/processor.php", {elem: elem}, function(data){
                     $('#okno_job').html(data);
                 });
@@ -620,8 +622,6 @@ $conn -> close();
                 document.getElementById("okno_background").style.display="none";
                 document.getElementById("okno_job").style.backgroundColor="#0082C3";
                 document.getElementById("okno_job").style.border="5px solid #0082C3";
-                new_job_forwho_toggle_variable = 0;
-                new_job_forwho_close_open_variable = 0;
             }
             new_job_forwho_toggle_option = 0;
             okno=0;
@@ -703,6 +703,8 @@ $conn -> close();
             if(document.getElementById("okno_background").style.display=="none"){
                 document.getElementById("okno_background").style.display="inline";
 
+                new_job_forwho_peoplenumber = 1;
+
                 $.get("additional/processor.php", {the_job: the_job}, function(data){
                     $('#okno_job').html(data);
                 });
@@ -721,45 +723,106 @@ $conn -> close();
 
             if(sklad=="Wszyscy"){
                 var tab = document.getElementsByName("new_forwho[]");
+                var is_empty = 0;
+                if(tab[counter].checked == true){
+                    for(i=0; i<tab.length; i++){
+                        tab[counter].checked=false;
+                        counter++;
+                    }
+                    is_empty = 1;
+                }
+                else{
+                    for(i=0; i<tab.length; i++){
+                        tab[counter].checked=true;
+                        counter++;
+                    }
+                }
+
+                var check = $(document).find('input[type=checkbox]:checked').length;
+                new_job_forwho_peoplenumber = check / 2;
+                document.getElementById("new_job_forwho_peoplenumber_text").innerHTML = new_job_forwho_peoplenumber;
+            }
+            else if(sklad=="Inesis"){
+                var tab = document.getElementsByClassName("ines");
                 if(tab[counter].checked == true){
                     while(tab[counter].checked!="undefined"){
                         tab[counter].checked=false;
+                        new_job_forwho_check(tab[counter].value, false);
                         counter++;
                     }
                 }
                 else{
                     while(tab[counter].checked!="undefined"){
                         tab[counter].checked=true;
+                        new_job_forwho_check(tab[counter].value, true);
                         counter++;
                     }
                 }
             }
-            else if(sklad=="Niski Skład"){
-                var tab = document.getElementsByClassName("nskl");
-                if(tab[counter].checked == true){
-                    while(tab[counter].checked!="undefined"){
-                        tab[counter].checked=false;
-                        counter++;
-                    }
-                }
-                else{
-                    while(tab[counter].checked!="undefined"){
-                        tab[counter].checked=true;
-                        counter++;
-                    }
-                }
-            }
-            else if(sklad=="Wysoki Skład"){
+            else if(sklad=="Wysoki"){
                 var tab = document.getElementsByClassName("wskl");
                 if(tab[counter].checked == true){
                     while(tab[counter].checked!="undefined"){
                         tab[counter].checked=false;
+                        new_job_forwho_check(tab[counter].value, false);
                         counter++;
                     }
                 }
                 else{
                     while(tab[counter].checked!="undefined"){
                         tab[counter].checked=true;
+                        new_job_forwho_check(tab[counter].value, true);
+                        counter++;
+                    }
+                }
+            }
+            else if(sklad=="Domyos"){
+                var tab = document.getElementsByClassName("domy");
+                if(tab[counter].checked == true){
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=false;
+                        new_job_forwho_check(tab[counter].value, false);
+                        counter++;
+                    }
+                }
+                else{
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=true;
+                        new_job_forwho_check(tab[counter].value, true);
+                        counter++;
+                    }
+                }
+            }
+            else if(sklad=="B'Twin"){
+                var tab = document.getElementsByClassName("btwn");
+                if(tab[counter].checked == true){
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=false;
+                        new_job_forwho_check(tab[counter].value, false);
+                        counter++;
+                    }
+                }
+                else{
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=true;
+                        new_job_forwho_check(tab[counter].value, true);
+                        counter++;
+                    }
+                }
+            }
+            else if(sklad=="Quechua"){
+                var tab = document.getElementsByClassName("quec");
+                if(tab[counter].checked == true){
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=false;
+                        new_job_forwho_check(tab[counter].value, false);
+                        counter++;
+                    }
+                }
+                else{
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=true;
+                        new_job_forwho_check(tab[counter].value, true);
                         counter++;
                     }
                 }
@@ -769,12 +832,31 @@ $conn -> close();
                 if(tab[counter].checked == true){
                     while(tab[counter].checked!="undefined"){
                         tab[counter].checked=false;
+                        new_job_forwho_check(tab[counter].value, false);
                         counter++;
                     }
                 }
                 else{
                     while(tab[counter].checked!="undefined"){
                         tab[counter].checked=true;
+                        new_job_forwho_check(tab[counter].value, true);
+                        counter++;
+                    }
+                }
+            }
+            else if(sklad=="Kalenji"){
+                var tab = document.getElementsByClassName("kale");
+                if(tab[counter].checked == true){
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=false;
+                        new_job_forwho_check(tab[counter].value, false);
+                        counter++;
+                    }
+                }
+                else{
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=true;
+                        new_job_forwho_check(tab[counter].value, true);
                         counter++;
                     }
                 }
@@ -784,27 +866,150 @@ $conn -> close();
                 if(tab[counter].checked == true){
                     while(tab[counter].checked!="undefined"){
                         tab[counter].checked=false;
+                        new_job_forwho_check(tab[counter].value, false);
                         counter++;
                     }
                 }
                 else{
                     while(tab[counter].checked!="undefined"){
                         tab[counter].checked=true;
+                        new_job_forwho_check(tab[counter].value, true);
                         counter++;
                     }
                 }
             }
-            else if(sklad=="Reszta"){
-                var tab = document.getElementsByClassName("resz");
+            else if(sklad=="Subea"){
+                var tab = document.getElementsByClassName("sube");
                 if(tab[counter].checked == true){
                     while(tab[counter].checked!="undefined"){
                         tab[counter].checked=false;
+                        new_job_forwho_check(tab[counter].value, false);
                         counter++;
                     }
                 }
                 else{
                     while(tab[counter].checked!="undefined"){
                         tab[counter].checked=true;
+                        new_job_forwho_check(tab[counter].value, true);
+                        counter++;
+                    }
+                }
+            }
+            else if(sklad=="Geologic"){
+                var tab = document.getElementsByClassName("geol");
+                if(tab[counter].checked == true){
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=false;
+                        new_job_forwho_check(tab[counter].value, false);
+                        counter++;
+                    }
+                }
+                else{
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=true;
+                        new_job_forwho_check(tab[counter].value, true);
+                        counter++;
+                    }
+                }
+            }
+            else if(sklad=="Kadry"){
+                var tab = document.getElementsByClassName("kadr");
+                if(tab[counter].checked == true){
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=false;
+                        new_job_forwho_check(tab[counter].value, false);
+                        counter++;
+                    }
+                }
+                else{
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=true;
+                        new_job_forwho_check(tab[counter].value, true);
+                        counter++;
+                    }
+                }
+            }
+            else if(sklad=="Kierownicy"){
+                var tab = document.getElementsByClassName("kier");
+                if(tab[counter].checked == true){
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=false;
+                        new_job_forwho_check(tab[counter].value, false);
+                        counter++;
+                    }
+                }
+                else{
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=true;
+                        new_job_forwho_check(tab[counter].value, true);
+                        counter++;
+                    }
+                }
+            }
+            else if(sklad=="Szkoleniowcy"){
+                var tab = document.getElementsByClassName("szko");
+                if(tab[counter].checked == true){
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=false;
+                        new_job_forwho_check(tab[counter].value, false);
+                        counter++;
+                    }
+                }
+                else{
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=true;
+                        new_job_forwho_check(tab[counter].value, true);
+                        counter++;
+                    }
+                }
+            }
+            else if(sklad=="Stażyści"){
+                var tab = document.getElementsByClassName("staz");
+                if(tab[counter].checked == true){
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=false;
+                        new_job_forwho_check(tab[counter].value, false);
+                        counter++;
+                    }
+                }
+                else{
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=true;
+                        new_job_forwho_check(tab[counter].value, true);
+                        counter++;
+                    }
+                }
+            }
+            else if(sklad=="Pracownicy"){
+                var tab = document.getElementsByClassName("prac");
+                if(tab[counter].checked == true){
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=false;
+                        new_job_forwho_check(tab[counter].value, false);
+                        counter++;
+                    }
+                }
+                else{
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=true;
+                        new_job_forwho_check(tab[counter].value, true);
+                        counter++;
+                    }
+                }
+            }
+            else if(sklad=="Inna"){
+                var tab = document.getElementsByClassName("inna");
+                if(tab[counter].checked == true){
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=false;
+                        new_job_forwho_check(tab[counter].value, false);
+                        counter++;
+                    }
+                }
+                else{
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=true;
+                        new_job_forwho_check(tab[counter].value, true);
                         counter++;
                     }
                 }
@@ -818,6 +1023,8 @@ $conn -> close();
             var role_list = document.getElementsByClassName("new_job_forwho_rola_list");
             var dzialy = document.getElementsByClassName("new_job_forwho_dzial");
             var dzialy_list = document.getElementsByClassName("new_job_forwho_dzial_list");
+            var butt_role = document.getElementsByClassName("new_job_rola_butt");
+            var butt_dzialy = document.getElementsByClassName("new_job_dzial_butt");
 
             var inesis = document.getElementsByClassName("ines");
             var domyos = document.getElementsByClassName("domy");
@@ -846,6 +1053,13 @@ $conn -> close();
                 }
                 new_job_forwho_toggle_variable = 1;
                 new_job_forwho_close_open_variable = 0;
+
+                for(i=0; i<butt_dzialy.length; i++){
+                    butt_dzialy[i].style.display = "none";
+                }
+                for(i=0; i<butt_role.length; i++){
+                    butt_role[i].style.display = "inline";
+                }
             }
             else{
                 for(i=0; i<role.length; i++){
@@ -857,6 +1071,13 @@ $conn -> close();
                 }
                 new_job_forwho_toggle_variable = 0;
                 new_job_forwho_close_open_variable = 0;
+
+                for(i=0; i<butt_dzialy.length; i++){
+                    butt_dzialy[i].style.display = "inline";
+                }
+                for(i=0; i<butt_role.length; i++){
+                    butt_role[i].style.display = "none";
+                }
             }
         }
 
@@ -892,31 +1113,37 @@ $conn -> close();
         }
 
         // Funkcja zaznacza osoby w obu trybach
-        function new_job_forwho_check(passed_id, passed_info){
+        function new_job_forwho_check(passed_id, passed_check){
             var changed_id = document.getElementsByClassName(passed_id);
 
-            var option = 0;
-
-            if(new_job_forwho_toggle_variable == 0 && passed_info != "error")
-                option = 1;
-
-                if(changed_id[option].checked == false){
+                if(passed_check){
                     for(i=0; i<changed_id.length; i++){
                         changed_id[i].checked = true;
                     }
+
+                    new_job_forwho_peoplenumber++;
                 }
+
                 else{
                     for(i=0; i<changed_id.length; i++){
                             changed_id[i].checked = false;
                         }
+
+                    new_job_forwho_peoplenumber--;
                 }
+
+            var check = $(document).find('input[type=checkbox]:checked').length;
+            new_job_forwho_peoplenumber = check / 2;
+            document.getElementById("new_job_forwho_peoplenumber_text").innerHTML = new_job_forwho_peoplenumber;
+
+            //document.getElementById("new_job_forwho_peoplenumber_text").innerHTML = new_job_forwho_peoplenumber;
         }
 
         // -----
 		// Skrypty sortowania
 		
 		function okno_sort(){
-        var sort = "";
+            var sort = "";
 			$.get("additional/sort.php", {sort: sort}, function(data){
 				$('#thrash').html(data);
 			});

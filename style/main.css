@@ -248,12 +248,12 @@ p{
 }
 
 .okno .done_job_li{
-    color: #00ff00;
+    color: #00af00;
 }
 
 .okno .done_job_li::before{
     content: "\2022";
-    color: #00ff00;
+    color: #00af00;
     font-weight: bold;
     display: inline-block; 
     width: 1em;
@@ -603,6 +603,22 @@ p{
 
 
 
+#new_job_forwho_peoplenumber_img img{
+    float: left;
+    margin-left: 20px;
+    height: 20px;
+    width: 20px;
+}
+
+#new_job_forwho_peoplenumber_text{
+    float: left;
+    font-weight: 800;
+    font-size: 120%;
+    margin-left: 10px;
+    margin-top: -2px;
+}
+
+
 #new_job_forwho{
     width: 98%;
     margin: 10px auto;
@@ -615,7 +631,7 @@ p{
     padding-top: 4px;
     padding-left: 5px;
     padding-right: 5px;
-    margin: 0 5px;
+    margin: 5px 5px;
     float: right;
     text-align: center;
     font-size: 70%;
@@ -629,9 +645,57 @@ p{
     height: 30px;
     padding-top: 5px;
     border-radius: 20px;
-    background-color: aqua;
+    background-color: #0082C3;
     margin:5px 0;
+    color: white;
     cursor: pointer;
+}
+
+#new_job_forwho_inesis{
+    background-color: red;
+}
+
+#new_job_forwho_domyos{
+    background-color: bisque;
+    color: black;
+}
+
+#new_job_forwho_quechua{
+    background-color: greenyellow;
+}
+
+#new_job_forwho_kalenji{
+    background-color: darkgreen;
+}
+
+#new_job_forwho_subea{
+    background-color: purple;
+}
+
+#new_job_forwho_wysoki{
+    background-color: dodgerblue;
+}
+
+#new_job_forwho_btwin{
+    background-color: gray;
+}
+
+#new_job_forwho_ecommerce{
+    background-color: yellow;
+    color: black;
+}
+
+#new_job_forwho_rampa{
+    background-color: orange;
+}
+
+#new_job_forwho_geologic{
+    background-color: white;
+    color: black;
+}
+
+#new_job_forwho_kadry{
+    background-color: pink;
 }
 
 .new_job_forwho_dzial_list{
@@ -680,6 +744,26 @@ p{
 }
 
 .new_job_dzial_butt:hover{
+    background-color: white;
+    border: #0082C3 solid 2px;
+    color: #0082C3;
+    transition: 0.1s;
+}
+
+.new_job_rola_butt{
+    padding: 10px;
+    margin: 1px;
+    border-radius: 20px;
+    background-color: #0082C3;
+    border: #0082C3 solid 2px;
+    color: white;
+    font-size: 80%;
+    transition: 0.1s;
+    cursor: pointer;
+    display: none;
+}
+
+.new_job_rola_butt:hover{
     background-color: white;
     border: #0082C3 solid 2px;
     color: #0082C3;
