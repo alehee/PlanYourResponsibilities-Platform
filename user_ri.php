@@ -21,7 +21,7 @@ if(!isset($_SESSION["sort"]))
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
         <title>Zadania RI</title>
-        <link rel="stylesheet" href="style/main.css?version=0.1.1"/>
+        <link rel="stylesheet" href="style/main.css?version=0.2.0"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
     <body onload="time()" class='normal'>

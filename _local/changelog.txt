@@ -1,10 +1,14 @@
-0.2.0 --- 
+0.2.0 --- 06.02.2020
 
 Nowości:
 - pinezka na zadaniu, które jest nowe, lub ma nową zawartość
+- nowy styl podziału osób przy dodawaniu nowego zadania
+- nowy styl dodawania osób
+- przystosowanie kolejnych komponentów do obsługi większej ilości zadań
 
 Naprawione błędy:
 - źle usuwane osoby przez delperson.php
+- lepsza identyfikacja osób
 
 0.1.1 --- 15.01.2020
 

@@ -53,7 +53,7 @@
             else 
                 echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
         }
-        echo '</div>';
+        echo '<div style="clear:both;"></div></div>';
 
         // DOMYOS
         $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='domy' ORDER BY Rola ASC";
@@ -71,7 +71,7 @@
             else 
                 echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
         }
-        echo '</div>';
+        echo '<div style="clear:both;"></div></div>';
 
         // QUECHUA
         $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='quec' ORDER BY Rola ASC";
@@ -89,7 +89,7 @@
             else 
                 echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
         }
-        echo '</div>';
+        echo '<div style="clear:both;"></div></div>';
 
         // KALENJI
         $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='kale' ORDER BY Rola ASC";
@@ -107,7 +107,7 @@
             else 
                 echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
         }
-        echo '</div>';
+        echo '<div style="clear:both;"></div></div>';
 
         // SUBEA
         $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='sube' ORDER BY Rola ASC";
@@ -125,7 +125,7 @@
             else 
                 echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
         }
-        echo '</div>';
+        echo '<div style="clear:both;"></div></div>';
 
 
 
@@ -142,7 +142,7 @@
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
         }
-        echo '</div>';
+        echo '<div style="clear:both;"></div></div>';
 
         // STAŻYŚCI
         $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Rola='staz' ORDER BY Rola ASC";
@@ -157,7 +157,7 @@
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
         }
-        echo '</div>';
+        echo '<div style="clear:both;"></div></div>';
 
         // INNA
         $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Rola='inna' ORDER BY Rola ASC";
@@ -172,7 +172,7 @@
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
         }
-        echo '</div>';
+        echo '<div style="clear:both;"></div></div>';
 
         // KONIEC DZIAŁY LEWO
         echo '
@@ -198,7 +198,7 @@
             else 
                 echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
         }
-        echo '</div>';
+        echo '<div style="clear:both;"></div></div>';
 
         // B'TWIN
         $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='btwn' ORDER BY Rola ASC";
@@ -216,7 +216,7 @@
             else 
                 echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
         }
-        echo '</div>';
+        echo '<div style="clear:both;"></div></div>';
 
         // E-COMMERCE
         $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='ecom' ORDER BY Rola ASC";
@@ -234,7 +234,7 @@
             else 
                 echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
         }
-        echo '</div>';
+        echo '<div style="clear:both;"></div></div>';
 
         // RAMPA
         $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='ramp' ORDER BY Rola ASC";
@@ -252,7 +252,7 @@
             else 
                 echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
         }
-        echo '</div>';
+        echo '<div style="clear:both;"></div></div>';
 
         // GEOLOGIC
         $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='geol' ORDER BY Rola ASC";
@@ -270,7 +270,7 @@
             else 
                 echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
         }
-        echo '</div>';
+        echo '<div style="clear:both;"></div></div>';
 
         // KADRY
         $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='kadr' ORDER BY Rola ASC";
@@ -288,7 +288,7 @@
             else 
                 echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
         }
-        echo '</div>';
+        echo '<div style="clear:both;"></div></div>';
 
 
 
@@ -305,7 +305,7 @@
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
         }
-        echo '</div>';
+        echo '<div style="clear:both;"></div></div>';
 
         // PRACOWNICY
         $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Rola='prac' ORDER BY Rola ASC";
@@ -320,7 +320,7 @@
                     echo "checked";
             echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
         }
-        echo '</div>';
+        echo '<div style="clear:both;"></div></div>';
 
         // KONIEC DZIAŁY PRAWO
         echo '

@@ -44,7 +44,7 @@ else if(isset($_POST["log_login"]) && isset($_POST["log_password"]) && isset($_P
     <head>
         <meta charset="utf-8"/>
         <title>Zaloguj</title>
-        <link rel="stylesheet" href="style/main.css?version=0.1.1"/>
+        <link rel="stylesheet" href="style/main.css?version=0.2.0"/>
     </head>
     <body>
 
@@ -55,17 +55,16 @@ else if(isset($_POST["log_login"]) && isset($_POST["log_password"]) && isset($_P
         </header>
 
         <div class="index_info">
-            <h1 style="color:#0082C3; padding-top:10px;">Nowości na platformie!</h1>
-            <h5 style="color:#0082C3; padding-bottom:10px;">Aktualna wersja: 0.1.1</h5>
+            <h1 style="color:#0082C3; padding-top:10px;">Rozwijamy się!</h1>
+            <h5 style="color:#0082C3; padding-bottom:10px;">Aktualna wersja: 0.2.0</h5>
             <div class="index_info_text">
-                Dzięki wielkie za każdy feedback! Cieszę się, że działacie z platformą!<br>
-                W oparciu o wasze opinie dodałem kilka nowych elementów:<br><br>
+                Cały czas idziemy do przodu co mnie ogromnie cieszy!<br>
+                Przychodzę do was z kolejnymi nowościami:<br><br>
             <span style="font-size:90%; color:green;">
-                - niektóre opcje zadania teraz są schowane w przycisku "więcej opcji"<br>
-                - przypomnienie o zadaniach przychodzi teraz tylko gdy jest jakieś do wykonania<br>
-                - osoby, które zakończyły zadanie są wypisane w oknie zadania na zielono<br>
-                - drobna poprawa stylu strony<br>
-                - naprawa mniejszych i większych błędów<br><br>
+                - pinezka na zadaniu, które jest nowe, lub ma nową zawartość<br>
+                - nowy styl podziału osób przy dodawaniu nowego zadania<br>
+                - nowy styl dodawania osób<br>
+                - przystosowanie kolejnych komponentów do obsługi większej ilości zadań<br><br>
             </span>
                 <span style="color:gray;">
                 Platforma jest nadal rozwijana, daj znać o każdym problemie w sekcji "Zgłoś Usterkę"!<br>
