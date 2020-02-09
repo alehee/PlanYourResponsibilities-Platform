@@ -5,7 +5,7 @@ require_once('additional/footer.php');
 
 if(isset($_SESSION["log"]))
 {
-    header("location:user.php");
+    header("location:main.php");
     exit();
 }
 
@@ -28,7 +28,7 @@ else if(isset($_POST["log_login"]) && isset($_POST["log_password"]) && isset($_P
         $_SESSION["city"]=$city;
         $_SESSION["dzial"]=$res["Dzial"];
         $_SESSION["rola"]=$res["Rola"];
-        header("location:user.php");
+        header("location:main.php");
         exit();
     }
 

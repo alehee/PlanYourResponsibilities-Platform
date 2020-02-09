@@ -12,6 +12,7 @@ if(isset($_POST['addperson_who']) && isset($_SESSION["the_job"])){
 	
 	$addperson_title;
 	$addperson_info;
+	$addperson_type;
 	$addperson_whoadd;
 	$addperson_forwho=$addperson_who;
 	$addperson_deadline;
@@ -22,6 +23,7 @@ if(isset($_POST['addperson_who']) && isset($_SESSION["the_job"])){
 	while($res = mysqli_fetch_array($que)){
 		$addperson_title=$res["Topic"];
 		$addperson_info=$res["Info"];
+		$addperson_type=$res["Type"];
 		$addperson_whoadd=$res["WhoAdd"];
 		$addperson_deadline=$res["End"];
 		$addperson_length = $res["Length"];
@@ -56,7 +58,7 @@ Zaloguj się na plandeca.pl i sprawdź szczegóły!
 Wygenerowano: ".date("Y-m-d G:i:s");
     $headers = "From: ".$from;
 	
-	$sql = "INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Length, Start, Visited, Visited_Admin, End) VALUES (NULL, '$addperson_the_job', '$addperson_title', '$addperson_info', '$addperson_whoadd', '$addperson_forwho', '$addperson_length', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '$addperson_deadline')";
+	$sql = "INSERT INTO job(ID, The_ID, Topic, Info, Type, WhoAdd, ForWho, Length, Start, Visited, Visited_Admin, End) VALUES (NULL, '$addperson_the_job', '$addperson_title', '$addperson_info', '$addperson_type', '$addperson_whoadd', '$addperson_forwho', '$addperson_length', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '$addperson_deadline')";
 	$conn -> query($sql);
 
 	$sql = "DELETE FROM done WHERE ForWho='$addperson_forwho' AND The_ID='$addperson_the_job'";
@@ -71,11 +73,14 @@ Wygenerowano: ".date("Y-m-d G:i:s");
 
 	$conn -> close();
 	unset($_SESSION["the_job"]);
-    unset($_POST["addperson_who"]);
-    header("location:../user.php");
+	unset($_POST["addperson_who"]);
+	if($addperson_type=="def")
+		header("location:../user.php");
+	else
+		header("location:../user_staff.php");
 }
 
 else
-    header("location:../user.php");
+    header("location:../main.php");
 
 ?>

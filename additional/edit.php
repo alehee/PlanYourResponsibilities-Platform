@@ -24,5 +24,6 @@ if(isset($_POST["edit_title"]) && isset($_POST["edit_info"]) && isset($_POST["ed
 }
 
 $conn -> close();
-header("location:../user.php");
+
+header("location:../main.php");
 ?>

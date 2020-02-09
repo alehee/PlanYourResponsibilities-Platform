@@ -87,10 +87,10 @@ $conn -> close();
 					$sort = $_SESSION["sort"];
 					
 					if($sort=="Deadline")
-						$sql="SELECT * FROM job WHERE ForWho=$id ORDER BY End ASC";
+						$sql="SELECT * FROM job WHERE ForWho=$id AND Type='def' ORDER BY End ASC";
 					
 					else
-						$sql="SELECT * FROM job WHERE ForWho=$id ORDER BY Length DESC, End ASC";
+						$sql="SELECT * FROM job WHERE ForWho=$id AND Type='def' ORDER BY Length DESC, End ASC";
 					
                     $que=mysqli_query($conn, $sql);
 
@@ -293,10 +293,10 @@ $conn -> close();
             $conn->query("SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
 
 			if($_SESSION["sort"]=="Deadline")
-            $sql = "SELECT * FROM job WHERE WhoAdd='$my_id_nadane' AND ForWho!='$my_id_nadane' ORDER BY End ASC";
+            $sql = "SELECT * FROM job WHERE WhoAdd='$my_id_nadane' AND ForWho!='$my_id_nadane' AND Type='def' ORDER BY End ASC";
 		
 			else
-				$sql = "SELECT * FROM job WHERE WhoAdd='$my_id_nadane' AND ForWho!='$my_id_nadane' ORDER BY Length DESC, End ASC";
+				$sql = "SELECT * FROM job WHERE WhoAdd='$my_id_nadane' AND ForWho!='$my_id_nadane' AND Type='def' ORDER BY Length DESC, End ASC";
 		
             $que = $conn -> query($sql);
             while($res = mysqli_fetch_array($que)){
@@ -1153,10 +1153,3 @@ $conn -> close();
 
     </script>
 </html>
-
-<!-- Funkcje, które są potrzebne tylko tutaj --->
-<?php
-
-    
-
-?>

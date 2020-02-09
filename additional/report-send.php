@@ -35,13 +35,13 @@ Wygenerowano: ".date("Y-m-d G:i:s");
 
 	$conn -> close();
     unset($_POST["report_info"]);
-    header("location:../user.php");
+    header("location:../main.php");
 }
 
 else{
 	$_SESSION["error"]="Wystąpił błąd podczas wysyłania maila!";
 
-	header("location:../user.php");
+	header("location:../main.php");
 }
 
 ?>

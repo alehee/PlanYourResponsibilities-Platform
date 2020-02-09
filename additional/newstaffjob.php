@@ -22,7 +22,7 @@ if(isset($_POST['new_title'])){
 
     $new_title = $_POST['new_title'];
     $new_info = $_POST['new_info'];
-    $new_type = "def";
+    $new_type = "sta";
     $new_deadline = $_POST['new_deadline'];
     $new_whoadd = $_SESSION['id'];
     $new_length = $_POST['new_length'];
@@ -50,7 +50,7 @@ if(isset($_POST['new_title'])){
     $mail_whoadd = $res["Imie"]." ".$res["Nazwisko"];
 
     $from = "PlanDeca@riverlakestudios.pl";
-    $subject = "[PLANDECA] Nowe zadanie!";
+    $subject = "[PLANDECA] Nowe zadanie kadrowe!";
 $message = "
 Od: ".$mail_whoadd."
 Długość: ".$mail_length."

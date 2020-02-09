@@ -23,6 +23,7 @@
 
             $topic;
             $info;
+            $type;
             $whoadd;
             $length;
             $end;
@@ -32,12 +33,13 @@
             while($res = mysqli_fetch_array($que)){
                 $topic = $res["Topic"];
                 $info = $res["Info"];
+                $type = $res["Type"];
                 $whoadd = $res["WhoAdd"];
                 $length = $res["Length"];
                 $end = $res["End"];
             }
 
-            $sql="INSERT INTO job(ID, The_ID, Topic, Info, WhoAdd, ForWho, Length, Start, Visited, Visited_Admin, End) VALUES (NULL, '$undone_job_id', '$topic', '$info', '$whoadd', '$undone_user_id', '$length', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '$end')";
+            $sql="INSERT INTO job(ID, The_ID, Topic, Info, Type, WhoAdd, ForWho, Length, Start, Visited, Visited_Admin, End) VALUES (NULL, '$undone_job_id', '$topic', '$info', '$type', '$whoadd', '$undone_user_id', '$length', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '$end')";
             $conn -> query($sql);
         }
 
@@ -46,6 +48,6 @@
 
         $conn -> close();
         // NIE DZIAŁA HEADER
-        echo "<script>nav_classic_link('user.php')</script>";
+        echo "<script>nav_classic_link('main.php')</script>";
     }
 ?>

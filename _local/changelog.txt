@@ -1,3 +1,11 @@
+0.3.0 --- 
+
+Nowości:
+- panel kadr na platformie!
+
+Naprawione błędy:
+- linki kierowników pojawiały się innym użytkownikom
+
 0.2.0 --- 06.02.2020
 
 Nowości:

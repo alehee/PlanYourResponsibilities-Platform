@@ -1128,13 +1128,7 @@ p{
 
 
 .main{
-    width: 98%;
-    margin: 10px 1%;
-    min-height: 200px;
-    text-align: center;
-    background-color: #e6e6e6;
-    border-radius: 20px;
-    padding: 20px;
+    
 }
 
 
@@ -1305,6 +1299,10 @@ footer{
     .job:nth-child(4n+2){
         clear: both;
     }
+
+    .main .job:nth-child(6){
+        display: none;
+    }
             
     .job{
         width: 24%;
@@ -1333,6 +1331,14 @@ footer{
     @media screen and (min-width: 801px) and (max-width: 1100px){
     .job:nth-child(3n+2){
         clear: both;
+    }
+
+    .main .job:nth-child(5){
+        display: none;
+    }
+
+    .main .job:nth-child(6){
+        display: none;
     }
         
     .job{
@@ -1395,6 +1401,18 @@ footer{
     @media screen and (min-width: 401px) and (max-width: 800px){
     .job:nth-child(2n+2){
         clear: both;
+    }
+
+    .main .job:nth-child(4){
+        display: none;
+    }
+
+    .main .job:nth-child(5){
+        display: none;
+    }
+
+    .main .job:nth-child(6){
+        display: none;
     }
     
     .job{
@@ -1459,6 +1477,22 @@ footer{
     @media screen and (max-width: 400px){
     .job:nth-child(n){
          clear: both;
+    }
+
+    .main .job:nth-child(3){
+        display: none;
+    }
+
+    .main .job:nth-child(4){
+        display: none;
+    }
+
+    .main .job:nth-child(5){
+        display: none;
+    }
+
+    .main .job:nth-child(6){
+        display: none;
     }
     
     .job{
