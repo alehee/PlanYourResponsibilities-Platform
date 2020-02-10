@@ -2,6 +2,8 @@
 
 Nowości:
 - panel kadr na platformie!
+- panel główny, który pokazuje zadania z najszybszym deadlinem
+- usprawnione logowanie
 
 Naprawione błędy:
 - linki kierowników pojawiały się innym użytkownikom

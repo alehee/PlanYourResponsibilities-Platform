@@ -1131,6 +1131,30 @@ p{
     
 }
 
+#main_link_button{
+    clear: both;
+    min-width: 100px;
+    max-width: 300px;
+    min-height: 30px;
+    padding: 10px;
+    margin: 5px auto;
+    margin-top: -20px;
+    border-radius: 20px;
+    background-color: #0082C3;
+    border: solid 2px #0082C3;
+    color: white;
+    font-size: 70%;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+#main_link_button:hover{
+    background-color: white;
+    color: #0082C3;
+    transition: 0.1s;
+}
+
 
 
 .staff{

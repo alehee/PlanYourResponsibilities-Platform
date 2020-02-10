@@ -35,6 +35,14 @@ if(isset($_SESSION["error"])){
         <!-- Pasek z linkami --->
         <?php echo $navbar ?>
 
+        <!-- Popup okienko zadań -->
+        <div id="okno_background" onclick="job_popup()">
+            <div class="okno_radius">
+            <div id="okno_job" class='okno_job_web' onclick="job_okno()">
+            </div>
+            </div>
+        </div>
+
         <header>
             <div id="nav_handle"><img src='icons/menu-3-white.png' onclick="nav_open()"/></div>
             <h1 style="width:60%; float:left;">PlanDeca</h1><br>
@@ -48,6 +56,7 @@ if(isset($_SESSION["error"])){
             <!-- Panel z zadaniami ogólnymi --->
             <div id="div_aktualne">
                 <div><h2>ZADANIA OGÓLNE</h2></div>
+                <div id="main_link_button" onclick="nav_classic_link('user.php')">PANEL ZADAŃ OGÓLNYCH</div>
                 <?php
                     require_once("connection.php");
                     $conn = mysqli_connect($host, $user_db, $password_db, $db_name);
@@ -56,21 +65,19 @@ if(isset($_SESSION["error"])){
                     mysqli_query($conn, "SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
 
                     $id = $_SESSION["id"];
+                    $job_number = 0;
 
                     if(isset($conn))
                     {
                         $sort = $_SESSION["sort"];
                         
-                        if($sort=="Deadline")
-                            $sql="SELECT * FROM job WHERE ForWho=$id AND Type='def' ORDER BY End ASC LIMIT 5";
-                        
-                        else
-                            $sql="SELECT * FROM job WHERE ForWho=$id AND Type='def' ORDER BY Length DESC, End ASC LIMIT 5";
-                        
+                        $sql="SELECT * FROM job WHERE ForWho=$id AND Type='def' ORDER BY End ASC LIMIT 5";
                         $que=mysqli_query($conn, $sql);
 
                         while($res=mysqli_fetch_array($que))
                         {
+                            $job_number++;
+
                             $days_left = how_many_days_left($res["End"]);
                             $div_job_top="";
 
@@ -238,6 +245,11 @@ if(isset($_SESSION["error"])){
                             echo $div_job_topic_bottom;
                             echo $div_job_bottom;
                         }
+                    }
+
+                    if($job_number == 0){
+                        echo "<div class='job' style='background-color:#f2f2f2; height:200px; border:2px dashed gray;'></div>";
+                        echo "<div style='clear:both;'></div>";
                     }
 
                     mysqli_close($conn);
@@ -247,6 +259,7 @@ if(isset($_SESSION["error"])){
             <!-- Panel z zadaniami kadrowymi --->
             <div id="div_aktualne">
                 <div><h2>ZADANIA KADROWE</h2></div>
+                <div id="main_link_button" onclick="nav_classic_link('user_staff.php')">PANEL ZADAŃ KADROWYCH</div>
                 <?php
                     require_once("connection.php");
                     $conn = mysqli_connect($host, $user_db, $password_db, $db_name);
@@ -254,22 +267,21 @@ if(isset($_SESSION["error"])){
                     mysqli_query($conn, "SET CHARSET utf8");
                     mysqli_query($conn, "SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
 
+                    $job_number = 0;
+
                     $id = $_SESSION["id"];
 
                     if(isset($conn))
                     {
                         $sort = $_SESSION["sort"];
                         
-                        if($sort=="Deadline")
-                            $sql="SELECT * FROM job WHERE ForWho=$id AND Type='sta' ORDER BY End ASC LIMIT 5";
-                        
-                        else
-                            $sql="SELECT * FROM job WHERE ForWho=$id AND Type='sta' ORDER BY Length DESC, End ASC LIMIT 5";
-                        
+                        $sql="SELECT * FROM job WHERE ForWho=$id AND Type='sta' ORDER BY End ASC LIMIT 5";
                         $que=mysqli_query($conn, $sql);
 
                         while($res=mysqli_fetch_array($que))
                         {
+                            $job_number++;
+
                             $days_left = how_many_days_left($res["End"]);
                             $div_job_top="";
 
@@ -439,9 +451,243 @@ if(isset($_SESSION["error"])){
                         }
                     }
 
+                    if($job_number == 0){
+                        echo "<div class='job' style='background-color:#f2f2f2; height:200px; border:2px dashed gray;'></div>";
+                        echo "<div style='clear:both;'></div>";
+                    }
+
                     mysqli_close($conn);
                 ?>
             </div>
+
+            <!-- Panel z zadaniami nadanymi --->
+            <?php
+                $my_id_nadane = $_SESSION["id"];
+                // Czy istnieje takie zadanie
+                $exist = 1;
+                // Czy ten panel jest wymagany
+                $already = 0;
+                // Tablica istniejących zadań
+                $nadane_tab = array();
+
+                /*
+                    JAK DZIAŁA KOD?
+                    Sprawdza czy istnieje zadanie, które nadaliśmy my.
+                    Jeżeli tak to te zadania są filtrowane czy to my jesteśmy dodani jako wykonawcy. 
+                    Jeżeli jest przynajmniej jedno to wtedy ukazuje się sekcja.
+                */
+
+                require_once("connection.php");
+                $conn = @new mysqli($host, $user_db, $password_db, $db_name);
+
+                $job_number = 0;
+
+                $conn->query("SET CHARSET utf8");
+                $conn->query("SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
+
+                $sql = "SELECT * FROM job WHERE WhoAdd='$my_id_nadane' AND ForWho!='$my_id_nadane' ORDER BY End ASC";
+                $que = $conn -> query($sql);
+
+                echo '<div id="div_nadane">';
+                echo '<div><h2>ZADANIA NADANE</h2></div>';
+
+                while($res = mysqli_fetch_array($que)){
+                    $the_id=$res["The_ID"];
+                    $temp_sql = "SELECT ID FROM job WHERE The_ID='$the_id' AND ForWho='$my_id_nadane'";
+                    $temp_que = $conn -> query($temp_sql);
+                    while($temp = mysqli_fetch_array($temp_que))
+                        $exist=0;
+
+                    foreach($nadane_tab as $nadane_id){
+                        if($nadane_id == $the_id)
+                            $exist=0;
+                    }
+
+                    if($exist==1 && $job_number<5){
+                        $job_number++;
+
+                        array_push($nadane_tab, $the_id);
+
+                        $days_left = how_many_days_left($res["End"]);
+                        $div_job_top="";
+
+                        // NIEODCZYTANE WIADOMOŚCI I CZY JEST NOWE
+                        $the_id_chat_msg = $res["The_ID"];
+                        if($id != $res["WhoAdd"])
+                            $chat_msg_visited = $res["Visited"];
+                        else
+                            $chat_msg_visited = $res["Visited_Admin"];
+                        $unread_msg_exist = 0;
+                        $temp_sql="SELECT ID FROM chat WHERE The_ID='$the_id_chat_msg' AND SentFrom!=$id AND Date > '$chat_msg_visited' ORDER BY Date DESC";
+                        $temp_que = mysqli_query($conn, $temp_sql);
+                        while($temp_res = mysqli_fetch_array($temp_que))
+                            $unread_msg_exist = 1;
+
+                        $temp_sql = "SELECT ID FROM job WHERE The_ID='$the_id_chat_msg' AND WhoAdd!=$id AND Start >= '$chat_msg_visited'";
+                        $temp_que = mysqli_query($conn, $temp_sql);
+                        while($temp_res = mysqli_fetch_array($temp_que))
+                            $unread_msg_exist = 1;
+
+                        if($days_left<=0){
+                            $div_job_top='<div class="job_red job" id="'.$res["The_ID"].'">';
+                            if($unread_msg_exist == 1)
+                                    $div_job_top=$div_job_top."<img class='job_unread_msg' src='icons/pin-red.png'/>";
+                            $div_job_topic_top = '<div class="job_topic_justbg"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
+                            $div_job_topic_bottom = '</div></div>';
+                        }
+                        else if($days_left<3){
+                            $div_job_top='<div class="job_yellow job" id="'.$res["The_ID"].'">';
+                            if($unread_msg_exist == 1)
+                                    $div_job_top=$div_job_top."<img class='job_unread_msg' src='icons/pin-red.png'/>";
+                            $div_job_topic_top = '<div class="job_topic_justbg"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
+                            $div_job_topic_bottom = '</div></div>';
+                        }
+                        else{
+                            $div_job_top='<div class="job" id="'.$res["The_ID"].'">';
+                            if($unread_msg_exist == 1)
+                                    $div_job_top=$div_job_top."<img class='job_unread_msg' src='icons/pin-red.png'/>";
+                            $div_job_topic_top = '<div class="job_topic_justbg"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
+                            $div_job_topic_bottom = '</div></div>';
+                        }
+
+                        $div_job_title_top = '<div class="job_title" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
+                        $div_job_title_bottom = '</div>';
+                        $div_job_bottom = '</div>';
+
+                        echo $div_job_top;
+                        echo $div_job_title_top;
+
+                        // TYTUŁ
+                        $topic = $res["Topic"];
+                        $bufor = "";
+                        if(strlen($topic)>200)
+                        {
+                                for($i=0; $i<200; $i++)
+                                {
+                                    if($i>180 && $topic[$i]==" ")
+                                    {
+                                        echo "...";
+                                        $i=199;
+                                    }
+                                    else 
+                                        echo $topic[$i];
+                                }
+                        }
+                        else
+                            $bufor=$topic;
+
+                        echo "<b>".$bufor."</b><br><br>";
+                        // -----
+
+                        echo $div_job_title_bottom;
+                        echo $div_job_topic_top;
+
+                        // DATA KOŃCA ZADANIA
+                        echo "<div class='job_small_info_plus'><img src='icons/hourglass.png'/><span>".proper_date($res["End"])."</span></div>";
+                        // -----
+
+                        // ILOŚĆ OSÓB W ZADANIU
+                        $the_id = $res["The_ID"];
+                        $how_many_per=0;
+                        $temp_sql="SELECT ForWho FROM job WHERE The_ID=$the_id";
+                        $temp_que=mysqli_query($conn, $temp_sql);
+                        while($temp_res = mysqli_fetch_array($temp_que)){
+                            $how_many_per++;
+                        }
+                        $temp_sql="SELECT ForWho FROM done WHERE The_ID=$the_id";
+                        $temp_que=mysqli_query($conn, $temp_sql);
+                        while($temp_res = mysqli_fetch_array($temp_que)){
+                            $how_many_per++;
+                        }
+                        echo "<div class='job_small_info'/><img src='icons/users.png'/>".$how_many_per."</div>";
+                        // -----
+
+                        // DŁUGOŚĆ ZADANIA
+                        if($res["Length"]==1){
+                            echo "<div class='job_small_info'><img src='icons/speed-1.png' style='padding:0; padding-left:12px;'/></div>";
+                        }
+                        else if($res["Length"]==2){
+                            echo "<div class='job_small_info'><img src='icons/speed-2.png' style='padding:0; padding-left:12px;'/></div>";
+                        }
+                        else{
+                            echo "<div class='job_small_info'><img src='icons/speed-3.png' style='padding:0; padding-left:12px;'/></div>";
+                        }
+                        // -----
+
+                        // INFORMACJE DODATKOWE W ZADANIU
+                        $job_info = $res["Info"];
+                        $bufor = "";
+
+                        if(strlen($job_info)>100)
+                        {
+                                for($i=0; $i<100; $i++)
+                                {
+                                    if($i>80 && $job_info[$i]==" ")
+                                    {
+                                        $bufor=$bufor."...";
+                                        $i=99;
+                                    }
+                                    else 
+                                        $bufor=$bufor.$job_info[$i];
+                                }
+                        }
+                        else
+                            $bufor=$job_info;
+
+                        echo "<div class='job_info'>".$bufor."</div>";
+                        echo "<div style='clear:both;'></div>";
+                        // -----
+
+                        // KTO DODAŁ ZADANIE
+                        echo "<div style='clear:both;'><div class='job_small_info_plus' style='width:75%;'><img src='icons/user.png'/>".name_by_id($res["WhoAdd"])."</div>";
+                        // -----
+
+                        // LICZNIK ZAŁĄCZNIKÓW
+                        $how_many_atta=0;
+                        $the_id = $res["The_ID"];
+                        $string = $res["Info"];
+                        $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
+                        $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
+                        $bufor = $string;
+                        while($pos = strpos($bufor, "a href=")){
+                            $bufor[$pos]="x";
+                            $how_many_atta++;
+                        }
+                        $temp_sql="SELECT Message FROM chat WHERE The_ID='$the_id'";
+                        $temp_que=mysqli_query($conn, $temp_sql);
+                        while($temp_res = mysqli_fetch_array($temp_que)){
+                            $string=$temp_res["Message"];
+                            $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
+                            $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
+                            $bufor = $string;
+                            while($pos = strpos($bufor, "a href=")){
+                                $bufor[$pos]="x";
+                                $how_many_atta++;
+                            }
+                        }
+                        echo "<div class='job_small_info' style='width:20%'><img src='icons/attachment.png'/>".$how_many_atta."</div>";
+                        // -----
+
+                        echo "</div>";
+                        echo "<div style='clear:both;'></div>";
+
+                        echo $div_job_topic_bottom;
+                        echo $div_job_bottom;
+                    }
+
+                    $exist=1;
+                }
+
+                if($job_number == 0){
+                    echo "<div class='job' style='background-color:#f2f2f2; height:200px; border:2px dashed gray;'></div>";
+                    echo "<div style='clear:both;'></div>";
+                }
+                
+                if($already==1)
+                    echo '</div>';
+
+                $conn -> close();
+            ?>
 
         </div>
 
@@ -460,7 +706,11 @@ if(isset($_SESSION["error"])){
 
     <script>
         // Musi tu być bo nie działa skrypt
+        document.getElementById("okno_background").style.display="none";
         document.getElementById("nav_background").style.display="none";
+        var new_job_forwho_toggle_variable = 0;
+        var new_job_forwho_close_open_variable = 0;
+        var new_job_forwho_peoplenumber = 1;
 
         // Skrypty nav
 
@@ -541,6 +791,103 @@ if(isset($_SESSION["error"])){
 
                 timer.innerHTML=<?php echo '"'.proper_date(date("Y-m-d")).' - "+'; ?>full_day+" - "+full_time;
             }, 1000, 1000)
+        }
+
+        // -----
+        // Skrypty dla aktywnych zadań
+
+        //Funkcje obsługi okienka z zadaniami
+        var okno=0;
+        function job_okno(){
+            okno=1;
+        };
+
+        function job_popup(elem){
+            if(document.getElementById("okno_background").style.display=="none"){
+                document.getElementById("okno_background").style.display="inline";
+                document.body.style.overflowY="hidden";
+                new_job_forwho_toggle_variable = 0;
+                new_job_forwho_close_open_variable = 0;
+                new_job_forwho_peoplenumber = 1;
+                $.get("additional/processor.php", {elem: elem}, function(data){
+                    $('#okno_job').html(data);
+                });
+            }
+            else if(okno==0){
+                document.body.style.overflowY="auto";
+                document.getElementById("okno_background").style.display="none";
+                document.getElementById("okno_job").style.backgroundColor="#0082C3";
+                document.getElementById("okno_job").style.border="5px solid #0082C3";
+            }
+            new_job_forwho_toggle_option = 0;
+            okno=0;
+        }
+		
+		//Funkcja dodaje osoby do zadania
+		function job_addperson(addperson_id){
+			$.get("additional/processor.php", {addperson_id: addperson_id}, function(data){
+                    $('#okno_job').html(data);
+            });
+		}
+
+        //Funkcja usuwa osoby z zadania
+		function job_delperson(delperson_id){
+			$.get("additional/processor.php", {delperson_id: delperson_id}, function(data){
+                    $('#okno_job').html(data);
+            });
+		}
+
+        //Funkcja usuwa całe zadanie
+		function job_deljob(deljob_id){
+            var can_delete = confirm("Czy na pewno chcesz trwale usunąć te zadanie (nie trafi ono do wykonanych zadań)?");
+            
+            if(can_delete==true){
+                $.get("additional/deljob.php", {deljob_id: deljob_id}, function(data){
+                        $('#thrash').html(data);
+                });
+            }
+		}
+		
+		//Funkcja wysyła wiadomość na chat
+		function okno_sentmessage(id){
+			var message = id+"~"+document.getElementById("okno_chat_chatbox").value;
+			
+			$.get("additional/chat.php", {message: message}, function(data){
+                    $('#thrash').html(data);
+            });
+		}
+
+        //Funkcja usuwa wiadomość z chatu
+        function job_chatmsqdelete(msg_id){
+            var can_delete = confirm("Czy na pewno chcesz usunąć tę wiadomość z chatu?");
+            
+            if(can_delete==true){
+                $.get("additional/deletemsg.php", {msg_id:msg_id}, function(data){
+                    $('#thrash').html(data);
+                });
+            }
+        }
+
+        //Funkcja edytuje zadanie
+        function job_edit(edit_id){
+            $.get("additional/processor.php", {edit_id:edit_id}, function(data){
+                $('#okno_job').html(data);
+            });
+        }
+
+        // -----
+        // Skrypty zakończonych zadań
+
+        function job_done(id){
+            $.get("additional/done.php", {id: id}, function(data){
+                $("#thrash").html(data);
+            });
+        }
+
+        function job_undone(id){
+            $.get("additional/undone.php", {id: id}, function(data){
+                $("#thrash").html(data);
+            })
         }
 
         // -----

@@ -17,19 +17,25 @@ else if(isset($_POST["log_login"]) && isset($_POST["log_password"]) && isset($_P
 
     require_once "connection.php";
     $conn = mysqli_connect($host, $user_db, $password_db, $db_name);
-    $sql = "SELECT ID, Login, Dzial, Rola FROM users WHERE Login='$login' AND Password='$pass'";
+    $sql = "SELECT ID, Login, Password, Dzial, Rola FROM users WHERE Login='$login'";
     $que = mysqli_query($conn, $sql);
     $res = mysqli_fetch_array($que);
 
     if($res>0)
     {
-        $_SESSION["log"]=$login;
-        $_SESSION["id"]=$res["ID"];
-        $_SESSION["city"]=$city;
-        $_SESSION["dzial"]=$res["Dzial"];
-        $_SESSION["rola"]=$res["Rola"];
-        header("location:main.php");
-        exit();
+        if(strcmp($pass, $res["Password"]) == 0){
+            $_SESSION["log"]=$login;
+            $_SESSION["id"]=$res["ID"];
+            $_SESSION["city"]=$city;
+            $_SESSION["dzial"]=$res["Dzial"];
+            $_SESSION["rola"]=$res["Rola"];
+            header("location:main.php");
+            exit();
+        }
+        else
+        {
+            echo '<script>document.getElementById("alert").innerHTML="Błąd logowania!"</script>';
+        }
     }
 
     else
