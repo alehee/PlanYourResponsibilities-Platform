@@ -647,6 +647,7 @@ p{
     border-radius: 20px;
     background-color: #0082C3;
     margin:5px 0;
+    text-align: center;
     color: white;
     cursor: pointer;
 }
@@ -1298,6 +1299,10 @@ footer{
         clear: both;
     }
 
+    .main .job{
+        clear: none;
+    }
+
     #okno_job{
         width: 60%;
         left: 20%;
@@ -1324,7 +1329,11 @@ footer{
         clear: both;
     }
 
-    .main .job:nth-child(6){
+    .main .job{
+        clear: none;
+    }
+
+    .main .job:nth-child(4n+7){
         display: none;
     }
             
@@ -1357,11 +1366,15 @@ footer{
         clear: both;
     }
 
-    .main .job:nth-child(5){
+    .main .job{
+        clear: none;
+    }
+
+    .main .job:nth-child(4n+6){
         display: none;
     }
 
-    .main .job:nth-child(6){
+    .main .job:nth-child(4n+7){
         display: none;
     }
         
@@ -1427,15 +1440,19 @@ footer{
         clear: both;
     }
 
-    .main .job:nth-child(4){
+    .main .job{
+        clear: none;
+    }
+
+    .main .job:nth-child(4n+5){
         display: none;
     }
 
-    .main .job:nth-child(5){
+    .main .job:nth-child(4n+6){
         display: none;
     }
 
-    .main .job:nth-child(6){
+    .main .job:nth-child(4n+7){
         display: none;
     }
     
@@ -1503,19 +1520,23 @@ footer{
          clear: both;
     }
 
-    .main .job:nth-child(3){
+    .main .job{
+        clear: none;
+    }
+
+    .main .job:nth-child(4n+4){
         display: none;
     }
 
-    .main .job:nth-child(4){
+    .main .job:nth-child(4n+5){
         display: none;
     }
 
-    .main .job:nth-child(5){
+    .main .job:nth-child(4n+6){
         display: none;
     }
 
-    .main .job:nth-child(6){
+    .main .job:nth-child(4n+7){
         display: none;
     }
     

@@ -71,164 +71,154 @@ if(isset($_SESSION["error"])){
                     {
                         $sort = $_SESSION["sort"];
                         
-                        $sql="SELECT * FROM job WHERE ForWho=$id AND Type='def' ORDER BY End ASC LIMIT 5";
+                        $sql="SELECT * FROM job WHERE ForWho=$id AND Type='def' ORDER BY End ASC";
                         $que=mysqli_query($conn, $sql);
 
                         while($res=mysqli_fetch_array($que))
                         {
                             $job_number++;
 
-                            $days_left = how_many_days_left($res["End"]);
-                            $div_job_top="";
+                            if($job_number<6){
+                                $days_left = how_many_days_left($res["End"]);
+                                $div_job_top="";
 
-                            // NIEODCZYTANE WIADOMOŚCI I CZY JEST NOWE
-                            $the_id_chat_msg = $res["The_ID"];
-                            if($id != $res["WhoAdd"])
-                                $chat_msg_visited = $res["Visited"];
-                            else
-                                $chat_msg_visited = $res["Visited_Admin"];
-                            $unread_msg_exist = 0;
-                            $temp_sql="SELECT ID FROM chat WHERE The_ID='$the_id_chat_msg' AND SentFrom!=$id AND Date > '$chat_msg_visited' ORDER BY Date DESC";
-                            $temp_que = mysqli_query($conn, $temp_sql);
-                            while($temp_res = mysqli_fetch_array($temp_que))
-                                $unread_msg_exist = 1;
+                                // NIEODCZYTANE WIADOMOŚCI I CZY JEST NOWE
+                                $the_id_chat_msg = $res["The_ID"];
+                                if($id != $res["WhoAdd"])
+                                    $chat_msg_visited = $res["Visited"];
+                                else
+                                    $chat_msg_visited = $res["Visited_Admin"];
+                                $unread_msg_exist = 0;
+                                $temp_sql="SELECT ID FROM chat WHERE The_ID='$the_id_chat_msg' AND SentFrom!=$id AND Date > '$chat_msg_visited' ORDER BY Date DESC";
+                                $temp_que = mysqli_query($conn, $temp_sql);
+                                while($temp_res = mysqli_fetch_array($temp_que))
+                                    $unread_msg_exist = 1;
 
-                            $temp_sql = "SELECT ID FROM job WHERE The_ID='$the_id_chat_msg' AND WhoAdd!=$id AND Start >= '$chat_msg_visited'";
-                            $temp_que = mysqli_query($conn, $temp_sql);
-                            while($temp_res = mysqli_fetch_array($temp_que))
-                                $unread_msg_exist = 1;
+                                $temp_sql = "SELECT ID FROM job WHERE The_ID='$the_id_chat_msg' AND WhoAdd!=$id AND Start >= '$chat_msg_visited'";
+                                $temp_que = mysqli_query($conn, $temp_sql);
+                                while($temp_res = mysqli_fetch_array($temp_que))
+                                    $unread_msg_exist = 1;
 
-                            if($days_left<=0){
-                                $div_job_top='<div class="job_red job" id="'.$res["The_ID"].'">';
-                                if($unread_msg_exist == 1)
-                                    $div_job_top=$div_job_top."<img class='job_unread_msg' src='icons/pin-red.png'/>";
-                                $div_job_topic_top = '<div class="job_topic_justbg"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
-                                $div_job_topic_bottom = '</div></div><input type="button" class="job_button" id="'.$res["The_ID"].'" value="Zakończ" onclick="job_done(this.id)"/>';
-                            }
-                            else if($days_left<3){
-                                $div_job_top='<div class="job_yellow job" id="'.$res["The_ID"].'">';
-                                if($unread_msg_exist == 1)
-                                    $div_job_top=$div_job_top."<img class='job_unread_msg' src='icons/pin-red.png'/>";
-                                $div_job_topic_top = '<div class="job_topic_justbg"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
-                                $div_job_topic_bottom = '</div></div><input type="button" class="job_button" id="'.$res["The_ID"].'" value="Zakończ" onclick="job_done(this.id)"/>';
-                            }
-                            else{
-                                $div_job_top='<div class="job" id="'.$res["The_ID"].'">';
-                                if($unread_msg_exist == 1)
-                                    $div_job_top=$div_job_top."<img class='job_unread_msg' src='icons/pin-red.png'/>";
-                                $div_job_topic_top = '<div class="job_topic_justbg"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
-                                $div_job_topic_bottom = '</div><input type="button" class="job_button" id="'.$res["The_ID"].'" value="Zakończ" onclick="job_done(this.id)"/></div>';
-                            }
-
-                            $div_job_title_top = '<div class="job_title" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
-                            $div_job_title_bottom = '</div>';
-                            $div_job_bottom = '</div>';
-
-                            echo $div_job_top;
-                            echo $div_job_title_top;
-
-                            // TYTUŁ
-                            $topic = $res["Topic"];
-                            $bufor = "";
-                            if(strlen($topic)>100)
-                            {
-                                echo "<b>";
-                                for($i=0; $i<100; $i++)
-                                {
-                                    if($i>80 && $topic[$i]==" ")
-                                    {
-                                        $bufor=$bufor."...</b>";
-                                        $i=99;
-                                    }
-                                    else 
-                                        $bufor=$bufor.$topic[$i];
+                                if($days_left<=0){
+                                    $div_job_top='<div class="job_red job" id="'.$res["The_ID"].'">';
+                                    if($unread_msg_exist == 1)
+                                        $div_job_top=$div_job_top."<img class='job_unread_msg' src='icons/pin-red.png'/>";
+                                    $div_job_topic_top = '<div class="job_topic_justbg"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
+                                    $div_job_topic_bottom = '</div></div><input type="button" class="job_button" id="'.$res["The_ID"].'" value="Zakończ" onclick="job_done(this.id)"/>';
                                 }
-                            }
-                            else
-                                $bufor=$topic;
+                                else if($days_left<3){
+                                    $div_job_top='<div class="job_yellow job" id="'.$res["The_ID"].'">';
+                                    if($unread_msg_exist == 1)
+                                        $div_job_top=$div_job_top."<img class='job_unread_msg' src='icons/pin-red.png'/>";
+                                    $div_job_topic_top = '<div class="job_topic_justbg"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
+                                    $div_job_topic_bottom = '</div></div><input type="button" class="job_button" id="'.$res["The_ID"].'" value="Zakończ" onclick="job_done(this.id)"/>';
+                                }
+                                else{
+                                    $div_job_top='<div class="job" id="'.$res["The_ID"].'">';
+                                    if($unread_msg_exist == 1)
+                                        $div_job_top=$div_job_top."<img class='job_unread_msg' src='icons/pin-red.png'/>";
+                                    $div_job_topic_top = '<div class="job_topic_justbg"><div class="job_topic" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
+                                    $div_job_topic_bottom = '</div><input type="button" class="job_button" id="'.$res["The_ID"].'" value="Zakończ" onclick="job_done(this.id)"/></div>';
+                                }
 
-                            echo "<b>".$bufor."</b><br><br>";
-                            // -----
+                                $div_job_title_top = '<div class="job_title" id="'.$res["The_ID"].'" onclick="job_popup(this.id)">';
+                                $div_job_title_bottom = '</div>';
+                                $div_job_bottom = '</div>';
 
-                            echo $div_job_title_bottom;
-                            echo $div_job_topic_top;
+                                echo $div_job_top;
+                                echo $div_job_title_top;
 
-                            // DATA KOŃCA ZADANIA
-                            echo "<div class='job_small_info_plus'><img src='icons/hourglass.png'/><span>".proper_date($res["End"])."</span></div>";
-                            // -----
-
-                            // ILOŚĆ OSÓB W ZADANIU
-                            $the_id = $res["The_ID"];
-                            $how_many_per=0;
-                            $temp_sql="SELECT ForWho FROM job WHERE The_ID=$the_id";
-                            $temp_que=mysqli_query($conn, $temp_sql);
-                            while($temp_res = mysqli_fetch_array($temp_que)){
-                                $how_many_per++;
-                            }
-                            $temp_sql="SELECT ForWho FROM done WHERE The_ID=$the_id";
-                            $temp_que=mysqli_query($conn, $temp_sql);
-                            while($temp_res = mysqli_fetch_array($temp_que)){
-                                $how_many_per++;
-                            }
-                            echo "<div class='job_small_info'/><img src='icons/users.png'/>".$how_many_per."</div>";
-                            // -----
-
-                            // DŁUGOŚĆ ZADANIA
-                            if($res["Length"]==1){
-                                echo "<div class='job_small_info'><img src='icons/speed-1.png' style='padding:0; padding-left:12px;'/></div>";
-                            }
-                            else if($res["Length"]==2){
-                                echo "<div class='job_small_info'><img src='icons/speed-2.png' style='padding:0; padding-left:12px;'/></div>";
-                            }
-                            else{
-                                echo "<div class='job_small_info'><img src='icons/speed-3.png' style='padding:0; padding-left:12px;'/></div>";
-                            }
-                            // -----
-
-                            // INFORMACJE DODATKOWE W ZADANIU
-                            $job_info = $res["Info"];
-                            $bufor = "";
-
-                            if(strlen($job_info)>200)
-                            {
-                                    for($i=0; $i<200; $i++)
+                                // TYTUŁ
+                                $topic = $res["Topic"];
+                                $bufor = "";
+                                if(strlen($topic)>100)
+                                {
+                                    echo "<b>";
+                                    for($i=0; $i<100; $i++)
                                     {
-                                        if($i>180 && $job_info[$i]==" ")
+                                        if($i>80 && $topic[$i]==" ")
                                         {
-                                            $bufor=$bufor."...";
-                                            $i=199;
+                                            $bufor=$bufor."...</b>";
+                                            $i=99;
                                         }
                                         else 
-                                            $bufor=$bufor.$job_info[$i];
+                                            $bufor=$bufor.$topic[$i];
                                     }
-                            }
-                            else
-                                $bufor=$job_info;
+                                }
+                                else
+                                    $bufor=$topic;
 
-                            echo "<div class='job_info'>".$bufor."</div>";
-                            echo "<div style='clear:both;'></div>";
-                            // -----
+                                echo "<b>".$bufor."</b><br><br>";
+                                // -----
 
-                            // KTO DODAŁ ZADANIE
-                            echo "<div style='clear:both;'><div class='job_small_info_plus' style='width:75%;'><img src='icons/user.png'/>".name_by_id($res["WhoAdd"])."</div>";
-                            echo "</div>";
-                            // -----
+                                echo $div_job_title_bottom;
+                                echo $div_job_topic_top;
 
-                            // LICZNIK ZAŁĄCZNIKÓW
-                            $how_many_atta=0;
-                            $the_id = $res["The_ID"];
-                            $string = $res["Info"];
-                            $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
-                            $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
-                            $bufor = $string;
-                            while($pos = strpos($bufor, "a href=")){
-                                $bufor[$pos]="x";
-                                $how_many_atta++;
-                            }
-                            $temp_sql="SELECT Message FROM chat WHERE The_ID='$the_id'";
-                            $temp_que=mysqli_query($conn, $temp_sql);
-                            while($temp_res = mysqli_fetch_array($temp_que)){
-                                $string=$temp_res["Message"];
+                                // DATA KOŃCA ZADANIA
+                                echo "<div class='job_small_info_plus'><img src='icons/hourglass.png'/><span>".proper_date($res["End"])."</span></div>";
+                                // -----
+
+                                // ILOŚĆ OSÓB W ZADANIU
+                                $the_id = $res["The_ID"];
+                                $how_many_per=0;
+                                $temp_sql="SELECT ForWho FROM job WHERE The_ID=$the_id";
+                                $temp_que=mysqli_query($conn, $temp_sql);
+                                while($temp_res = mysqli_fetch_array($temp_que)){
+                                    $how_many_per++;
+                                }
+                                $temp_sql="SELECT ForWho FROM done WHERE The_ID=$the_id";
+                                $temp_que=mysqli_query($conn, $temp_sql);
+                                while($temp_res = mysqli_fetch_array($temp_que)){
+                                    $how_many_per++;
+                                }
+                                echo "<div class='job_small_info'/><img src='icons/users.png'/>".$how_many_per."</div>";
+                                // -----
+
+                                // DŁUGOŚĆ ZADANIA
+                                if($res["Length"]==1){
+                                    echo "<div class='job_small_info'><img src='icons/speed-1.png' style='padding:0; padding-left:12px;'/></div>";
+                                }
+                                else if($res["Length"]==2){
+                                    echo "<div class='job_small_info'><img src='icons/speed-2.png' style='padding:0; padding-left:12px;'/></div>";
+                                }
+                                else{
+                                    echo "<div class='job_small_info'><img src='icons/speed-3.png' style='padding:0; padding-left:12px;'/></div>";
+                                }
+                                // -----
+
+                                // INFORMACJE DODATKOWE W ZADANIU
+                                $job_info = $res["Info"];
+                                $bufor = "";
+
+                                if(strlen($job_info)>200)
+                                {
+                                        for($i=0; $i<200; $i++)
+                                        {
+                                            if($i>180 && $job_info[$i]==" ")
+                                            {
+                                                $bufor=$bufor."...";
+                                                $i=199;
+                                            }
+                                            else 
+                                                $bufor=$bufor.$job_info[$i];
+                                        }
+                                }
+                                else
+                                    $bufor=$job_info;
+
+                                echo "<div class='job_info'>".$bufor."</div>";
+                                echo "<div style='clear:both;'></div>";
+                                // -----
+
+                                // KTO DODAŁ ZADANIE
+                                echo "<div style='clear:both;'><div class='job_small_info_plus' style='width:75%;'><img src='icons/user.png'/>".name_by_id($res["WhoAdd"])."</div>";
+                                echo "</div>";
+                                // -----
+
+                                // LICZNIK ZAŁĄCZNIKÓW
+                                $how_many_atta=0;
+                                $the_id = $res["The_ID"];
+                                $string = $res["Info"];
                                 $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
                                 $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
                                 $bufor = $string;
@@ -236,14 +226,26 @@ if(isset($_SESSION["error"])){
                                     $bufor[$pos]="x";
                                     $how_many_atta++;
                                 }
+                                $temp_sql="SELECT Message FROM chat WHERE The_ID='$the_id'";
+                                $temp_que=mysqli_query($conn, $temp_sql);
+                                while($temp_res = mysqli_fetch_array($temp_que)){
+                                    $string=$temp_res["Message"];
+                                    $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
+                                    $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
+                                    $bufor = $string;
+                                    while($pos = strpos($bufor, "a href=")){
+                                        $bufor[$pos]="x";
+                                        $how_many_atta++;
+                                    }
+                                }
+                                echo "<div class='job_small_info' style='width:20%'><img src='icons/attachment.png'/>".$how_many_atta."</div>";
+                                // -----
+
+                                echo "<div style='clear:both;'></div>";
+
+                                echo $div_job_topic_bottom;
+                                echo $div_job_bottom;
                             }
-                            echo "<div class='job_small_info' style='width:20%'><img src='icons/attachment.png'/>".$how_many_atta."</div>";
-                            // -----
-
-                            echo "<div style='clear:both;'></div>";
-
-                            echo $div_job_topic_bottom;
-                            echo $div_job_bottom;
                         }
                     }
 
@@ -888,6 +890,40 @@ if(isset($_SESSION["error"])){
             $.get("additional/undone.php", {id: id}, function(data){
                 $("#thrash").html(data);
             })
+        }
+
+        // -----
+        // Skrypty dodawania zadania
+
+        // Funkcja otwiera wszystkie zakładki osób
+        function new_job_forwho_open_close(){
+            var role_list = document.getElementsByClassName("new_job_forwho_rola_list");
+            var dzialy_list = document.getElementsByClassName("new_job_forwho_dzial_list");
+
+            if(new_job_forwho_close_open_variable == 0 && new_job_forwho_toggle_variable == 0){
+                for(i=0; i<dzialy_list.length; i++){
+                    dzialy_list[i].style.display = "block";
+                }
+                new_job_forwho_close_open_variable = 1;
+            }
+            else if(new_job_forwho_close_open_variable == 1 && new_job_forwho_toggle_variable == 0){
+                for(i=0; i<dzialy_list.length; i++){
+                    dzialy_list[i].style.display = "none";
+                }
+                new_job_forwho_close_open_variable = 0;
+            }
+            else if(new_job_forwho_close_open_variable == 0 && new_job_forwho_toggle_variable == 1){
+                for(i=0; i<role_list.length; i++){
+                    role_list[i].style.display = "block";
+                }
+                new_job_forwho_close_open_variable = 1;
+            }
+            else if(new_job_forwho_close_open_variable == 1 && new_job_forwho_toggle_variable == 1){
+                for(i=0; i<role_list.length; i++){
+                    role_list[i].style.display = "none";
+                }
+                new_job_forwho_close_open_variable = 0;
+            }
         }
 
         // -----
