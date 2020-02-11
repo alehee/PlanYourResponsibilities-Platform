@@ -11,14 +11,20 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
     exit();
 }
 
-if(!isset($_SESSION["rola"]!="kier" && $_SESSION["dzial"]!="kadr")
+if($_SESSION["rola"]!="kier" && $_SESSION["dzial"]!="kadr")
 {
     header("location:index.php");
     exit();
 }
 
 if(!isset($_SESSION["sort"]))
-	$_SESSION["sort"]='Deadline';
+    $_SESSION["sort"]='Deadline';
+
+if(isset($_SESSION["error"])){
+    echo '<script>alert("'.$_SESSION["error"].'")</script>';
+    unset($_SESSION["error"]);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +32,7 @@ if(!isset($_SESSION["sort"]))
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
-        <title>Zadania RI</title>
+        <title>Zresetuj hasło</title>
         <link rel="stylesheet" href="style/main.css?version=0.2.0"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
@@ -43,11 +49,23 @@ if(!isset($_SESSION["sort"]))
             <p id="p_timer"><br></p>
         </header>
 
-        <!-- Panel z zadaniami RI --->
-        <div class="ri">
-            <p style="font-size:130%; margin:20px;">Praca w toku... Przepraszamy!</p>
-            <img src="icons/settings-3-blue.png" style="width:100px; height:auto;"/>
-        </div>
+        <form id="reset_password_form" action="additional/reset_password.php" method="POST">
+            <div style="text-align:center; font-size:200%; padding:20px;"><b>ZRESETUJ HASŁO</b></div>
+
+            <div class="reset_option">
+               <input id="reset_radio_1" type="radio" name="reset_option" value="1" checked/><b>PODAM LOGIN</b>
+            </div>
+            <div class="reset_option">
+                <input id="reset_radio_2" type="radio" name="reset_option" value="2"/><b>PODAM IMIĘ I NAZWISKO</b>
+            </div>
+            <div class="reset_option">
+                <input id="reset_radio_3" type="radio" name="reset_option" value="3"/><b>PODAM E-MAIL</b>
+            </div>
+
+            <div id="reset_input"><input type="text" name="reset_text"/></div>
+
+            <div style="text-align:center; margin:10px;"><input type="submit" class="reset_butt" value="ZRESETUJ HASŁO"/></div>
+        </form>
 
     </div>
 
@@ -142,9 +160,12 @@ if(!isset($_SESSION["sort"]))
 
                 var full_time=time_h+":"+time_m+":"+time_s;
 
-                timer.innerHTML=<?php echo '"'.proper_date(date("Y-m-d")).' - "+'; ?>full_day+" - "+full_time;
+                timer.innerHTML= <?php echo '"'.proper_date(date("Y-m-d")).' - "+'; ?> full_day+" - "+full_time;
             }, 1000, 1000)
         }
+
+        // -----
+        // Skrypty resetu hasła
 
         // -----
     </script>
