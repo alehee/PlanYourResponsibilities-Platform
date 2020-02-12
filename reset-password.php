@@ -51,6 +51,8 @@ if(isset($_SESSION["error"])){
 
         <form id="reset_password_form" action="additional/reset_password.php" method="POST">
             <div style="text-align:center; font-size:200%; padding:20px;"><b>ZRESETUJ HASŁO</b></div>
+            <div style="text-align:center; font-size:110%; padding-top:-20px;"><b>Hasło zostanie zresetowane na takie same jak login</b></div>
+            <div style="text-align:center; font-size:80%;"><b>np. dla loginu <span style="font-style:italic;">anowak11</span> hasło zresetuje się na <span style="font-style:italic;">anowak11</span></b></div>
 
             <div class="reset_option">
                <input id="reset_radio_1" type="radio" name="reset_option" value="1" checked/><b>PODAM LOGIN</b>

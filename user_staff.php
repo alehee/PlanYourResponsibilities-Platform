@@ -1017,6 +1017,23 @@ $conn -> close();
                     }
                 }
             }
+            else if(sklad=="Administracja i Liderzy"){
+                var tab = document.getElementsByClassName("admi");
+                if(tab[counter].checked == true){
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=false;
+                        new_job_forwho_check(tab[counter].value, false);
+                        counter++;
+                    }
+                }
+                else{
+                    while(tab[counter].checked!="undefined"){
+                        tab[counter].checked=true;
+                        new_job_forwho_check(tab[counter].value, true);
+                        counter++;
+                    }
+                }
+            }
         }
 
         // Funkcja przełącza widok zaznaczania osób

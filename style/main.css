@@ -699,6 +699,10 @@ p{
     background-color: pink;
 }
 
+#new_job_forwho_administracja{
+    background-color: brown;
+}
+
 .new_job_forwho_dzial_list{
     min-height: 30px;
     display: none;

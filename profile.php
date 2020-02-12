@@ -117,6 +117,9 @@ if(!isset($_SESSION["sort"]))
                         case 'kadr':
                             $dzial = "Kadry";
                         break;
+                        case 'admi':
+                            $dzial = "Administracja i Liderzy";
+                        break;
                         default:
                             $dzial = "Niezdefiniowany";
                         break;
@@ -135,8 +138,11 @@ if(!isset($_SESSION["sort"]))
                         case 'staz':
                             $rola = "Stażysta";
                         break;
+                        case 'kadr':
+                            $rola = "Kadry";
+                        break;
                         case 'inna':
-                            $rola = "Inna";
+                            $rola = "Administracja i Liderzy";
                         break;
                         default:
                             $rola = "Niezdefiniowany";

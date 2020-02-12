@@ -62,6 +62,7 @@ if(!isset($_SESSION["sort"]))
                 <option value="geol">Geologic</option>
                 <option value="ramp">Rampa</option>
                 <option value="kadr">Kadry</option>
+                <option value="admi">Administracja i Liderzy</option>
             </select>
             </div>
             <div style="text-align:center; margin:0 auto; padding:10px; font-size:120%; width:350px;"><b style='color:#0082C3;'>ROLA: </b>
@@ -70,7 +71,8 @@ if(!isset($_SESSION["sort"]))
                 <option value="szko">Szkoleniowiec</option>
                 <option value="kier">Kierownik</option>
                 <option value="staz">Stażysta</option>
-                <option value="inna">Inna</option>
+                <option value="inna">Administracja i Liderzy</option>
+                <option value="kadr">Kadry</option>
             </select>
             </div>
             <div style="text-align:center; margin:10px;"><input type="submit" class="create_panel_butt" value="UTWÓRZ UŻYTKOWNIKA"/></div>

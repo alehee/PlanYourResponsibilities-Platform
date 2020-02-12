@@ -5,6 +5,8 @@ Nowości:
 - panel główny, który pokazuje zadania z najszybszym deadlinem
 - usprawnione logowanie
 - nowy styl usuwania i dodawania osoby do zadania
+- zadanie już automatycznie nie zaznacza Ciebie
+- zmiana podziału niektórych osób
 
 Naprawione błędy:
 - linki kierowników pojawiały się innym użytkownikom

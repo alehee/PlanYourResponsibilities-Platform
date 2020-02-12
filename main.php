@@ -487,7 +487,7 @@ if(isset($_SESSION["error"])){
                 $conn->query("SET CHARSET utf8");
                 $conn->query("SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
 
-                $sql = "SELECT * FROM job WHERE WhoAdd='$my_id_nadane' AND ForWho!='$my_id_nadane' ORDER BY End ASC";
+                $sql = "SELECT * FROM job WHERE WhoAdd='$my_id_nadane' AND ForWho!='$my_id_nadane' ORDER BY End ASC LIMIT 5";
                 $que = $conn -> query($sql);
 
                 echo '<div id="div_nadane">';
