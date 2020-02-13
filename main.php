@@ -771,13 +771,15 @@ if(isset($_SESSION["error"])){
             var taskback = document.getElementById("task_background");
             taskback.style.display="inline";
             document.body.style.overflowY="hidden";
+
+            $('textarea').blur();
         }
 
         function task_add(){
             var newtask = document.createElement("div");
             var task_num = $("#task .task_job_textarea").length;
             task_num++;
-            newtask.innerHTML = "<textarea class='task_job_textarea' id='task_"+task_num+"' style='width:90%; border:none; padding:2px; background-color:#f2f2f2; resize:none;' rows='3'></textarea><button class='task_job_end_button' id='task_butt_"+task_num+"' onclick='task_done("+task_num+")'>x</button>";
+            newtask.innerHTML = "<textarea data-autoresize class='task_job_textarea' id='task_"+task_num+"' style='width:90%; border:none; padding:2px; background-color:#f2f2f2; resize:none;' rows='1' spellcheck='false'></textarea><button class='task_job_end_button' id='task_butt_"+task_num+"' onclick='task_done("+task_num+")'>x</button>";
             newtask.className = "task_job";
             newtask.id = "task_job_"+task_num;
             newtask.onclick = function(){
@@ -790,11 +792,24 @@ if(isset($_SESSION["error"])){
 
             var lasttask = document.getElementById("task_job_"+(parseInt(task_num)-1));
             document.getElementById("task").insertBefore(newtask, lasttask);
+
+            document.getElementById("task_"+task_num).focus();
+            task_old_info = "";
+
+            jQuery.each(jQuery('textarea[data-autoresize]'), function() {
+            var offset = this.offsetHeight - this.clientHeight;
+            
+            var resizeTextarea = function(el) {
+                jQuery(el).css('height', 'auto').css('height', el.scrollHeight + offset);
+            };
+            jQuery(this).on('keyup input', function() { resizeTextarea(this); }).removeAttr('data-autoresize');
+            });
         }
 
         function task_done(task_number){
             var the_task = document.getElementById("task_"+task_number);
             var the_task_info = the_task.value;
+            the_task_info = the_task_info.replace(/\n\r?/g, '\\n');
 
             $.ajax({
                 url: "additional/task_processor.php?complete=1&the_task="+the_task_info
@@ -808,6 +823,7 @@ if(isset($_SESSION["error"])){
         function task_change(task_number){
             var old_task = task_old_info;
             var new_task = document.getElementById("task_"+task_number).value;
+            new_task = new_task.replace(/\n\r?/g, '\\n');
 
             $.ajax({
                 url: "additional/task_processor.php?update=1&old="+old_task+"&new="+new_task
@@ -818,8 +834,20 @@ if(isset($_SESSION["error"])){
 
         function task_getinfo(task_number){
             var the_task = "task_"+task_number;
-            task_old_info = document.getElementById(the_task).value;
+            val = document.getElementById(the_task).value;
+            val = val.replace(/\n\r?/g, '\\n');
+            task_old_info = val;
         }
+
+        jQuery.each(jQuery('textarea[data-autoresize]'), function() {
+            var offset = this.offsetHeight - this.clientHeight;
+            
+            var resizeTextarea = function(el) {
+                jQuery(el).css('height', 'auto').css('height', el.scrollHeight + offset);
+            };
+
+            jQuery(this).on('blur', function() { resizeTextarea(this); }).removeAttr('data-autoresize');
+        });
 
         // -----
         // Skrypty timera

@@ -3,6 +3,7 @@ session_start();
 
 require_once('additional/func.php');
 require_once('additional/navbar.php');
+require_once('additional/taskbar.php');
 require_once('additional/footer.php');
 require_once('connection.php');
 
@@ -46,6 +47,7 @@ $conn -> close();
 
         <!-- Pasek z linkami --->
         <?php echo $navbar ?>
+        <?php echo $taskbar ?>
 
         <!-- Popup okienko zadań -->
         <div id="okno_background" onclick="job_popup()">
@@ -58,6 +60,7 @@ $conn -> close();
         <header>
             <div id="nav_handle"><img src='icons/menu-3-white.png' onclick="nav_open()"/></div>
             <h1 style="width:60%; float:left;">PlanDeca</h1><br>
+            <div id="task_handle"><img src='icons/briefcase.png' onclick="task_open()"/></div>
             <div style="clear:both;"></div>
             <p id="p_timer"><br></p>
         </header>
@@ -515,6 +518,8 @@ $conn -> close();
         // Musi tu być bo nie działa skrypt
         document.getElementById("okno_background").style.display="none";
         document.getElementById("nav_background").style.display="none";
+        document.getElementById("task_background").style.display="none";
+        var task_old_info = "";
         var new_job_forwho_toggle_variable = 0;
         var new_job_forwho_close_open_variable = 0;
         var new_job_forwho_peoplenumber = 1;
@@ -549,6 +554,105 @@ $conn -> close();
         function nav_classic_link(link){
             window.location.href = link;
         }
+
+        // -----
+        // Skrypty task
+
+        var okno=0;
+        function task_hidenot(){
+            okno=1;
+        }
+
+        function task_hide(){
+            if(okno==0){
+                var taskback = document.getElementById("task_background");
+                taskback.style.display="none";
+                document.body.style.overflowY="auto";
+            }
+            okno=0;
+        }
+
+        function task_open(){
+            var taskback = document.getElementById("task_background");
+            taskback.style.display="inline";
+            document.body.style.overflowY="hidden";
+
+            $('textarea').blur();
+        }
+
+        function task_add(){
+            var newtask = document.createElement("div");
+            var task_num = $("#task .task_job_textarea").length;
+            task_num++;
+            newtask.innerHTML = "<textarea data-autoresize class='task_job_textarea' id='task_"+task_num+"' style='width:90%; border:none; padding:2px; background-color:#f2f2f2; resize:none;' rows='1' spellcheck='false'></textarea><button class='task_job_end_button' id='task_butt_"+task_num+"' onclick='task_done("+task_num+")'>x</button>";
+            newtask.className = "task_job";
+            newtask.id = "task_job_"+task_num;
+            newtask.onclick = function(){
+                task_getinfo(task_num);
+            };
+            newtask.onchange = function(){
+                task_change(task_num);
+            };
+            //document.getElementById("task").appendChild(newtask);
+
+            var lasttask = document.getElementById("task_job_"+(parseInt(task_num)-1));
+            document.getElementById("task").insertBefore(newtask, lasttask);
+
+            document.getElementById("task_"+task_num).focus();
+            task_old_info = "";
+
+            jQuery.each(jQuery('textarea[data-autoresize]'), function() {
+            var offset = this.offsetHeight - this.clientHeight;
+            
+            var resizeTextarea = function(el) {
+                jQuery(el).css('height', 'auto').css('height', el.scrollHeight + offset);
+            };
+            jQuery(this).on('keyup input', function() { resizeTextarea(this); }).removeAttr('data-autoresize');
+            });
+        }
+
+        function task_done(task_number){
+            var the_task = document.getElementById("task_"+task_number);
+            var the_task_info = the_task.value;
+            the_task_info = the_task_info.replace(/\n\r?/g, '\\n');
+
+            $.ajax({
+                url: "additional/task_processor.php?complete=1&the_task="+the_task_info
+            }).done(function(data) { // data what is sent back by the php page
+                $('#thrash').html(data); // display data
+            });
+
+            document.getElementById("task_job_"+task_number).style.display = "none";
+        }
+
+        function task_change(task_number){
+            var old_task = task_old_info;
+            var new_task = document.getElementById("task_"+task_number).value;
+            new_task = new_task.replace(/\n\r?/g, '\\n');
+
+            $.ajax({
+                url: "additional/task_processor.php?update=1&old="+old_task+"&new="+new_task
+            }).done(function(data) { // data what is sent back by the php page
+                $('#thrash').html(data); // display data
+            });
+        }
+
+        function task_getinfo(task_number){
+            var the_task = "task_"+task_number;
+            val = document.getElementById(the_task).value;
+            val = val.replace(/\n\r?/g, '\\n');
+            task_old_info = val;
+        }
+
+        jQuery.each(jQuery('textarea[data-autoresize]'), function() {
+            var offset = this.offsetHeight - this.clientHeight;
+            
+            var resizeTextarea = function(el) {
+                jQuery(el).css('height', 'auto').css('height', el.scrollHeight + offset);
+            };
+
+            jQuery(this).on('blur', function() { resizeTextarea(this); }).removeAttr('data-autoresize');
+        });
 
         // -----
         // Skrypty timera
