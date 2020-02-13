@@ -20,7 +20,7 @@ $navbar='
 	<div id="nav_link_header">LINKI</div>
 	<div id="nav_link" onclick=\'nav_link("http:\/\/mail.oxylane.com")\'>GMAIL</div>';
 
-	if($_SESSION["rola"]=="kier" || $_SESSION["rola"]=="admi")
+	if($_SESSION["rola"]=="kier" || $_SESSION["rola"]=="admi" || $_SESSION["id"]=="6")
 		$navbar = $navbar.'<div id="nav_link" onclick=\'nav_link("https:\/\/sites.google.com\/decathlon.com\/menadzer-car-gliwice\/")\'>TECZKA MENADŻERA</div>';
 
 	$navbar = $navbar.'<div id="nav_link" onclick=\'nav_link("https:\/\/sites.google.com\/decathlon.com\/cargliwice\/strona-g%C5%82%C3%B3wna?authuser=0")\'>CAR GLIWICE</div>
@@ -39,7 +39,7 @@ $navbar='
 		$navbar = $navbar.'<div id="nav_link" onclick=\'nav_classic_link("stats.php")\'><span>STATYSTYKI</span></div>';
 	}
 
-	if($_SESSION["rola"]=="kier" || $_SESSION["rola"]=="admi"){
+	if($_SESSION["rola"]=="kier" || $_SESSION["rola"]=="admi" || $_SESSION["id"]=="6"){
 		$navbar = $navbar.'<div id="nav_link" onclick=\'nav_classic_link("create-account.php")\'><span>DODAJ NOWĄ OSOBĘ</span></div>';
 		$navbar = $navbar.'<div id="nav_link" onclick=\'nav_classic_link("reset-password.php")\'><span>ZRESETUJ HASŁO</span></div>';
 		$navbar = $navbar.'<div id="nav_link" onclick=\'nav_classic_link("delete-account.php")\'><span>USUŃ OSOBĘ</span></div>';

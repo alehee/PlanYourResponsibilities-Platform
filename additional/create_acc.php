@@ -61,10 +61,10 @@ if(isset($_POST["imie"])){
 	unset($_POST["dzial"]);
 	unset($_POST["rola"]);
 	
-    header("location:../user.php");
+    header("location:../main.php");
 }
 
 else
-    header("location:../user.php");
+    header("location:../main.php");
 
 ?>

@@ -52,7 +52,19 @@ if(isset($_POST["reset_option"])){
     }
 
 	// USUWANIE Z TABEL
-    $sql = "";
+    $sql = "DELETE FROM chat WHERE SentFrom='$delete_id'";
+    $conn -> query($sql);
+    $sql = "DELETE FROM done WHERE ForWho='$delete_id'";
+    $conn -> query($sql);
+    $sql = "DELETE FROM done WHERE WhoAdd='$delete_id'";
+    $conn -> query($sql);
+    $sql = "DELETE FROM job WHERE ForWho='$delete_id'";
+    $conn -> query($sql);
+    $sql = "DELETE FROM job WHERE WhoAdd='$delete_id'";
+    $conn -> query($sql);
+    $sql = "DELETE FROM job_red WHERE ForWho='$delete_id'";
+    $conn -> query($sql);
+    $sql = "DELETE FROM users WHERE ID='$delete_id'";
     $conn -> query($sql);
 
 	// SPRAWDZENIE CZY POPRAWNIE USUNIĘTO
@@ -63,14 +75,14 @@ if(isset($_POST["reset_option"])){
     while($res = mysqli_fetch_array($que))
         $reset_status = 1;
 
-    if($reset_status == 1)
+    if($reset_status == 0)
         $_SESSION["error"]="Poprawnie usunięto użytkownika";
 
-    if($reset_status == 0)
+    if($reset_status == 1)
         $_SESSION["error"]="Wystąpił błąd";
 }
 
-header("location:../reset-password.php");
+header("location:../delete-account.php");
 
 $conn -> close();
 ?>
