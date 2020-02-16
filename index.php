@@ -50,7 +50,7 @@ else if(isset($_POST["log_login"]) && isset($_POST["log_password"]) && isset($_P
     <head>
         <meta charset="utf-8"/>
         <title>Zaloguj</title>
-        <link rel="stylesheet" href="style/main.css?version=0.2.0"/>
+        <link rel="stylesheet" href="style/main.css?version=0.3.0"/>
     </head>
     <body>
 
@@ -61,16 +61,20 @@ else if(isset($_POST["log_login"]) && isset($_POST["log_password"]) && isset($_P
         </header>
 
         <div class="index_info">
-            <h1 style="color:#0082C3; padding-top:10px;">Rozwijamy się!</h1>
-            <h5 style="color:#0082C3; padding-bottom:10px;">Aktualna wersja: 0.2.0</h5>
+            <h1 style="color:#0082C3; padding-bottom:10px;">Aktualna wersja: 0.3.0</h1>
             <div class="index_info_text">
-                Cały czas idziemy do przodu co mnie ogromnie cieszy!<br>
-                Przychodzę do was z kolejnymi nowościami:<br><br>
+                Nadchodzą kolejne nowości:<br><br>
             <span style="font-size:90%; color:green;">
-                - pinezka na zadaniu, które jest nowe, lub ma nową zawartość<br>
-                - nowy styl podziału osób przy dodawaniu nowego zadania<br>
-                - nowy styl dodawania osób<br>
-                - przystosowanie kolejnych komponentów do obsługi większej ilości zadań<br><br>
+            - panel kadr na platformie!<br>
+            - panel główny, który pokazuje zadania z najszybszym deadlinem<br>
+            - usprawnione logowanie<br>
+            - nowy styl usuwania i dodawania osoby do zadania<br>
+            - zadanie już automatycznie nie zaznacza Ciebie<br>
+            - zmiana podziału niektórych osób<br>
+            - resetowanie hasła<br>
+            - usuwanie użytkownika<br>
+            - osobista lista zadań dla każdego<br>
+            - naprawa drobnych błędów<br><br>
             </span>
                 <span style="color:gray;">
                 Platforma jest nadal rozwijana, daj znać o każdym problemie w sekcji "Zgłoś Usterkę"!<br>

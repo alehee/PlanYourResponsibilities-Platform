@@ -1,4 +1,12 @@
-0.3.0 --- 
+0.4.0 ---
+
+Nowości:
+-
+
+Naprawione błędy:
+-
+
+0.3.0 --- 16.02.2020
 
 Nowości:
 - panel kadr na platformie!
@@ -9,6 +17,7 @@ Nowości:
 - zmiana podziału niektórych osób
 - resetowanie hasła
 - usuwanie użytkownika
+- osobista lista zadań dla każdego
 
 Naprawione błędy:
 - linki kierowników pojawiały się innym użytkownikom
