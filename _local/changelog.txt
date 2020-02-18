@@ -4,7 +4,8 @@ Nowości:
 -
 
 Naprawione błędy:
--
+- widoczność opcji rozszerzonych dla mających uprawnienia i wyrzucanie gdy ktoś ich nie ma
+- lepszy activity feed na serwerze
 
 0.3.0 --- 16.02.2020
 

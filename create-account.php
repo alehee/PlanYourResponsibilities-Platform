@@ -12,6 +12,12 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
     exit();
 }
 
+if($_SESSION["rola"]=="kier" || $_SESSION["rola"]=="admi" || $_SESSION["rola"]=="kadr" || $_SESSION["id"]=="6")
+{
+    header("location:index.php");
+    exit();
+}
+
 if(!isset($_SESSION["sort"]))
 	$_SESSION["sort"]='Deadline';
 ?>

@@ -19,6 +19,17 @@ if(isset($_SESSION["error"])){
     echo '<script>alert("'.$_SESSION["error"].'")</script>';
     unset($_SESSION["error"]);
 }
+
+if(isset($_SESSION["id"])){
+// UAKTUALNIENIE AKTYWNOŚCI NA PROFILU
+$conn = @new mysqli($host, $user_db, $password_db, $db_name);
+$activity_id = $_SESSION["id"];
+    
+$sql = "UPDATE users SET Activity=CURRENT_TIMESTAMP WHERE ID='$activity_id'";
+$conn -> query($sql);
+    
+$conn -> close();
+}
 ?>
 
 <!DOCTYPE html>
