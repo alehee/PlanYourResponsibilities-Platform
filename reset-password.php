@@ -12,7 +12,7 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
     exit();
 }
 
-if($_SESSION["rola"]=="kier" || $_SESSION["rola"]=="admi" || $_SESSION["rola"]=="kadr" || $_SESSION["id"]=="6")
+if($_SESSION["rola"]!="kier" && $_SESSION["rola"]!="admi" && $_SESSION["rola"]!="kadr" && $_SESSION["id"]!="6")
 {
     header("location:index.php");
     exit();
@@ -47,7 +47,23 @@ if(isset($_SESSION["error"])){
         <header>
             <div id="nav_handle"><img src='icons/menu-3-white.png' onclick="nav_open()"/></div>
             <h1 style="width:60%; float:left;">PlanDeca</h1><br>
-            <div id="task_handle"><img src='icons/briefcase.png' onclick="task_open()"/></div>
+            <?php
+                $task_id = $_SESSION["id"];
+                $conn = connect();
+                $sql = "SELECT ID FROM task WHERE WhoAdd='$task_id'";
+                $que = $conn -> query($sql);
+                $num_rows = mysqli_num_rows($que);
+                if($num_rows != 0){
+                    echo '<div id="task_handle"><img src="icons/briefcase-red.png" onclick="task_open()"/><p id="task_handle_p">'.$num_rows.'</p></div>';
+                }
+                else{
+                    echo '<div id="task_handle"><img src="icons/briefcase-green.png" onclick="task_open()"/></div>';
+                }
+                
+                if($num_rows>9){
+                    echo '<script>document.getElementById("task_handle_p").style.marginRight="-35px"</script>';
+                }
+            ?>
             <div style="clear:both;"></div>
             <p id="p_timer"><br></p>
         </header>

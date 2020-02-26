@@ -39,7 +39,7 @@ $navbar='
 		$navbar = $navbar.'<div id="nav_link" onclick=\'nav_classic_link("stats.php")\'><span>STATYSTYKI</span></div>';
 	}
 
-	if($_SESSION["rola"]=="kier" || $_SESSION["rola"]=="admi" || $_SESSION["rola"]=="kadr" || $_SESSION["id"]=="6"){
+	if($_SESSION["rola"]!="kier" && $_SESSION["rola"]!="admi" && $_SESSION["rola"]!="kadr" && $_SESSION["id"]!="6"){
 		$navbar = $navbar.'<div id="nav_link" onclick=\'nav_classic_link("create-account.php")\'><span>DODAJ NOWĄ OSOBĘ</span></div>';
 		$navbar = $navbar.'<div id="nav_link" onclick=\'nav_classic_link("reset-password.php")\'><span>ZRESETUJ HASŁO</span></div>';
 		$navbar = $navbar.'<div id="nav_link" onclick=\'nav_classic_link("delete-account.php")\'><span>USUŃ OSOBĘ</span></div>';

@@ -23,7 +23,7 @@ if(isset($_SESSION["error"])){
 
 if(isset($_SESSION["id"])){
 // UAKTUALNIENIE AKTYWNOŚCI NA PROFILU
-$conn = @new mysqli($host, $user_db, $password_db, $db_name);
+$conn = connect();
 $activity_id = $_SESSION["id"];
 
 $sql = "UPDATE users SET Activity=CURRENT_TIMESTAMP WHERE ID='$activity_id'";
@@ -60,7 +60,23 @@ $conn -> close();
         <header>
             <div id="nav_handle"><img src='icons/menu-3-white.png' onclick="nav_open()"/></div>
             <h1 style="width:60%; float:left;">PlanDeca</h1><br>
-            <div id="task_handle"><img src='icons/briefcase.png' onclick="task_open()"/></div>
+            <?php
+                $task_id = $_SESSION["id"];
+                $conn = connect();
+                $sql = "SELECT ID FROM task WHERE WhoAdd='$task_id'";
+                $que = $conn -> query($sql);
+                $num_rows = mysqli_num_rows($que);
+                if($num_rows != 0){
+                    echo '<div id="task_handle"><img src="icons/briefcase-red.png" onclick="task_open()"/><p id="task_handle_p">'.$num_rows.'</p></div>';
+                }
+                else{
+                    echo '<div id="task_handle"><img src="icons/briefcase-green.png" onclick="task_open()"/></div>';
+                }
+                
+                if($num_rows>9){
+                    echo '<script>document.getElementById("task_handle_p").style.marginRight="-35px"</script>';
+                }
+            ?>
             <div style="clear:both;"></div>
             <p id="p_timer"><br></p>
         </header>

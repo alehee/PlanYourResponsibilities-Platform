@@ -134,4 +134,60 @@ function how_many_days_left($date_job){
     return $date_job_var-$date_curr_var;
 }
 
+// FUNKCJA ZWRACAJĄCA ILOŚCI NA PANEL MAIN
+function how_many_jobs($id, $type){
+    $conn = connect();
+    $sql = "";
+    $result = -1;
+
+    switch($type){
+        case "def":
+            $sql = "SELECT ID FROM job WHERE ForWho='$id' AND Type='def'";
+        break;
+
+        case "sta":
+            $sql = "SELECT ID FROM job WHERE ForWho='$id' AND Type='sta'";
+        break;
+
+        case "nadane":
+                $exist = 1;
+                $already = 0;
+                $nadane_tab = array();
+                $job_number = 0;
+                
+                $sql = "SELECT * FROM job WHERE WhoAdd='$id' AND ForWho!='$id'";
+                $que = $conn -> query($sql);
+
+                while($res = mysqli_fetch_array($que)){
+                    $the_id=$res["The_ID"];
+                    $temp_sql = "SELECT ID FROM job WHERE The_ID='$the_id' AND ForWho='$my_id_nadane'";
+                    $temp_que = $conn -> query($temp_sql);
+                    while($temp = mysqli_fetch_array($temp_que))
+                        $exist=0;
+
+                    foreach($nadane_tab as $nadane_id){
+                        if($nadane_id == $the_id)
+                            $exist=0;
+                    }
+
+                    if($exist==1){
+                        $job_number++;
+                        array_push($nadane_tab, $the_id);
+                    }
+                }
+                $result = $job_number;
+        break;
+
+        case "ri":
+            $result = 0;
+        break;
+    }
+
+    $que = $conn -> query($sql);
+    $result = mysqli_num_rows($que);
+
+    $conn -> close();
+    return $result;
+}
+
 ?>
