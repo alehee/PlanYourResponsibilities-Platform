@@ -100,10 +100,10 @@ $conn -> close();
                 </div>
             </div>
             <div id="main_information" class="main_information_stats">
-                <div style="width:100%; min-height:20px; margin:10px;"><span style="float:left; padding-left:10px;">Zadań <b>OGÓLNYCH</b>:</span><span style="float:right; padding-right:10px;">0</span></div>
-                <div style="width:100%; min-height:20px; margin:10px;"><span style="float:left; padding-left:10px;">Zadań <b>KADROWYCH</b>:</span><span style="float:right; padding-right:10px;">0</span></div>
-                <div style="width:100%; min-height:20px; margin:10px;"><span style="float:left; padding-left:10px;">Zadań <b>NADANYCH</b>:</span><span style="float:right; padding-right:10px;">0</span></div>
-                <div style="width:100%; min-height:20px; margin:10px;"><span style="float:left; padding-left:10px;">Zadań <b>RI</b> w tym miesiącu:</span><span style="float:right; padding-right:10px;">0</span></div>
+                <div style="width:100%; min-height:20px; margin:10px;"><span style="float:left; padding-left:10px;">Zadań <b>OGÓLNYCH</b>:</span><span style="float:right; padding-right:10px;"><?php echo how_many_jobs($activity_id, "def"); ?></span></div>
+                <div style="width:100%; min-height:20px; margin:10px;"><span style="float:left; padding-left:10px;">Zadań <b>KADROWYCH</b>:</span><span style="float:right; padding-right:10px;"><?php echo how_many_jobs($activity_id, "sta"); ?></span></div>
+                <div style="width:100%; min-height:20px; margin:10px;"><span style="float:left; padding-left:10px;">Zadań <b>NADANYCH</b>:</span><span style="float:right; padding-right:10px;"><?php echo how_many_jobs($activity_id, "nadane"); ?></span></div>
+                <div style="width:100%; min-height:20px; margin:10px;"><span style="float:left; padding-left:10px;">Zadań <b>RI</b> w tym miesiącu:</span><span style="float:right; padding-right:10px;"><?php echo how_many_jobs($activity_id, "ri"); ?></span></div>
             </div>
             <div style="clear:both;"></div>
 

@@ -138,7 +138,7 @@ function how_many_days_left($date_job){
 function how_many_jobs($id, $type){
     $conn = connect();
     $sql = "";
-    $result = -1;
+    $result = 0;
 
     switch($type){
         case "def":
@@ -159,8 +159,10 @@ function how_many_jobs($id, $type){
                 $que = $conn -> query($sql);
 
                 while($res = mysqli_fetch_array($que)){
+                    $exist = 1;
                     $the_id=$res["The_ID"];
-                    $temp_sql = "SELECT ID FROM job WHERE The_ID='$the_id' AND ForWho='$my_id_nadane'";
+
+                    $temp_sql = "SELECT ID FROM job WHERE The_ID='$the_id' AND ForWho='$id'";
                     $temp_que = $conn -> query($temp_sql);
                     while($temp = mysqli_fetch_array($temp_que))
                         $exist=0;
@@ -179,12 +181,15 @@ function how_many_jobs($id, $type){
         break;
 
         case "ri":
+            $sql = "SELECT ID FROM job WHERE ForWho='$id'";
             $result = 0;
         break;
     }
 
-    $que = $conn -> query($sql);
-    $result = mysqli_num_rows($que);
+    if($type=="def" || $type=="sta" || $type=="ri"){
+        $que = $conn -> query($sql);
+        $result = mysqli_num_rows($que);
+    }
 
     $conn -> close();
     return $result;

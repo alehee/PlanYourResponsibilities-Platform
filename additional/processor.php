@@ -6,6 +6,16 @@
     require_once("../connection.php");
     $conn = mysqli_connect($host, $user_db, $password_db, $db_name);
 
+    $processor_rola = "";
+    $processor_dzial = "";
+    $id = $_SESSION["id"];
+    $sql = "SELECT Dzial, Rola FROM users WHERE ID='$id'";
+    $que = mysqli_query($conn, $sql);
+    while($res = mysqli_fetch_array($que)){
+        $processor_rola = $res["Rola"];
+        $processor_dzial = $res["Dzial"];
+    }
+
     // DODAWANIE NOWEGO ZADANIA OGÓLNEGO
     if(isset($_GET['the_job'])){
 
@@ -38,143 +48,161 @@
         echo '<div class="new_job_forwho_dzial_left">';
 
         // INESIS
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='ines' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_inesis" onclick="$(\'#new_job_forwho_inesis_list\').slideToggle(1);">INESIS</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_inesis_list">';
+        if($processor_rola!="prac" || $processor_dzial=="ines"){
+            $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='ines' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_inesis" onclick="$(\'#new_job_forwho_inesis_list\').slideToggle(1);">INESIS</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_inesis_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
-            if($res["Rola"]=="kier")
-                echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-            else 
-                echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
+                if($res["Rola"]=="kier")
+                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                else 
+                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // DOMYOS
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='domy' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_domyos" onclick="$(\'#new_job_forwho_domyos_list\').slideToggle(1);">DOMYOS</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_domyos_list">';
+        if($processor_rola!="prac" || $processor_dzial=="domy"){
+            $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='domy' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_domyos" onclick="$(\'#new_job_forwho_domyos_list\').slideToggle(1);">DOMYOS</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_domyos_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
-                if($res["ID"]==$_SESSION["id"])
-                    echo "checked";
-            if($res["Rola"]=="kier")
-                echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-            else 
-                echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
+                    if($res["ID"]==$_SESSION["id"])
+                        echo "checked";
+                if($res["Rola"]=="kier")
+                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                else 
+                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // QUECHUA
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='quec' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_quechua"onclick="$(\'#new_job_forwho_quechua_list\').slideToggle(1);">QUECHUA</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_quechua_list">';
+        if($processor_rola!="prac" || $processor_dzial=="quec"){
+            $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='quec' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_quechua"onclick="$(\'#new_job_forwho_quechua_list\').slideToggle(1);">QUECHUA</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_quechua_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
-            if($res["Rola"]=="kier")
-                echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-            else 
-                echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
+                if($res["Rola"]=="kier")
+                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                else 
+                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // KALENJI
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='kale' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_kalenji"onclick="$(\'#new_job_forwho_kalenji_list\').slideToggle(1);">KALENJI</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_kalenji_list">';
+        if($processor_rola!="prac" || $processor_dzial=="kale"){
+            $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='kale' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_kalenji"onclick="$(\'#new_job_forwho_kalenji_list\').slideToggle(1);">KALENJI</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_kalenji_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
-            if($res["Rola"]=="kier")
-                echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-            else 
-                echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
+                if($res["Rola"]=="kier")
+                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                else 
+                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // SUBEA
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='sube' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_subea"onclick="$(\'#new_job_forwho_subea_list\').slideToggle(1);">SUBEA</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_subea_list">';
+        if($processor_rola!="prac" || $processor_dzial=="sube"){
+            $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='sube' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_subea"onclick="$(\'#new_job_forwho_subea_list\').slideToggle(1);">SUBEA</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_subea_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
-            if($res["Rola"]=="kier")
-                echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-            else 
-                echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
+                if($res["Rola"]=="kier")
+                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                else 
+                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // ADMINISTRACJA I LIDERZY (DZIAŁ)
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='admi' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_administracja"onclick="$(\'#new_job_forwho_administracja_list\').slideToggle(1);">ADMINISTRACJA I LIDERZY</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_administracja_list">';
+        if($processor_rola!="prac" || $processor_dzial=="admi"){
+            $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='admi' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_administracja"onclick="$(\'#new_job_forwho_administracja_list\').slideToggle(1);">ADMINISTRACJA I LIDERZY</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_administracja_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
-            if($res["Rola"]=="kier")
-                echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-            else 
-                echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
+                if($res["Rola"]=="kier")
+                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                else 
+                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
 
 
         // KIEROWNICY
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Rola='kier' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_rola" id="new_job_forwho_kierownicy"onclick="$(\'#new_job_forwho_kierownicy_list\').slideToggle(1);">KIEROWNICY</div>
-                <div class="new_job_forwho_rola_list" id="new_job_forwho_kierownicy_list">';
+        if($processor_rola!="prac"){
+            $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Rola='kier' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_rola" id="new_job_forwho_kierownicy"onclick="$(\'#new_job_forwho_kierownicy_list\').slideToggle(1);">KIEROWNICY</div>
+                    <div class="new_job_forwho_rola_list" id="new_job_forwho_kierownicy_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Rola"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
-            echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Rola"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
+                echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // STAŻYŚCI
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Rola='staz' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_rola" id="new_job_forwho_stazysci"onclick="$(\'#new_job_forwho_stazysci_list\').slideToggle(1);">STAŻYŚCI</div>
-                <div class="new_job_forwho_rola_list" id="new_job_forwho_stazysci_list">';
+        if($processor_rola!="prac"){
+            $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Rola='staz' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_rola" id="new_job_forwho_stazysci"onclick="$(\'#new_job_forwho_stazysci_list\').slideToggle(1);">STAŻYŚCI</div>
+                    <div class="new_job_forwho_rola_list" id="new_job_forwho_stazysci_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Rola"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
-            echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Rola"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
+                echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // ADMINISTRACJA I LIDERZY (GRUPA)
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Rola='admi' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_rola" id="new_job_forwho_admi_gr"onclick="$(\'#new_job_forwho_admi_gr_list\').slideToggle(1);">ADMINISTRACJA I LIDERZY</div>
-                <div class="new_job_forwho_rola_list" id="new_job_forwho_admi_gr_list">';
+        if($processor_rola!="prac"){
+            $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Rola='admi' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_rola" id="new_job_forwho_admi_gr"onclick="$(\'#new_job_forwho_admi_gr_list\').slideToggle(1);">ADMINISTRACJA I LIDERZY</div>
+                    <div class="new_job_forwho_rola_list" id="new_job_forwho_admi_gr_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Rola"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
-            echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Rola"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
+                echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // KONIEC DZIAŁY LEWO
         echo '
@@ -185,141 +213,159 @@
         echo '<div class="new_job_forwho_dzial_right">';
 
         // WYSOKI
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='wskl' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_wskl" onclick="$(\'#new_job_forwho_wskl_list\').slideToggle(1);">WYSOKI</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_wskl_list">';
+        if($processor_rola!="prac" || $processor_dzial=="wskl"){
+            $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='wskl' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_wskl" onclick="$(\'#new_job_forwho_wskl_list\').slideToggle(1);">WYSOKI</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_wskl_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
-            if($res["Rola"]=="kier")
-                echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-            else 
-                echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
+                if($res["Rola"]=="kier")
+                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                else 
+                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // B'TWIN
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='btwn' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_btwin" onclick="$(\'#new_job_forwho_btwin_list\').slideToggle(1);">B\'TWIN</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_btwin_list">';
+        if($processor_rola!="prac" || $processor_dzial=="btwn"){
+            $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='btwn' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_btwin" onclick="$(\'#new_job_forwho_btwin_list\').slideToggle(1);">B\'TWIN</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_btwin_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
-            if($res["Rola"]=="kier")
-                echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-            else 
-                echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
+                if($res["Rola"]=="kier")
+                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                else 
+                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // E-COMMERCE
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='ecom' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_ecommerce" onclick="$(\'#new_job_forwho_ecommerce_list\').slideToggle(1);">E-COMMERCE</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_ecommerce_list">';
+        if($processor_rola!="prac" || $processor_dzial=="ecom"){
+            $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='ecom' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_ecommerce" onclick="$(\'#new_job_forwho_ecommerce_list\').slideToggle(1);">E-COMMERCE</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_ecommerce_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
-            if($res["Rola"]=="kier")
-                echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-            else 
-                echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
+                if($res["Rola"]=="kier")
+                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                else 
+                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // RAMPA
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='ramp' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_rampa" onclick="$(\'#new_job_forwho_rampa_list\').slideToggle(1);">RAMPA</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_rampa_list">';
+        if($processor_rola!="prac" || $processor_dzial=="ramp"){
+            $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='ramp' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_rampa" onclick="$(\'#new_job_forwho_rampa_list\').slideToggle(1);">RAMPA</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_rampa_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
-            if($res["Rola"]=="kier")
-                echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-            else 
-                echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
+                if($res["Rola"]=="kier")
+                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                else 
+                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // GEOLOGIC
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='geol' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_geologic" onclick="$(\'#new_job_forwho_geologic_list\').slideToggle(1);">GEOLOGIC</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_geologic_list">';
+        if($processor_rola!="prac" || $processor_dzial=="geol"){
+            $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='geol' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_geologic" onclick="$(\'#new_job_forwho_geologic_list\').slideToggle(1);">GEOLOGIC</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_geologic_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
-            if($res["Rola"]=="kier")
-                echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-            else 
-                echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
+                if($res["Rola"]=="kier")
+                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                else 
+                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // KADRY (DZIAŁ)
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='kadr' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_kadry" onclick="$(\'#new_job_forwho_kadry_list\').slideToggle(1);">KADRY</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_kadry_list">';
+        if($processor_rola!="prac"){
+            $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Dzial='kadr' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_kadry" onclick="$(\'#new_job_forwho_kadry_list\').slideToggle(1);">KADRY</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_kadry_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
-            if($res["Rola"]=="kier")
-                echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-            else 
-                echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
+                if($res["Rola"]=="kier")
+                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                else 
+                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
 
 
         // SZKOLENIOWCY
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Rola='szko' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_rola" id="new_job_forwho_szkoleniowcy"onclick="$(\'#new_job_forwho_szkoleniowcy_list\').slideToggle(1);">SZKOLENIOWCY</div>
-                <div class="new_job_forwho_rola_list" id="new_job_forwho_szkoleniowcy_list">';
+        if($processor_rola!="prac"){
+            $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Rola='szko' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_rola" id="new_job_forwho_szkoleniowcy"onclick="$(\'#new_job_forwho_szkoleniowcy_list\').slideToggle(1);">SZKOLENIOWCY</div>
+                    <div class="new_job_forwho_rola_list" id="new_job_forwho_szkoleniowcy_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Rola"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
-            echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Rola"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
+                echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // PRACOWNICY
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Rola='prac' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_rola" id="new_job_forwho_pracownicy"onclick="$(\'#new_job_forwho_pracownicy_list\').slideToggle(1);">PRACOWNICY</div>
-                <div class="new_job_forwho_rola_list" id="new_job_forwho_pracownicy_list">';
+        if($processor_rola!="prac" || $processor_rola=="prac"){
+            $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Rola='prac' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_rola" id="new_job_forwho_pracownicy"onclick="$(\'#new_job_forwho_pracownicy_list\').slideToggle(1);">PRACOWNICY</div>
+                    <div class="new_job_forwho_rola_list" id="new_job_forwho_pracownicy_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Rola"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
-            echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Rola"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
+                echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // KADRY (GRUPA)
-        $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Rola='kadr' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_rola" id="new_job_forwho_kadry_gr"onclick="$(\'#new_job_forwho_kadry_gr_list\').slideToggle(1);">KADRY</div>
-                <div class="new_job_forwho_rola_list" id="new_job_forwho_kadry_gr_list">';
+        if($processor_rola!="prac"){
+            $sql = "SELECT ID, Imie, Nazwisko, Dzial, Rola FROM users WHERE Rola='kadr' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_rola" id="new_job_forwho_kadry_gr"onclick="$(\'#new_job_forwho_kadry_gr_list\').slideToggle(1);">KADRY</div>
+                    <div class="new_job_forwho_rola_list" id="new_job_forwho_kadry_gr_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Rola"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
-            echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Rola"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
+                echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+            }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // KONIEC DZIAŁY PRAWO
         echo '
@@ -1000,202 +1046,214 @@
         echo '<div class="new_job_forwho_dzial_left">';
 
         // INESIS
-        $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='ines' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_inesis" onclick="$(\'#new_job_forwho_inesis_list\').slideToggle(1);">INESIS</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_inesis_list">';
+        if($processor_rola!="prac" || $processor_dzial=="ines"){
+            $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='ines' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_inesis" onclick="$(\'#new_job_forwho_inesis_list\').slideToggle(1);">INESIS</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_inesis_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            $is_out=1;
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                $is_out=1;
 
-            foreach($is_in as $user){
-				if($user == $res["Login"]){
-					$is_out=0;
-				}
-			}
+                foreach($is_in as $user){
+                    if($user == $res["Login"]){
+                        $is_out=0;
+                    }
+                }
 
-            if($is_out==1){
-                echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
+                if($is_out==1){
+                    echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
 
-                if($res["ID"]==$_SESSION["id"])
-                    echo "checked";
+                    if($res["ID"]==$_SESSION["id"])
+                        echo "checked";
 
-                if($res["Rola"]=="kier")
-                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-                else 
-                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+                    if($res["Rola"]=="kier")
+                        echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                    else 
+                        echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
 
-                $anyone=1;
-                array_push($is_in, $res["Login"]);
+                    $anyone=1;
+                    array_push($is_in, $res["Login"]);
+                }
             }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // DOMYOS
-        $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='domy' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_domyos" onclick="$(\'#new_job_forwho_domyos_list\').slideToggle(1);">DOMYOS</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_domyos_list">';
+        if($processor_rola!="prac" || $processor_dzial=="domy"){
+            $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='domy' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_domyos" onclick="$(\'#new_job_forwho_domyos_list\').slideToggle(1);">DOMYOS</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_domyos_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            $is_out=1;
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                $is_out=1;
 
-            foreach($is_in as $user){
-				if($user == $res["Login"]){
-					$is_out=0;
-				}
-			}
+                foreach($is_in as $user){
+                    if($user == $res["Login"]){
+                        $is_out=0;
+                    }
+                }
 
-            if($is_out==1){
-                echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
+                if($is_out==1){
+                    echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
 
-                if($res["ID"]==$_SESSION["id"])
-                    echo "checked";
+                    if($res["ID"]==$_SESSION["id"])
+                        echo "checked";
 
-                if($res["Rola"]=="kier")
-                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-                else 
-                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+                    if($res["Rola"]=="kier")
+                        echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                    else 
+                        echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
 
-                $anyone=1;
-                array_push($is_in, $res["Login"]);
+                    $anyone=1;
+                    array_push($is_in, $res["Login"]);
+                }
             }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // QUECHUA
-        $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='quec' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_quechua"onclick="$(\'#new_job_forwho_quechua_list\').slideToggle(1);">QUECHUA</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_quechua_list">';
+        if($processor_rola!="prac" || $processor_dzial=="quec"){
+            $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='quec' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_quechua"onclick="$(\'#new_job_forwho_quechua_list\').slideToggle(1);">QUECHUA</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_quechua_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            $is_out=1;
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                $is_out=1;
 
-            foreach($is_in as $user){
-				if($user == $res["Login"]){
-					$is_out=0;
-				}
-			}
+                foreach($is_in as $user){
+                    if($user == $res["Login"]){
+                        $is_out=0;
+                    }
+                }
 
-            if($is_out==1){
-                echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
+                if($is_out==1){
+                    echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
 
-                if($res["ID"]==$_SESSION["id"])
-                    echo "checked";
+                    if($res["ID"]==$_SESSION["id"])
+                        echo "checked";
 
-                if($res["Rola"]=="kier")
-                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-                else 
-                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+                    if($res["Rola"]=="kier")
+                        echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                    else 
+                        echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
 
-                $anyone=1;
-                array_push($is_in, $res["Login"]);
+                    $anyone=1;
+                    array_push($is_in, $res["Login"]);
+                }
             }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // KALENJI
-        $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='kale' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_kalenji"onclick="$(\'#new_job_forwho_kalenji_list\').slideToggle(1);">KALENJI</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_kalenji_list">';
+        if($processor_rola!="prac" || $processor_dzial=="kale"){
+            $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='kale' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_kalenji"onclick="$(\'#new_job_forwho_kalenji_list\').slideToggle(1);">KALENJI</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_kalenji_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            $is_out=1;
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                $is_out=1;
 
-            foreach($is_in as $user){
-				if($user == $res["Login"]){
-					$is_out=0;
-				}
-			}
+                foreach($is_in as $user){
+                    if($user == $res["Login"]){
+                        $is_out=0;
+                    }
+                }
 
-            if($is_out==1){
-                echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
+                if($is_out==1){
+                    echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
 
-                if($res["ID"]==$_SESSION["id"])
-                    echo "checked";
+                    if($res["ID"]==$_SESSION["id"])
+                        echo "checked";
 
-                if($res["Rola"]=="kier")
-                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-                else 
-                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+                    if($res["Rola"]=="kier")
+                        echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                    else 
+                        echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
 
-                $anyone=1;
-                array_push($is_in, $res["Login"]);
+                    $anyone=1;
+                    array_push($is_in, $res["Login"]);
+                }
             }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // SUBEA
-        $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='sube' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_subea"onclick="$(\'#new_job_forwho_subea_list\').slideToggle(1);">SUBEA</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_subea_list">';
+        if($processor_rola!="prac" || $processor_dzial=="sube"){
+            $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='sube' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_subea"onclick="$(\'#new_job_forwho_subea_list\').slideToggle(1);">SUBEA</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_subea_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            $is_out=1;
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                $is_out=1;
 
-            foreach($is_in as $user){
-				if($user == $res["Login"]){
-					$is_out=0;
-				}
-			}
+                foreach($is_in as $user){
+                    if($user == $res["Login"]){
+                        $is_out=0;
+                    }
+                }
 
-            if($is_out==1){
-                echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
+                if($is_out==1){
+                    echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
 
-                if($res["ID"]==$_SESSION["id"])
-                    echo "checked";
+                    if($res["ID"]==$_SESSION["id"])
+                        echo "checked";
 
-                if($res["Rola"]=="kier")
-                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-                else 
-                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+                    if($res["Rola"]=="kier")
+                        echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                    else 
+                        echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
 
-                $anyone=1;
-                array_push($is_in, $res["Login"]);
+                    $anyone=1;
+                    array_push($is_in, $res["Login"]);
+                }
             }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // ADMINISTRACJA I LIDERZY
-        $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='admi' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_administracja"onclick="$(\'#new_job_forwho_administracja_list\').slideToggle(1);">ADMINISTRACJA I LIDERZY</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_administracja_list">';
+        if($processor_rola!="prac" || $processor_dzial=="admi"){
+            $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='admi' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_administracja"onclick="$(\'#new_job_forwho_administracja_list\').slideToggle(1);">ADMINISTRACJA I LIDERZY</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_administracja_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            $is_out=1;
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                $is_out=1;
 
-            foreach($is_in as $user){
-				if($user == $res["Login"]){
-					$is_out=0;
-				}
-			}
+                foreach($is_in as $user){
+                    if($user == $res["Login"]){
+                        $is_out=0;
+                    }
+                }
 
-            if($is_out==1){
-                echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
+                if($is_out==1){
+                    echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
 
-                if($res["ID"]==$_SESSION["id"])
-                    echo "checked";
+                    if($res["ID"]==$_SESSION["id"])
+                        echo "checked";
 
-                if($res["Rola"]=="kier")
-                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-                else 
-                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+                    if($res["Rola"]=="kier")
+                        echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                    else 
+                        echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
 
-                $anyone=1;
-                array_push($is_in, $res["Login"]);
+                    $anyone=1;
+                    array_push($is_in, $res["Login"]);
+                }
             }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // KONIEC DZIAŁY LEWO
         echo '
@@ -1206,202 +1264,214 @@
         echo '<div class="new_job_forwho_dzial_right">';
 
         // WYSOKI
-        $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='wskl' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_wskl" onclick="$(\'#new_job_forwho_wskl_list\').slideToggle(1);">WYSOKI</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_wskl_list">';
+        if($processor_rola!="prac" || $processor_dzial=="wskl"){
+            $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='wskl' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_wskl" onclick="$(\'#new_job_forwho_wskl_list\').slideToggle(1);">WYSOKI</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_wskl_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            $is_out=1;
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                $is_out=1;
 
-            foreach($is_in as $user){
-				if($user == $res["Login"]){
-					$is_out=0;
-				}
-			}
+                foreach($is_in as $user){
+                    if($user == $res["Login"]){
+                        $is_out=0;
+                    }
+                }
 
-            if($is_out==1){
-                echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
+                if($is_out==1){
+                    echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
 
-                if($res["ID"]==$_SESSION["id"])
-                    echo "checked";
+                    if($res["ID"]==$_SESSION["id"])
+                        echo "checked";
 
-                if($res["Rola"]=="kier")
-                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-                else 
-                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+                    if($res["Rola"]=="kier")
+                        echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                    else 
+                        echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
 
-                $anyone=1;
-                array_push($is_in, $res["Login"]);
+                    $anyone=1;
+                    array_push($is_in, $res["Login"]);
+                }
             }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // B'TWIN
-        $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='btwn' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_btwin" onclick="$(\'#new_job_forwho_btwin_list\').slideToggle(1);">B\'TWIN</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_btwin_list">';
+        if($processor_rola!="prac" || $processor_dzial=="btwn"){
+            $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='btwn' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_btwin" onclick="$(\'#new_job_forwho_btwin_list\').slideToggle(1);">B\'TWIN</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_btwin_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            $is_out=1;
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                $is_out=1;
 
-            foreach($is_in as $user){
-				if($user == $res["Login"]){
-					$is_out=0;
-				}
-			}
+                foreach($is_in as $user){
+                    if($user == $res["Login"]){
+                        $is_out=0;
+                    }
+                }
 
-            if($is_out==1){
-                echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
+                if($is_out==1){
+                    echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
 
-                if($res["ID"]==$_SESSION["id"])
-                    echo "checked";
+                    if($res["ID"]==$_SESSION["id"])
+                        echo "checked";
 
-                if($res["Rola"]=="kier")
-                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-                else 
-                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+                    if($res["Rola"]=="kier")
+                        echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                    else 
+                        echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
 
-                $anyone=1;
-                array_push($is_in, $res["Login"]);
+                    $anyone=1;
+                    array_push($is_in, $res["Login"]);
+                }
             }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // E-COMMERCE
-        $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='ecom' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_ecommerce" onclick="$(\'#new_job_forwho_ecommerce_list\').slideToggle(1);">E-COMMERCE</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_ecommerce_list">';
+        if($processor_rola!="prac" || $processor_dzial=="ecom"){
+            $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='ecom' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_ecommerce" onclick="$(\'#new_job_forwho_ecommerce_list\').slideToggle(1);">E-COMMERCE</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_ecommerce_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            $is_out=1;
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                $is_out=1;
 
-            foreach($is_in as $user){
-				if($user == $res["Login"]){
-					$is_out=0;
-				}
-			}
+                foreach($is_in as $user){
+                    if($user == $res["Login"]){
+                        $is_out=0;
+                    }
+                }
 
-            if($is_out==1){
-                echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
+                if($is_out==1){
+                    echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
 
-                if($res["ID"]==$_SESSION["id"])
-                    echo "checked";
+                    if($res["ID"]==$_SESSION["id"])
+                        echo "checked";
 
-                if($res["Rola"]=="kier")
-                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-                else 
-                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+                    if($res["Rola"]=="kier")
+                        echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                    else 
+                        echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
 
-                $anyone=1;
-                array_push($is_in, $res["Login"]);
+                    $anyone=1;
+                    array_push($is_in, $res["Login"]);
+                }
             }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // RAMPA
-        $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='ramp' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_rampa" onclick="$(\'#new_job_forwho_rampa_list\').slideToggle(1);">RAMPA</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_rampa_list">';
+        if($processor_rola!="prac" || $processor_dzial=="ramp"){
+            $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='ramp' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_rampa" onclick="$(\'#new_job_forwho_rampa_list\').slideToggle(1);">RAMPA</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_rampa_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            $is_out=1;
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                $is_out=1;
 
-            foreach($is_in as $user){
-				if($user == $res["Login"]){
-					$is_out=0;
-				}
-			}
+                foreach($is_in as $user){
+                    if($user == $res["Login"]){
+                        $is_out=0;
+                    }
+                }
 
-            if($is_out==1){
-                echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
+                if($is_out==1){
+                    echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
 
-                if($res["ID"]==$_SESSION["id"])
-                    echo "checked";
+                    if($res["ID"]==$_SESSION["id"])
+                        echo "checked";
 
-                if($res["Rola"]=="kier")
-                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-                else 
-                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+                    if($res["Rola"]=="kier")
+                        echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                    else 
+                        echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
 
-                $anyone=1;
-                array_push($is_in, $res["Login"]);
+                    $anyone=1;
+                    array_push($is_in, $res["Login"]);
+                }
             }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // GEOLOGIC
-        $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='geol' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_geologic" onclick="$(\'#new_job_forwho_geologic_list\').slideToggle(1);">GEOLOGIC</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_geologic_list">';
+        if($processor_rola!="prac" || $processor_dzial=="geol"){
+            $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='geol' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_geologic" onclick="$(\'#new_job_forwho_geologic_list\').slideToggle(1);">GEOLOGIC</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_geologic_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            $is_out=1;
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                $is_out=1;
 
-            foreach($is_in as $user){
-				if($user == $res["Login"]){
-					$is_out=0;
-				}
-			}
+                foreach($is_in as $user){
+                    if($user == $res["Login"]){
+                        $is_out=0;
+                    }
+                }
 
-            if($is_out==1){
-                echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
+                if($is_out==1){
+                    echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
 
-                if($res["ID"]==$_SESSION["id"])
-                    echo "checked";
+                    if($res["ID"]==$_SESSION["id"])
+                        echo "checked";
 
-                if($res["Rola"]=="kier")
-                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-                else 
-                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+                    if($res["Rola"]=="kier")
+                        echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                    else 
+                        echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
 
-                $anyone=1;
-                array_push($is_in, $res["Login"]);
+                    $anyone=1;
+                    array_push($is_in, $res["Login"]);
+                }
             }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // KADRY
-        $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='kadr' ORDER BY Rola ASC";
-        echo '
-            <div class="new_job_forwho_dzial" id="new_job_forwho_kadry" onclick="$(\'#new_job_forwho_kadry_list\').slideToggle(1);">KADRY</div>
-                <div class="new_job_forwho_dzial_list" id="new_job_forwho_kadry_list">';
+        if($processor_rola!="prac" || $processor_dzial=="kadr"){
+            $sql = "SELECT ID, Imie, Login, Nazwisko, Dzial, Rola FROM users WHERE Dzial='kadr' ORDER BY Rola ASC";
+            echo '
+                <div class="new_job_forwho_dzial" id="new_job_forwho_kadry" onclick="$(\'#new_job_forwho_kadry_list\').slideToggle(1);">KADRY</div>
+                    <div class="new_job_forwho_dzial_list" id="new_job_forwho_kadry_list">';
 
-        $que = mysqli_query($conn, $sql);
-        while($res = mysqli_fetch_array($que)){
-            $is_out=1;
+            $que = mysqli_query($conn, $sql);
+            while($res = mysqli_fetch_array($que)){
+                $is_out=1;
 
-            foreach($is_in as $user){
-				if($user == $res["Login"]){
-					$is_out=0;
-				}
-			}
+                foreach($is_in as $user){
+                    if($user == $res["Login"]){
+                        $is_out=0;
+                    }
+                }
 
-            if($is_out==1){
-                echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
+                if($is_out==1){
+                    echo '<div style="float:left;"><input type="radio" style="margin-left:30px;" class="'.$res["Dzial"].' '.$res["ID"].' new_job_forwho_checkbox" name="addperson_who" value="'.$res["ID"].'"';
 
-                if($res["ID"]==$_SESSION["id"])
-                    echo "checked";
+                    if($res["ID"]==$_SESSION["id"])
+                        echo "checked";
 
-                if($res["Rola"]=="kier")
-                    echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
-                else 
-                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+                    if($res["Rola"]=="kier")
+                        echo '/> <b>'.$res['Imie']." ".$res["Nazwisko"]."</b></div>";
+                    else 
+                        echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
 
-                $anyone=1;
-                array_push($is_in, $res["Login"]);
+                    $anyone=1;
+                    array_push($is_in, $res["Login"]);
+                }
             }
+            echo '<div style="clear:both;"></div></div>';
         }
-        echo '<div style="clear:both;"></div></div>';
 
         // KONIEC DZIAŁY PRAWO
         echo '
