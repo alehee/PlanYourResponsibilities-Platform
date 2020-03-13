@@ -1,9 +1,10 @@
-0.4.0 ---
+ ---
 
 Nowości:
 - teczka z taskami może być teraz czerwona (gdy są w niej zadania) lub zielona (gdy jest pusta)
 - teczka z taskami gdy jest czerwona informuje ile mamy w niej zadań
 - pogoda dziś / jutro / pojutrze na panelu głównym
+- wprowadzenie podziału widoku dodawania zadania dla różnych ról na magazynie
 
 Naprawione błędy:
 - widoczność opcji rozszerzonych dla mających uprawnienia i wyrzucanie gdy ktoś ich nie ma

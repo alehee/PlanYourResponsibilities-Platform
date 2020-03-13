@@ -346,8 +346,10 @@
 
             $que = mysqli_query($conn, $sql);
             while($res = mysqli_fetch_array($que)){
-                echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Rola"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
-                echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+                if($res["Dzial"] == $processor_dzial){
+                    echo '<div style="float:left;"><input type="checkbox" style="margin-left:30px;" onchange="new_job_forwho_check('.$res["ID"].', this.checked);" class="'.$res["Rola"].' '.$res["ID"].' new_job_forwho_checkbox" name="new_forwho[]" value="'.$res["ID"].'"';
+                    echo '/> '.$res['Imie']." ".$res["Nazwisko"]."</div>";
+                }
             }
             echo '<div style="clear:both;"></div></div>';
         }
@@ -372,35 +374,46 @@
                 </div>
         ';
 
-        echo '
-            <div style="clear:both;"></div>
-            <div style="margin:10px;">
-                <input type="button" class="new_job_dzial_butt" value="Wszyscy" onclick="new_job_toggle(this.value)"/>
-                <input type="button" class="new_job_dzial_butt" value="Inesis" onclick="new_job_toggle(this.value)"/>
-                <input type="button" class="new_job_dzial_butt" value="Wysoki" onclick="new_job_toggle(this.value)"/>
-                <input type="button" class="new_job_dzial_butt" value="Domyos" onclick="new_job_toggle(this.value)"/>
-                <input type="button" class="new_job_dzial_butt" value="B\'Twin" onclick="new_job_toggle(this.value)"/>
-                <input type="button" class="new_job_dzial_butt" value="Quechua" onclick="new_job_toggle(this.value)"/>
-                <input type="button" class="new_job_dzial_butt" value="E-commerce" onclick="new_job_toggle(this.value)"/>
-                <input type="button" class="new_job_dzial_butt" value="Kalenji" onclick="new_job_toggle(this.value)"/>
-                <input type="button" class="new_job_dzial_butt" value="Rampa" onclick="new_job_toggle(this.value)"/>
-                <input type="button" class="new_job_dzial_butt" value="Subea" onclick="new_job_toggle(this.value)"/>
-                <input type="button" class="new_job_dzial_butt" value="Geologic" onclick="new_job_toggle(this.value)"/>
-                <input type="button" class="new_job_dzial_butt" value="Administracja i Liderzy" onclick="new_job_toggle(this.value)"/>
-                <input type="button" class="new_job_dzial_butt" value="Kadry" onclick="new_job_toggle(this.value)"/>
-                <input type="button" class="new_job_rola_butt" value="Wszyscy" onclick="new_job_toggle(this.value)"/>
-                <input type="button" class="new_job_rola_butt" value="Kierownicy" onclick="new_job_toggle(this.value)"/>
-                <input type="button" class="new_job_rola_butt" value="Szkoleniowcy" onclick="new_job_toggle(this.value)"/>
-                <input type="button" class="new_job_rola_butt" value="Stażyści" onclick="new_job_toggle(this.value)"/>
-                <input type="button" class="new_job_rola_butt" value="Pracownicy" onclick="new_job_toggle(this.value)"/>
-                <input type="button" class="new_job_rola_butt" value="Administracja i Liderzy" onclick="new_job_toggle(this.value)"/>
-                <input type="button" class="new_job_rola_butt" value="Kadry" onclick="new_job_toggle(this.value)"/>
+        if($processor_rola != "prac"){
+            echo '
+                <div style="clear:both;"></div>
+                <div style="margin:10px;">
+                    <input type="button" class="new_job_dzial_butt" value="Wszyscy" onclick="new_job_toggle(this.value)"/>
+                    <input type="button" class="new_job_dzial_butt" value="Inesis" onclick="new_job_toggle(this.value)"/>
+                    <input type="button" class="new_job_dzial_butt" value="Wysoki" onclick="new_job_toggle(this.value)"/>
+                    <input type="button" class="new_job_dzial_butt" value="Domyos" onclick="new_job_toggle(this.value)"/>
+                    <input type="button" class="new_job_dzial_butt" value="B\'Twin" onclick="new_job_toggle(this.value)"/>
+                    <input type="button" class="new_job_dzial_butt" value="Quechua" onclick="new_job_toggle(this.value)"/>
+                    <input type="button" class="new_job_dzial_butt" value="E-commerce" onclick="new_job_toggle(this.value)"/>
+                    <input type="button" class="new_job_dzial_butt" value="Kalenji" onclick="new_job_toggle(this.value)"/>
+                    <input type="button" class="new_job_dzial_butt" value="Rampa" onclick="new_job_toggle(this.value)"/>
+                    <input type="button" class="new_job_dzial_butt" value="Subea" onclick="new_job_toggle(this.value)"/>
+                    <input type="button" class="new_job_dzial_butt" value="Geologic" onclick="new_job_toggle(this.value)"/>
+                    <input type="button" class="new_job_dzial_butt" value="Administracja i Liderzy" onclick="new_job_toggle(this.value)"/>
+                    <input type="button" class="new_job_dzial_butt" value="Kadry" onclick="new_job_toggle(this.value)"/>
+                    <input type="button" class="new_job_rola_butt" value="Wszyscy" onclick="new_job_toggle(this.value)"/>
+                    <input type="button" class="new_job_rola_butt" value="Kierownicy" onclick="new_job_toggle(this.value)"/>
+                    <input type="button" class="new_job_rola_butt" value="Szkoleniowcy" onclick="new_job_toggle(this.value)"/>
+                    <input type="button" class="new_job_rola_butt" value="Stażyści" onclick="new_job_toggle(this.value)"/>
+                    <input type="button" class="new_job_rola_butt" value="Pracownicy" onclick="new_job_toggle(this.value)"/>
+                    <input type="button" class="new_job_rola_butt" value="Administracja i Liderzy" onclick="new_job_toggle(this.value)"/>
+                    <input type="button" class="new_job_rola_butt" value="Kadry" onclick="new_job_toggle(this.value)"/>
+                </div>
             </div>
-        </div>
-            <input class="new_job_butt" type="submit" value="UTWÓRZ ZADANIE"/>
-        </form>
-        </div>
-        ';
+                <input class="new_job_butt" type="submit" value="UTWÓRZ ZADANIE"/>
+            </form>
+            </div>
+            ';
+        }
+        else{
+            echo '
+                <div style="clear:both;"></div>
+            </div>
+                <input class="new_job_butt" type="submit" value="UTWÓRZ ZADANIE"/>
+            </form>
+            </div>
+            ';
+        }
         
         // DALSZA CZĘŚĆ W NEWJOB.PHP
 
