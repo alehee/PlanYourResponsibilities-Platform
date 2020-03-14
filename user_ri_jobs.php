@@ -7,7 +7,7 @@ require_once('additional/taskbar.php');
 require_once('additional/footer.php');
 require_once('additional/weather.php');
 
-if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
+if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]) || !isset($_SESSION["ri_id"]))
 {
     header("location:index.php");
     exit();
@@ -82,24 +82,17 @@ $conn -> close();
         </header>
 
         <div class="ri">
-            <div><h2>TWÓJ PANEL RI</h2></div>
-            <div id="ri_icon" onclick="ri_open('<?php echo $_SESSION['id'] ?>')">
-                <?php echo '<img src="photo/'.$_SESSION["id"].'.png" />'; ?>
-                <?php echo '<span class="ri_icon_text">'.name_by_id($_SESSION["id"]).'</span>'; ?>
-            </div>
         </div>
 
         <?php
             if($_SESSION["rola"] == "kier"){
                 echo '<div class="ri">';
-                    echo '<div><h2>PANELE RI TWOICH PRACOWNIKÓW</h2></div>';
-                echo '</div>';
-
-                echo '<div class="ri">';
-                    echo '<div><h2>PANELE RI NIEPRZYDZIELONE</h2></div>';
                 echo '</div>';
             }
         ?>
+
+        <div class="ri">
+        </div>
 
     </div>
 
@@ -297,12 +290,6 @@ $conn -> close();
 
                 timer.innerHTML=<?php echo '"'.proper_date(date("Y-m-d")).' - "+'; ?>full_day+" - "+full_time;
             }, 1000, 1000)
-        }
-        // -----
-
-        // Skrypty RI otwierania
-        function ri_open(id){
-            alert(id);
         }
         // -----
     </script>
