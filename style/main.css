@@ -1209,7 +1209,7 @@ p{
 .ri{
     width: 98%;
     margin: 10px 1%;
-    min-height: 200px;
+    min-height: 130px;
     text-align: center;
     background-color: #e6e6e6;
     border-radius: 20px;
@@ -1220,10 +1220,10 @@ p{
     float: left;
     min-width: 200px;
     height: 50px;
-    margin: 0 auto;
+    margin: 5px;
     background-color: white;
     border: 1px solid #0082C3;
-    border-radius: 20px;
+    border-radius: 10px;
     cursor: pointer;
 }
 
@@ -1231,8 +1231,28 @@ p{
     float: left;
     height: 45px;
     width: 45px;
-    padding: 2px;
-    margin-left: 10px;
+    margin: 2.5px;
+    margin-left: 2px;
+    border-radius: 100%;
+}
+
+.ri_icon_you{
+    float: left;
+    width: 20%;
+    height: 100px;
+    margin: 5px 40%;
+    background-color: white;
+    border: 2px solid #0082C3;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.ri_icon_you img{
+    float: left;
+    height: 90px;
+    width: 90px;
+    margin: 5px;
+    margin-left: 2px;
     border-radius: 100%;
 }
 
@@ -1240,6 +1260,13 @@ p{
     float: right;
     padding-right: 10px;
     padding-top: 15px;
+}
+
+.ri_icon_you .ri_icon_text{
+    float: right;
+    padding-right: 10px;
+    padding-top: 35px;
+    font-size: 20px;
 }
 
 

@@ -83,21 +83,49 @@ $conn -> close();
 
         <div class="ri">
             <div><h2>TWÓJ PANEL RI</h2></div>
-            <div id="ri_icon" onclick="ri_open('<?php echo $_SESSION['id'] ?>')">
+            <div class="ri_icon_you" onclick="ri_open('<?php echo $_SESSION['id'] ?>')">
                 <?php echo '<img src="photo/'.$_SESSION["id"].'.png" />'; ?>
-                <?php echo '<span class="ri_icon_text">'.name_by_id($_SESSION["id"]).'</span>'; ?>
+                <?php echo '<span class="ri_icon_text"><b>'.name_by_id($_SESSION["id"]).'</b></span>'; ?>
             </div>
+            <div style="clear:both;"></div>
         </div>
 
         <?php
             if($_SESSION["rola"] == "kier"){
+                $conn = connect();
+
                 echo '<div class="ri">';
                     echo '<div><h2>PANELE RI TWOICH PRACOWNIKÓW</h2></div>';
-                echo '</div>';
+
+                    $user_ri_id = $_SESSION["id"];
+                    $sql = "SELECT ID FROM users WHERE RI='$user_ri_id' ORDER BY Nazwisko ASC";
+                    $que = $conn -> query($sql);
+                    while($res = mysqli_fetch_array($que)){
+                        echo '
+                        <div id="ri_icon" onclick="ri_open('.$res["ID"].')">
+                            <img src="photo/'.$res["ID"].'.png" />
+                            <span class="ri_icon_text">'.name_by_id($res["ID"]).'</span>
+                        </div>';
+                    }
+
+                echo '<div style="clear:both;"></div></div>';
 
                 echo '<div class="ri">';
                     echo '<div><h2>PANELE RI NIEPRZYDZIELONE</h2></div>';
-                echo '</div>';
+
+                    $sql = "SELECT ID FROM users WHERE RI='' ORDER BY Nazwisko ASC";
+                    $que = $conn -> query($sql);
+                    while($res = mysqli_fetch_array($que)){
+                        echo '
+                        <div id="ri_icon" onclick="ri_create('.$res["ID"].')">
+                            <img src="photo/'.$res["ID"].'.png" />
+                            <span class="ri_icon_text">'.name_by_id($res["ID"]).'</span>
+                        </div>';
+                    }
+
+                echo '<div style="clear:both;"></div></div>';
+
+                $conn -> close();
             }
         ?>
 
@@ -302,7 +330,18 @@ $conn -> close();
 
         // Skrypty RI otwierania
         function ri_open(id){
-            alert(id);
+            $.get("additional/ri_processor.php", {ri_id: id}, function(data){
+                    $('#thrash').html(data);
+            });
+        }
+
+        function ri_create(id){
+            var ri_create_true = confirm("Czy na pewno chcesz przydzielić się dla RI tej osoby?");
+            if(ri_create_true){
+                $.get("additional/ri_processor.php", {ri_create: id}, function(data){
+                    $('#thrash').html(data);
+                });
+            }
         }
         // -----
     </script>
