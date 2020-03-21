@@ -181,8 +181,8 @@ function how_many_jobs($id, $type){
         break;
 
         case "ri":
-            $sql = "SELECT ID FROM job WHERE ForWho='$id'";
-            $result = 0;
+            $func_ri_month = date("ym");
+            $sql = "SELECT ID FROM job_ri WHERE ForWho='$id' AND Month='$func_ri_month' AND Completed='false'";
         break;
     }
 

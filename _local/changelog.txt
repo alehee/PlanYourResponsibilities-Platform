@@ -1,10 +1,12 @@
- ---
+0.4.0 --- 21.03.2020
 
 Nowości:
 - teczka z taskami może być teraz czerwona (gdy są w niej zadania) lub zielona (gdy jest pusta)
 - teczka z taskami gdy jest czerwona informuje ile mamy w niej zadań
 - pogoda dziś / jutro / pojutrze na panelu głównym
 - wprowadzenie podziału widoku dodawania zadania dla różnych ról na magazynie
+- w pełni działający panel RI
+- informacja na panelu głównym z najważniejszymi statystykami
 
 Naprawione błędy:
 - widoczność opcji rozszerzonych dla mających uprawnienia i wyrzucanie gdy ktoś ich nie ma

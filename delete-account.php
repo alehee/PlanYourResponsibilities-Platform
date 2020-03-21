@@ -34,7 +34,7 @@ if(isset($_SESSION["error"])){
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
         <title>Usuń konto</title>
-        <link rel="stylesheet" href="style/main.css?version=0.3.0"/>
+        <link rel="stylesheet" href="style/main.css?version=0.4.0"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
     <body onload="time()" class='normal'>
