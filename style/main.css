@@ -1361,11 +1361,50 @@ p{
 .project{
     width: 98%;
     margin: 10px 1%;
-    min-height: 200px;
+    min-height: 50px;
     text-align: center;
-    background-color: #e6e6e6;
+    background-color: white;
     border-radius: 20px;
-    padding: 20px;
+}
+
+.project table{
+    width: 100%;
+    min-height: 100px;
+    background-color: #e6e6e6;
+    border-collapse: collapse;
+    font-size: 120%;
+}
+
+.project table td{
+    padding: 5px;
+}
+
+.project table tr:nth-child(2n){
+    background-color: #cccccc;
+}
+
+.project table td img{
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.project_table_button_enter{
+    transition: 0.1s;
+    width: 80px;
+    height: 30px;
+    color: white;
+    background-color: rebeccapurple;
+    border: solid 2px rebeccapurple;
+    border-radius: 20px;
+}
+
+.project_table_button_enter:hover{
+    transition: 0.1s;
+    color:  rebeccapurple;
+    background-color: white;
+    border: solid 2px rebeccapurple;
+    cursor: pointer;
 }
 
 

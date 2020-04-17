@@ -32,8 +32,13 @@ $conn -> query($sql);
 $conn -> close();
 }
 
-if(isset($_SESSION["project_name"]))
-    unset($_SESSION["project_name"]);
+// SPRAWDZENIE CZY PROJEKT ZOSTAŁ ZAŁADOWANY
+if(isset($_SESSION["project_name"])){
+    $project_name = $_SESSION["project_name"];
+}
+else{
+    header("location:project.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +46,7 @@ if(isset($_SESSION["project_name"]))
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
-        <title>Panel projektów</title>
+        <title>Projekt <?php echo $project_name; ?></title>
         <link rel="stylesheet" href="style/main.css?version=0.4.0"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
@@ -77,39 +82,10 @@ if(isset($_SESSION["project_name"]))
         </header>
 
         <div class="project">
-            <div><h2>AKTYWNE PROJEKTY</h2></div>
-            <table>
-                <?php
-                    $conn = connect();
-                    $sql = "SELECT * FROM project WHERE User_ID='$activity_id'";
-                    $que = $conn -> query($sql);
-                    while($res = mysqli_fetch_array($que)){
-                        $project_pin = true;
-                        $project_people = 1;
-                        $project_msg = 0;
-                        $project_jobs = 0;
-
-                        echo "<tr>";
-                        
-                        if($project_pin == true)
-                            echo "<td><img src='icons/pin-red.png'/></td>";
-                        else
-                            echo "<td><div style='width:30px; height:30px; margin-left:10px'></div></td>";
-
-                        echo "<td><b>".$res["Name"]."</b></td><td><img src='icons/users.png'/>".$project_people."</td><td><img src='icons/message.png'/>".$project_msg."</td><td><img src='icons/job.png'/>".$project_jobs."</td><td><button class='project_table_button_enter' onclick='project_enter(\"".$res["Name"]."\")'>WEJDŹ</button></td></tr>";
-                    }
-
-                    $conn -> close();
-                ?>
-            </table>
+            
         </div>
 
         <div style="clear:both;"></div>
-        
-        <!-- Panel akcji --->
-        <div id="div_panel">
-            <div onclick="new_project()" id="new_job">UTWÓRZ NOWY PROJEKT</div>
-        </div>
 
     </div>
 
@@ -307,17 +283,6 @@ if(isset($_SESSION["project_name"]))
 
                 timer.innerHTML=<?php echo '"'.proper_date(date("Y-m-d")).' - "+'; ?>full_day+" - "+full_time;
             }, 1000, 1000)
-        }
-        // -----
-
-        // Skrypty projektu
-        function project_enter(project_name){
-            $.ajax({
-                url: "additional/projectredirect.php?projname="+project_name
-            }).done(function(data) { // data what is sent back by the php page
-                $('#thrash').html(data); // display data
-                nav_classic_link("project-panel.php");
-            });
         }
         // -----
 
