@@ -39,6 +39,17 @@ if(isset($_SESSION["project_name"])){
 else{
     header("location:project.php");
 }
+
+if(isset($_SESSION["id"])){
+    // UAKTUALNIENIE AKTYWNOŚCI NA PROJEKCIE
+    $conn = connect();
+    $activity_id = $_SESSION["id"];
+    
+    $sql = "UPDATE project SET Date=CURRENT_TIMESTAMP WHERE User_ID='$activity_id' AND Name='$project_name'";
+    $conn -> query($sql);
+    
+    $conn -> close();
+}
 ?>
 
 <!DOCTYPE html>
@@ -56,6 +67,14 @@ else{
         <!-- Pasek z linkami --->
         <?php echo $navbar ?>
         <?php echo $taskbar ?>
+
+        <!-- Popup okienko zadań -->
+        <div id="okno_background" onclick="job_popup()">
+            <div class="okno_radius">
+            <div id="okno_job" class='okno_job_web' onclick="job_okno()">
+            </div>
+            </div>
+        </div>
 
         <header>
             <div id="nav_handle"><img src='icons/menu-3-white.png' onclick="nav_open()"/></div>
@@ -82,7 +101,56 @@ else{
         </header>
 
         <div class="project">
-            
+            <h1><?php echo $project_name ?></h1>
+            <!-- OSOBY UCZESTNICZĄCE W PROJEKCIE --->
+            <div class="project_container">
+                <div class="project_container_header" style="padding-left:40px;">OSOBY:<span class="project_add_plus" onclick="project_addperson()">+</span><span class="project_add_minus" onclick="project_delperson()">-</span></div>
+                <?php
+                    $conn = connect();
+
+                    $sql = "SELECT User_ID FROM project WHERE Name='$project_name'";
+                    $que = $conn -> query($sql);
+                    while($res = mysqli_fetch_array($que)){
+                        echo "<div class='project_container_line'>".name_by_id($res["User_ID"])."</div>";
+                    }
+
+                    $conn -> close();
+                ?>
+            </div>
+            <!-- PANEL Z ZADANIAMI --->
+            <div class="project_container" style="width:48%;">
+                <div class="project_container_header">ZADANIA:<span class="project_add_plus" onclick="project_addjob()">+</span></div>
+                <?php
+                    $conn = connect();
+
+                    $sql = "SELECT * FROM project_jobs WHERE Project_Name='$project_name'";
+                    $que = $conn -> query($sql);
+                    while($res = mysqli_fetch_array($que)){
+                        echo "<div class='project_container_line'>".name_by_id($res["ForWho"])."</div>";
+                    }
+
+                    $conn -> close();
+                ?>
+            </div>
+            <!--  --->
+            <div class="project_container">
+                <div class="project_container_header">NIE WIEM CO:</div>
+                <div class="project_container_line">RANDOM SHIET BRUH</div>
+                <div class="project_container_line">RANDOM SHIET BRUH</div>
+                <div class="project_container_line">RANDOM SHIET BRUH</div>
+                <div class="project_container_line">RANDOM SHIET BRUH</div>
+            </div>
+            <div style="clear:both;"></div>
+
+            <!-- DODAWANIE NOWEGO POSTU --->
+            <div class="project_addpost">
+                <div class="project_container_header">DODAJ POST:</div>
+                
+            </div>
+            <div style="clear:both;"></div>
+
+            <!-- POSTY --->
+
         </div>
 
         <div style="clear:both;"></div>
@@ -101,12 +169,12 @@ else{
 
     <script>
         // Musi tu być bo nie działa skrypt
+        document.getElementById("okno_background").style.display="none";
         document.getElementById("nav_background").style.display="none";
         document.getElementById("task_background").style.display="none";
         var task_old_info = "";
         var new_job_forwho_toggle_variable = 0;
         var new_job_forwho_close_open_variable = 0;
-        var new_job_forwho_peoplenumber = 1;
         
         // Skrypty nav
         var okno=0;
@@ -284,6 +352,70 @@ else{
                 timer.innerHTML=<?php echo '"'.proper_date(date("Y-m-d")).' - "+'; ?>full_day+" - "+full_time;
             }, 1000, 1000)
         }
+        // -----
+
+        // Skrypty projektowe
+
+        //Funkcje obsługi okienka z zadaniami
+        var okno=0;
+        function job_okno(){
+            okno=1;
+        };
+
+        function job_popup(elem){
+            if(document.getElementById("okno_background").style.display=="none"){
+                document.getElementById("okno_background").style.display="inline";
+                document.body.style.overflowY="hidden";
+                new_job_forwho_toggle_variable = 0;
+                new_job_forwho_close_open_variable = 0;
+                new_job_forwho_peoplenumber = 1;
+                $.get("additional/processor.php", {elem: elem}, function(data){
+                    $('#okno_job').html(data);
+                });
+            }
+            else if(okno==0){
+                document.body.style.overflowY="auto";
+                document.getElementById("okno_background").style.display="none";
+                document.getElementById("okno_job").style.backgroundColor="#0082C3";
+                document.getElementById("okno_job").style.border="5px solid #0082C3";
+            }
+            new_job_forwho_toggle_option = 0;
+            okno=0;
+        }
+
+        function project_addperson(){
+            var addperson_project = <?php echo '"'.$project_name.'"'; ?>;
+            if(document.getElementById("okno_background").style.display=="none"){
+                document.getElementById("okno_background").style.display="inline";
+
+                $.get("additional/processor.php", {addperson_project: addperson_project}, function(data){
+                    $('#okno_job').html(data);
+                });
+            }
+            else if(okno==0){
+                document.getElementById("okno_background").style.display="none";
+                document.getElementById("new_job_div_1").style.display="none";
+            }
+            
+            okno=0;
+        }
+
+        function project_delperson(){
+
+        }
+
+        function project_addjob(){
+
+        }
+
+        function project_deljob(){
+
+        }
+
+        function project_completejob(){
+            
+        }
+
         // -----
 
     </script>

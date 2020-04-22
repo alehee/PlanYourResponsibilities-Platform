@@ -89,6 +89,8 @@ if(isset($_SESSION["project_name"]))
                         $project_msg = 0;
                         $project_jobs = 0;
 
+                        
+
                         echo "<tr>";
                         
                         if($project_pin == true)

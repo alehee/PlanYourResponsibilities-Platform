@@ -2017,5 +2017,10 @@
         unset($_GET['edit_id']);
     }
 
+    // PROJEKTY - OKNO DODANIA NOWEJ OSOBY DO PROJEKTU
+    else if(isset($_GET["addperson_project"])){
+        
+    }
+
     mysqli_close($conn);
 ?>
