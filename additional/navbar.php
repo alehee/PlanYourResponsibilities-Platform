@@ -15,10 +15,16 @@ $navbar='
 	<div id="nav_link" onclick=\'nav_classic_link("main.php")\'><span>PANEL GŁÓWNY</span></div>
 	<div id="nav_link" onclick=\'nav_classic_link("user.php")\'><span>ZADANIA OGÓLNE</span></div>
 	<div id="nav_link" onclick=\'nav_classic_link("user_staff.php")\'><span>ZADANIA KADROWE</span></div>
-	<div id="nav_link" onclick=\'nav_classic_link("user_ri.php")\'><span>ZADANIA RI</span></div>
-	<div id="nav_link" onclick=\'nav_classic_link("project.php")\'><span>PANEL PROJEKTÓW</span></div>
+	<div id="nav_link" onclick=\'nav_classic_link("user_ri.php")\'><span>ZADANIA RI</span></div>';
+
+	if($_SESSION["rola"]=="kadr" || $_SESSION["id"]=="6"){
+		$navbar = $navbar.'<div id="nav_link" onclick=\'nav_classic_link("hr_tasks.php")\'><span>PANEL KADR</span></div>';
+	}
+	
+$navbar .= '	
 	<div id="nav_link_header">LINKI</div>
 	<div id="nav_link" onclick=\'nav_link("http:\/\/mail.oxylane.com")\'>GMAIL</div>';
+	// <div id="nav_link" onclick=\'nav_classic_link("project.php")\'><span>PANEL PROJEKTÓW</span></div>
 
 	if($_SESSION["rola"]=="kier" || $_SESSION["rola"]=="admi" || $_SESSION["rola"]=="kadr" || $_SESSION["id"]=="6")
 		$navbar = $navbar.'<div id="nav_link" onclick=\'nav_link("https:\/\/sites.google.com\/decathlon.com\/menadzer-car-gliwice\/")\'>TECZKA MENADŻERA</div>';
@@ -39,7 +45,7 @@ $navbar='
 		$navbar = $navbar.'<div id="nav_link" onclick=\'nav_classic_link("stats.php")\'><span>STATYSTYKI</span></div>';
 	}
 
-	if($_SESSION["rola"]!="kier" && $_SESSION["rola"]!="admi" && $_SESSION["rola"]!="kadr" && $_SESSION["id"]!="6"){
+	if($_SESSION["rola"]=="kier" || $_SESSION["rola"]=="admi" || $_SESSION["rola"]=="kadr" || $_SESSION["id"]=="6"){
 		$navbar = $navbar.'<div id="nav_link" onclick=\'nav_classic_link("create-account.php")\'><span>DODAJ NOWĄ OSOBĘ</span></div>';
 		$navbar = $navbar.'<div id="nav_link" onclick=\'nav_classic_link("reset-password.php")\'><span>ZRESETUJ HASŁO</span></div>';
 		$navbar = $navbar.'<div id="nav_link" onclick=\'nav_classic_link("delete-account.php")\'><span>USUŃ OSOBĘ</span></div>';

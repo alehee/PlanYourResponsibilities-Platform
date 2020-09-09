@@ -39,7 +39,8 @@ $conn -> close();
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
         <title>Panel Główny</title>
-        <link rel="stylesheet" href="style/main.css?version=0.4.0"/>
+        <link rel="stylesheet" href="style/main.css?version=0.4.2"/>
+        <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
     <body onload="time()" class='normal'>
@@ -100,10 +101,10 @@ $conn -> close();
                 </div>
             </div>
             <div id="main_information" class="main_information_stats">
-                <div style="width:100%; min-height:20px; margin:10px;"><span style="float:left; padding-left:10px;">Zadań <b>OGÓLNYCH</b>:</span><span style="float:right; padding-right:10px;"><?php echo how_many_jobs($activity_id, "def"); ?></span></div>
-                <div style="width:100%; min-height:20px; margin:10px;"><span style="float:left; padding-left:10px;">Zadań <b>KADROWYCH</b>:</span><span style="float:right; padding-right:10px;"><?php echo how_many_jobs($activity_id, "sta"); ?></span></div>
-                <div style="width:100%; min-height:20px; margin:10px;"><span style="float:left; padding-left:10px;">Zadań <b>NADANYCH</b>:</span><span style="float:right; padding-right:10px;"><?php echo how_many_jobs($activity_id, "nadane"); ?></span></div>
-                <div style="width:100%; min-height:20px; margin:10px;"><span style="float:left; padding-left:10px;">Zadań <b>RI</b> w tym miesiącu:</span><span style="float:right; padding-right:10px;"><?php echo how_many_jobs($activity_id, "ri"); ?></span></div>
+                <div style="width:100%; min-height:20px; margin:10px;"><span style="float:left; padding-left:10px;" class="main_job_count_span" onclick="nav_classic_link('user.php')">Zadań <b>OGÓLNYCH</b>:</span><span style="float:right; padding-right:10px;"><?php echo how_many_jobs($activity_id, "def"); ?></span></div>
+                <div style="width:100%; min-height:20px; margin:10px;"><span style="float:left; padding-left:10px;" class="main_job_count_span" onclick="nav_classic_link('user_staff.php')">Zadań <b>KADROWYCH</b>:</span><span style="float:right; padding-right:10px;"><?php echo how_many_jobs($activity_id, "sta"); ?></span></div>
+                <div style="width:100%; min-height:20px; margin:10px;"><span style="float:left; padding-left:10px;" class="main_job_count_span" onclick="nav_classic_link('user.php')">Zadań <b>NADANYCH</b>:</span><span style="float:right; padding-right:10px;"><?php echo how_many_jobs($activity_id, "nadane"); ?></span></div>
+                <div style="width:100%; min-height:20px; margin:10px;"><span style="float:left; padding-left:10px;" class="main_job_count_span" onclick="nav_classic_link('user_ri.php')">Zadań <b>RI</b> w tym miesiącu:</span><span style="float:right; padding-right:10px;"><?php echo how_many_jobs($activity_id, "ri"); ?></span></div>
             </div>
             <div style="clear:both;"></div>
 

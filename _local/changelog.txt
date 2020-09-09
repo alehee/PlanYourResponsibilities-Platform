@@ -1,3 +1,25 @@
+0.4.2 --- 24.08.2020
+
+Nowości:
+- Zupełnie nowy panel dla kadr
+- Panel Główny: linki do paneli przy liczbie zadań
+- Panel RI: przeniesienie paska przesuwania miesięcy na górę
+- Mój Profil: usunięto zbędne opcje, zmiana metody modyfikacji profilu
+- Dodano ikonę strony
+
+Naprawione błędy:
+- ukrycie nieukończonego panelu projektów
+- przebijające się okienka w panelu RI
+
+0.4.1 --- 22.07.2020
+
+Nowości:
+- zmiana czasu przypominajek
+- pseudoautomatyczny system zadań dla Inwentaryzacji wózków pickingowych
+
+Naprawione błędy:
+- usuwanie zadań w "done" przy save_server gdy tylko wszystkie są zakończone
+
 0.4.0 --- 21.03.2020
 
 Nowości:

@@ -1,7 +1,7 @@
 <?php
 // TEN PLIK POWINIEN BYĆ WYKONYWANY RAZ DZIENNIE NA KOMPUTERZE, ABY ZAKTUALIZOWAĆ ZADANIA ORAZ WYCZYŚCIĆ TABELĘ
 
-$conn = @new mysqli("riverlakestudios.pl", "30908302_pld", "rvrlkPLD_", "30908302_pld");
+$conn = @new mysqli("localhost", "u986763087_pld", "AleHeePLD$", "u986763087_pld");
 
 $conn -> query("SET CHARSET utf8");
 $conn -> query("SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
@@ -47,6 +47,53 @@ while($res = mysqli_fetch_array($que)){
 }
 
 // -----
+/// EWENTUALNE DODANIE ZADAŃ CYKLICZNYCH
+
+    /// SEBASTIAN GERLICH - Inwentaryzacja wózków pickingowych
+    if(date("d") == "01"){
+        $conn -> query("SET CHARSET utf8");
+        $conn -> query("SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
+
+        // POBIERA OSTATNI NUMER ZADANIA JEDNOSTKI I WSTAWIA KOLEJNY NUMER DO BAZY
+        $new_jednostka = "CAR Gliwice";
+        $sql = "SELECT The_ID FROM job_index WHERE Jednostka='$new_jednostka'";
+        $que = $conn -> query($sql);
+        $res = mysqli_fetch_array($que);
+        $the_id = 1 + $res['The_ID'];
+        $sql = "UPDATE job_index SET The_ID=$the_id WHERE Jednostka='$new_jednostka'";
+        $conn -> query($sql);
+
+        // POBIERA DANE DLA ZADANIA
+        $new_title = "Inwentaryzacja wózków pickingowych ".date("m.Y");
+        $new_info = "Ocena techniczna wózków pickingowych i uzupełnienie pliku: https://docs.google.com/spreadsheets/d/1WWSRG0pZ0V_mOJxKrbfzdI5qdPXT_UmCiS2bxXKA40E/edit#gid=0";
+        $new_type = "def";
+        $new_deadline = date("Y-m-")."25";
+        $new_whoadd = 0;
+        $new_length = 2;
+
+        // POBIERA LISTĘ OSÓB DO ZADANIA
+        $sql = "SELECT ID FROM users WHERE Rola='kier' OR ID='47' OR ID='48'";
+        $que = $conn -> query($sql);
+        while($res = mysqli_fetch_array($que)){
+            $forwho_id = $res["ID"];
+            // JEŻELI ISTNIEJE JUŻ TAKIE ZADANIE TO OMIJA
+            $forwho_error = 0;
+
+            $temp_sql = "SELECT ID FROM job WHERE The_ID='$the_id' AND ForWho='$forwho_id'";
+            $temp_que = $conn -> query($temp_sql);
+            while($temp_res = mysqli_fetch_array($temp_que)){
+                $forwho_error = 1;
+            }
+
+            if($forwho_error == 0){
+                $temp_sql = "INSERT INTO job(ID, The_ID, Topic, Info, Type, WhoAdd, ForWho, Length, Start, Visited, Visited_Admin, End) VALUES (NULL, '$the_id', '$new_title', '$new_info', '$new_type', '$new_whoadd', '$forwho_id', '$new_length', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '$new_deadline')";
+                $conn -> query($temp_sql);
+            }
+        }
+    }
+    /// ==========
+
+/// ==========
 // WYSYŁANIE MAILI INFORMUJĄCYH O ZBLIŻAJĄCYM SIĘ KOŃCU ZADAŃ
 
 $ilosc_zadan = 0;
@@ -72,10 +119,10 @@ Oto Twoja dzisiejsza przypominajka:
 		if($days_left < 3 && $job_length == 3){
 			$user_jobs[$user_topic] = $days_left;
         }
-        else if($days_left < 4 && $job_length == 2){
+        else if($days_left < 5 && $job_length == 2){
 			$user_jobs[$user_topic] = $days_left;
         }
-        else if($days_left < 6 && $job_length == 1){
+        else if($days_left < 7 && $job_length == 1){
 			$user_jobs[$user_topic] = $days_left;
 		}
 	}
@@ -104,10 +151,57 @@ $email_message=$email_message."
 Zaloguj się na plandeca.pl i sprawdź szczegóły!
 Wygenerowano: ".date("Y-m-d G:i:s");
 	
-	mail($user_email, "[PLANDECA] Zadania $today", $email_message, "From: PlanDeca@riverlakestudios.pl");
+	mail($user_email, "[PLANDECA] Zadania $today", $email_message, "From: PlanDeca@aleksanderheese.pl");
 }
 
 // -----
+/// WYSYŁANIE MAILI DO KADR Z INFORMACJĄ O DZISIEJSZYCH OBOWIĄZKACH
+
+$hr_date = date("Y-m-d");
+$hr_notedate = "2030-".date("m-d");
+$hr_message = "";
+$hr_note = "";
+$ilosc_zadan = 0;
+
+$sql = "SELECT Info FROM hr_tasks WHERE Deadline='$hr_notedate'";
+$que = $conn -> query($sql);
+while($res = mysqli_fetch_array($que)){
+    $hr_note = $res["Info"];
+}
+
+$hr_message.="
+Notatka dnia $today:
+$hr_note
+";
+
+$sql = "SELECT Info FROM hr_tasks WHERE Deadline='$hr_date' AND Completed='false'";
+$que = $conn -> query($sql);
+while($res = mysqli_fetch_array($que)){
+    $hr_task = $res["Info"];
+
+$hr_message.="
+- $hr_task,";
+
+$ilosc_zadan++;
+}
+
+$hr_message.="
+
+Zaloguj się na plandeca.pl i sprawdź szczegóły!
+Wygenerowano: ".date("Y-m-d G:i:s");
+
+// WYŚLIJ JEŚLI SĄ ZADANIA
+if($ilosc_zadan > 0 || $hr_note != ""){
+    $sql = "SELECT Email FROM users WHERE Rola='kadr' OR ID='6'";
+    $que = $conn -> query($sql);
+    while($res = mysqli_fetch_array($que)){
+        $mail = $res["Email"];
+
+        mail($mail, "[PLANDECA] Zadania kadrowe $today", $hr_message, "From: PlanDeca@aleksanderheese.pl");
+    }
+}
+
+/// ==========
 // CZYSZCZENIE TABEL
 
 $sql = "SELECT The_ID, Date FROM done";
@@ -122,10 +216,8 @@ while($res = mysqli_fetch_array($que)){
     while($temp_res = mysqli_fetch_array($temp_que)){
         $all_jobs_done = 0;
     }
-	
-    $done_difference = checkdays($done_date);
     
-	if($done_difference<-7 && $all_jobs_done==1){
+	if($all_jobs_done==1){
 		$temp_sql = "DELETE FROM done WHERE The_ID='$done_the_id'";
 		$conn -> query($temp_sql);
 		$temp_sql = "DELETE FROM job_red WHERE The_ID='$done_the_id'";
@@ -148,7 +240,7 @@ $conn -> query($sql);
 $sql = "DELETE FROM save_server WHERE Date!='$today'";
 $conn -> query($sql);
 
-mail("aleksander.heese@decathlon.com", "PYR - skrypt save_server został wykonany", $message, "From: PYR@riverlakestudios.pl");
+mail("aleksander.heese@decathlon.com", "PlanDeca - skrypt save_server został wykonany", $message, "From: PlanDeca@aleksanderheese.pl");
 
 // -----
 

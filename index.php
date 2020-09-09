@@ -50,7 +50,8 @@ else if(isset($_POST["log_login"]) && isset($_POST["log_password"]) && isset($_P
     <head>
         <meta charset="utf-8"/>
         <title>Zaloguj</title>
-        <link rel="stylesheet" href="style/main.css?version=0.4.0"/>
+        <link rel="stylesheet" href="style/main.css?version=0.4.2"/>
+        <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
     </head>
     <body>
 
@@ -60,10 +61,11 @@ else if(isset($_POST["log_login"]) && isset($_POST["log_password"]) && isset($_P
             <h1>PlanDeca</h1>
         </header>
 
+<!--
         <div class="index_info">
-            <h1 style="color:#0082C3; padding-bottom:10px;">Aktualna wersja: 0.4.0</h1>
+            <h1 style="color:#0082C3; padding-bottom:10px;">Aktualna wersja: 0.4.1</h1>
             <div class="index_info_text">
-                Nowości:<br><br>
+                Nowości:<br>
             <span style="font-size:90%; color:green;">
             - teczka z taskami może być teraz czerwona (gdy są w niej zadania) lub zielona (gdy jest pusta)<br>
             - teczka z taskami gdy jest czerwona informuje ile mamy w niej zadań<br>
@@ -71,6 +73,25 @@ else if(isset($_POST["log_login"]) && isset($_POST["log_password"]) && isset($_P
             - wprowadzenie podziału widoku dodawania zadania dla różnych ról na magazynie<br>
             - w pełni działający panel RI<br>
             - informacja na panelu głównym z najważniejszymi statystykami<br>
+            </span>
+                <span style="color:gray;">
+                Platforma jest nadal rozwijana, daj znać o każdym problemie w sekcji "Zgłoś Usterkę"!<br>
+                </span>
+            </div>
+            <h2 style="color:#0082C3; padding:10px; font-style: normal;">Miłego użytkowania!</h2>
+        </div>
+-->
+
+        <div class="index_info">
+            <h1 style="color:#0082C3; padding-bottom:10px;">Aktualna wersja: 0.4.2</h1>
+            <div class="index_info_text">
+                Nowości:<br>
+            <span style="font-size:90%; color:green;">
+            - Zupełnie nowy panel dla kadr<br>
+            - Panel Główny: linki do paneli przy liczbie zadań<br>
+            - Panel RI: przeniesienie paska przesuwania miesięcy na górę<br>
+            - Mój Profil: usunięto zbędne opcje, zmiana metody modyfikacji profilu<br>
+            - Dodano ikonę strony<br>
             </span>
                 <span style="color:gray;">
                 Platforma jest nadal rozwijana, daj znać o każdym problemie w sekcji "Zgłoś Usterkę"!<br>

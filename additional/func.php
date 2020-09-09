@@ -1,10 +1,10 @@
 <?php
 
 function connect(){
-    $host = "riverlakestudios.pl";
-    $user_db = "30908302_pyr";
-    $password_db = "rvrlkPYR_";
-    $db_name = "30908302_pyr";
+    $host = "localhost";
+    $user_db = "u986763087_pld";
+    $password_db = "AleHeePLD$";
+    $db_name = "u986763087_pld";
 
     return @new mysqli($host, $user_db, $password_db, $db_name);
 }
@@ -75,14 +75,20 @@ function name_by_id($id){
     $name="";
     $conn = connect();
 
-    $conn->query("SET CHARSET utf8");
-    $conn->query("SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
+    if($id != 0){
+        $conn->query("SET CHARSET utf8");
+        $conn->query("SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
 
-    $sql = "SELECT Imie, Nazwisko FROM users WHERE ID='$id' LIMIT 1";
-    $que = $conn -> query($sql);
-    while($res = mysqli_fetch_array($que)){
-        $name = $res["Imie"]." ".$res["Nazwisko"];
+        $sql = "SELECT Imie, Nazwisko FROM users WHERE ID='$id' LIMIT 1";
+        $que = $conn -> query($sql);
+        while($res = mysqli_fetch_array($que)){
+            $name = $res["Imie"]." ".$res["Nazwisko"];
+        }
     }
+
+    else{
+        $name = "PlanDeca";
+    }    
 
     $conn -> close();
 

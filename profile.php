@@ -12,6 +12,11 @@ if(!isset($_SESSION["log"]) || !isset($_SESSION["id"]))
     exit();
 }
 
+if(isset($_SESSION["error"])){
+    echo '<script>alert("'.$_SESSION["error"].'")</script>';
+    unset($_SESSION["error"]);
+}
+
 if(!isset($_SESSION["sort"]))
 	$_SESSION["sort"]='Deadline';
 ?>
@@ -22,7 +27,8 @@ if(!isset($_SESSION["sort"]))
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
         <title>Mój Profil</title>
-        <link rel="stylesheet" href="style/main.css?version=0.4.0"/>
+        <link rel="stylesheet" href="style/main.css?version=0.4.2"/>
+        <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
     <body onload="time()" class='normal'>
@@ -31,6 +37,25 @@ if(!isset($_SESSION["sort"]))
         <!-- Pasek z linkami --->
         <?php echo $navbar ?>
         <?php echo $taskbar ?>
+
+        <!-- Popup zmień dane (z hr_tasks.php) -->
+        <div id="okno_background" onclick="hr_tasks_hide()">
+            <div id="hr_task_form" onclick="hr_tasks_hidenot()">
+                <form action="additional/change_acc.php" method="POST">
+                <input id="profile_changeoption_option" type="text" style="display:none;" name="option">
+                <div>
+                    <label>Aktualne hasło:</label><br>
+                    <input type="password" placeholder="Hasło" name="pwd">
+                </div>
+                <div>
+                    <label id="profile_changeoption_label"></label><br>
+                    <input id="profile_changeoption_text" type="text" name="new_info">
+                    <input id="profile_changeoption_password" type="password" placeholder="Nowe hasło" name="new_pwd">
+                </div>
+                <button type="submit">ZMIEŃ</button>
+                </form>
+            </div>
+        </div>
 
         <header>
             <div id="nav_handle"><img src='icons/menu-3-white.png' onclick="nav_open()"/></div>
@@ -177,8 +202,8 @@ if(!isset($_SESSION["sort"]))
                         $password = $password."*";
                     }
 
-                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%; color:#0082C3;'>IMIĘ: </b>$imie<span class='panel_info_zmien' onclick='change_imie()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
-                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%; color:#0082C3;'>NAZWISKO: </b>$nazwisko<span class='panel_info_zmien' onclick='change_nazwisko()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
+                    echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%; color:#0082C3;'>IMIĘ: </b>$imie</div>";
+                    echo "<div style='float:left; margin-bottom:20px;'><b style='font-size:80%; color:#0082C3;'>NAZWISKO: </b>$nazwisko</div>";
                     echo "<div style='clear:both;'></div>";
                     echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%; color:#0082C3;'>LOGIN: </b>$login<span class='panel_info_zmien' onclick='change_login()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
                     echo "<div style='float:left; margin-right:15%; margin-bottom:20px;'><b style='font-size:80%; color:#0082C3;'>HASŁO: </b>$password<span class='panel_info_zmien' onclick='change_password()'><img src='icons/edit-blue.png'/>Zmień</span></div>";
@@ -396,7 +421,38 @@ if(!isset($_SESSION["sort"]))
         }
 
         // -----
-        // Skrypty zmian w profilu
+
+        /// SKRYPTY ZADAŃ KADROWYCH DLA OBSŁUGI ZMIAN W PROFILU
+
+        var okno=0;
+
+        // KOPIA Z hr_tasks.php
+        function hr_tasks_hidenot(){
+            okno=1;
+        }
+
+        // KOPIA Z hr_tasks.php
+        function hr_tasks_hide(){
+            if(okno==0){
+                $("#okno_background").css("display", "none");
+                $("#hr_list").css("overflowX", "auto");
+                document.body.style.overflowY="auto";
+            }
+            okno=0;
+        }
+
+        // KOPIA Z hr_tasks.php
+        function hr_tasks_open(){
+            $("#okno_background").css("display", "inline");
+            $("#hr_list").css("overflowX", "hidden");
+            document.body.style.overflowY="hidden";
+        }
+
+
+
+        /// ==========
+
+        /// SKRYPTY ZMIAN W PROFILU
 
         var form_opened=0;
         function open_form(){
@@ -410,81 +466,35 @@ if(!isset($_SESSION["sort"]))
             }
         }
 
-        function change_imie(){
-            var pass = prompt("Podaj hasło");
-            if(real_password == pass){
-                var imie = "";
-                imie = prompt("Podaj nowe imię");
-                if(imie!=""){
-                    $.get("additional/change_acc.php", {imie: imie}, function(data){
-                        $('#thrash').html(data);
-                    });
-                }
-            }
-            else
-                alert("Podano błędne hasło");
-        }
-
-        function change_nazwisko(){
-            var pass = prompt("Podaj hasło");
-            if(real_password == pass){
-                var nazwisko = "";
-                nazwisko = prompt("Podaj nowe nazwisko");
-                if(nazwisko!=""){
-                    $.get("additional/change_acc.php", {nazwisko: nazwisko}, function(data){
-                        $('#thrash').html(data);
-                    });
-                }
-            }
-            else
-                alert("Podano błędne hasło");
-        }
-
         function change_login(){
-            var pass = prompt("Podaj hasło");
-            if(real_password == pass){
-                var login = "";
-                login = prompt("Podaj nowy login");
-                if(login!=""){
-                    $.get("additional/change_acc.php", {login: login}, function(data){
-                        $('#thrash').html(data);
-                    });
-                }
-            }
-            else
-                alert("Podano błędne hasło");
+            hr_tasks_open();
+            $('#profile_changeoption_password').css('display', 'none');
+            $('#profile_changeoption_text').css('display', 'inline');
+            $('#profile_changeoption_label').text('Nowy login:');
+            $('#profile_changeoption_option').val('login');
+
+            $('#profile_changeoption_text').attr('placeholder', 'Nowy login');
         }
 
         function change_password(){
-            var pass = prompt("Podaj hasło");
-            if(real_password == pass){
-                var haslo = "";
-                haslo = prompt("Podaj nowe hasło");
-                if(haslo!=""){
-                    $.get("additional/change_acc.php", {haslo: haslo}, function(data){
-                        $('#thrash').html(data);
-                    });
-                }
-            }
-            else
-                alert("Podano błędne hasło");
+            hr_tasks_open();
+            $('#profile_changeoption_password').css('display', 'inline');
+            $('#profile_changeoption_text').css('display', 'none');
+            $('#profile_changeoption_label').text('Nowe hasło:');
+            $('#profile_changeoption_option').val('password');
         }
 
         function change_email(){
-            var pass = prompt("Podaj hasło");
-            if(real_password == pass){
-                var email = "";
-                email = prompt("Podaj nowy email");
-                if(email!=""){
-                    $.get("additional/change_acc.php", {email: email}, function(data){
-                        $('#thrash').html(data);
-                    });
-                }
-            }
-            else
-                alert("Podano błędne hasło");
+            hr_tasks_open();
+            $('#profile_changeoption_password').css('display', 'none');
+            $('#profile_changeoption_text').css('display', 'inline');
+            $('#profile_changeoption_label').text('Nowy e-mail:');
+            $('#profile_changeoption_option').val('email');
+
+            $('#profile_changeoption_text').attr('placeholder', 'Nowy e-mail');
         }
 
-        // -----
+        /// ==========
+
     </script>
 </html>

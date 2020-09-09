@@ -43,7 +43,8 @@ $conn -> close();
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
         <title>Panel Zadań RI</title>
-        <link rel="stylesheet" href="style/main.css?version=0.4.0"/>
+        <link rel="stylesheet" href="style/main.css?version=0.4.2"/>
+        <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
     <body onload="time()" class='normal'>
@@ -626,19 +627,37 @@ $conn -> close();
             okno=1;
         }
 
+        // ZMIENIONE!
         function nav_hide(){
             if(okno==0){
                 var navback = document.getElementById("nav_background");
                 navback.style.display="none";
                 document.body.style.overflowY="auto";
+
+                $("#ri_job_list").css('transform', 'rotateX(180deg)');
+                $("#ri_job_list").css('-ms-transform', 'rotateX(180deg)');
+                $("#ri_job_list").css('-webkit-transform', 'rotateX(180deg)');
+                $(".ri_job_month").css('transform', 'rotateX(180deg)');
+                $(".ri_job_month").css('-ms-transform', 'rotateX(180deg)');
+                $(".ri_job_month").css('-webkit-transform', 'rotateX(180deg)');
+                $(".ri_job_month").css('vertical-align', 'bottom');
             }
             okno=0;
         }
 
+        // ZMIENIONE!
         function nav_open(){
             var navback = document.getElementById("nav_background");
             navback.style.display="inline";
             document.body.style.overflowY="hidden";
+
+            $("#ri_job_list").css('transform', 'none');
+            $("#ri_job_list").css('-ms-transform', 'none');
+            $("#ri_job_list").css('-webkit-transform', 'none');
+            $(".ri_job_month").css('transform', 'none');
+            $(".ri_job_month").css('-ms-transform', 'none');
+            $(".ri_job_month").css('-webkit-transform', 'none');
+            $(".ri_job_month").css('vertical-align', 'top');
         }
 
         function nav_link(link){
@@ -657,19 +676,37 @@ $conn -> close();
             okno=1;
         }
 
+        // ZMIENIONE!
         function task_hide(){
             if(okno==0){
                 var taskback = document.getElementById("task_background");
                 taskback.style.display="none";
                 document.body.style.overflowY="auto";
+
+                $("#ri_job_list").css('transform', 'rotateX(180deg)');
+                $("#ri_job_list").css('-ms-transform', 'rotateX(180deg)');
+                $("#ri_job_list").css('-webkit-transform', 'rotateX(180deg)');
+                $(".ri_job_month").css('transform', 'rotateX(180deg)');
+                $(".ri_job_month").css('-ms-transform', 'rotateX(180deg)');
+                $(".ri_job_month").css('-webkit-transform', 'rotateX(180deg)');
+                $(".ri_job_month").css('vertical-align', 'bottom');
             }
             okno=0;
         }
 
+        // ZMIENIONE!
         function task_open(){
             var taskback = document.getElementById("task_background");
             taskback.style.display="inline";
             document.body.style.overflowY="hidden";
+
+            $("#ri_job_list").css('transform', 'none');
+            $("#ri_job_list").css('-ms-transform', 'none');
+            $("#ri_job_list").css('-webkit-transform', 'none');
+            $(".ri_job_month").css('transform', 'none');
+            $(".ri_job_month").css('-ms-transform', 'none');
+            $(".ri_job_month").css('-webkit-transform', 'none');
+            $(".ri_job_month").css('vertical-align', 'top');
 
             $('textarea').blur();
         }
@@ -887,6 +924,7 @@ $conn -> close();
         }
 
         $('textarea').blur(); //DZIĘKI TEMU TEXTAREA SIĘ NAPRAWIĄ
+        
 
         // -----
     </script>

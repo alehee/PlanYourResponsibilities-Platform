@@ -6,59 +6,62 @@ $conn = @new mysqli($host, $user_db, $password_db, $db_name);
 
 $id = $_SESSION["id"];
 
-// ZMIEŃ IMIĘ
-if(isset($_GET["imie"])){
+// ZMIEŃ DANE NA PROFILU
+if(isset($_POST["option"])){
 
-    $imie = $_GET["imie"];
-    $sql = "UPDATE users SET Imie='$imie' WHERE ID='$id'";
-    $conn -> query($sql);
+    $option = $_POST["option"];
+    $new_info = $_POST["new_info"];
+    $new_password = $_POST["new_pwd"];
+    $password = $_POST["pwd"];
 
-    unset($_GET["imie"]);
-    echo ("<script>window.location = 'profile.php'</script>");
-}
+    $passwordIsGood = false;
 
-// ZMIEŃ NAZWISKO
-else if(isset($_GET["nazwisko"])){
+    $sql = "SELECT ID FROM users WHERE ID='$id' AND Password='$password'";
+    $que = $conn -> query($sql);
+    while($res = mysqli_fetch_array($que)){
+        $passwordIsGood = true;
+    }
 
-    $nazwisko = $_GET["nazwisko"];
-    $sql = "UPDATE users SET Nazwisko='$nazwisko' WHERE ID='$id'";
-    $conn -> query($sql);
+    if($passwordIsGood == true){
+        $error = false;
 
-    unset($_GET["nazwisko"]);
-    echo ("<script>window.location = 'profile.php'</script>");
-}
+        switch($option){
+            case "login":
+                $sql = "SELECT ID FROM users WHERE Login='$new_info'";
+                $que = $conn -> query($sql);
+                while($res = mysqli_fetch_array($que)){
+                    $error = true;
+                }
+                if($error == false){
+                    $sql = "UPDATE users SET Login='$new_info' WHERE ID='$id'";
+                    $conn -> query($sql);
+                    $_SESSION["error"] = "Zaktualizowano login poprawnie!";
+                }
+                else{
+                    $_SESSION["error"] = "Taki login już istnieje! Wybierz inny.";
+                }
+            break;
+            case "password":
+                $sql = "UPDATE users SET Password='$new_password' WHERE ID='$id'";
+                $conn -> query($sql);
+                $_SESSION["error"] = "Zaktualizowano hasło poprawnie!";
+            break;
+            case "email":
+                $sql = "UPDATE users SET Email='$new_info' WHERE ID='$id'";
+                $conn -> query($sql);
+                $_SESSION["error"] = "Zaktualizowano e-mail poprawnie!";
+            break;
+        }
+    }
+    else{
+        $_SESSION["error"] = "Podano błędne hasło!";
+    }
 
-// ZMIEŃ LOGIN
-else if(isset($_GET["login"])){
-
-    $login = $_GET["login"];
-    $sql = "UPDATE users SET Login='$login' WHERE ID='$id'";
-    $conn -> query($sql);
-
-    unset($_GET["login"]);
-    echo ("<script>window.location = 'profile.php'</script>");
-}
-
-// ZMIEŃ HASŁO
-else if(isset($_GET["haslo"])){
-
-    $haslo = $_GET["haslo"];
-    $sql = "UPDATE users SET Password='$haslo' WHERE ID='$id'";
-    $conn -> query($sql);
-
-    unset($_GET["haslo"]);
-    echo ("<script>window.location = 'profile.php'</script>");
-}
-
-// ZMIEŃ EMAIL
-else if(isset($_GET["email"])){
-
-    $email = $_GET["email"];
-    $sql = "UPDATE users SET Email='$email' WHERE ID='$id'";
-    $conn -> query($sql);
-
-    unset($_GET["email"]);
-    echo ("<script>window.location = 'profile.php'</script>");
+    unset($_POST["option"]);
+    unset($_POST["new_info"]);
+    unset($_POST["new_pwd"]);
+    unset($_POST["pwd"]);
+    header("location:../profile.php");
 }
 
 // ZMIEŃ ZDJĘCIE
