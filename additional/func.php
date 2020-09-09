@@ -2,9 +2,9 @@
 
 function connect(){
     $host = "localhost";
-    $user_db = "";
-    $password_db = "";
-    $db_name = "";
+    $user_db = "u986763087_pld";
+    $password_db = "AleHeePLD$";
+    $db_name = "u986763087_pld";
 
     return @new mysqli($host, $user_db, $password_db, $db_name);
 }
