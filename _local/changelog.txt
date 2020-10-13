@@ -1,3 +1,14 @@
+0.4.3 --- 23.09.2020
+
+Nowości:
+- Panel Kadr: notatka podzielona na dwa segmenty
+- Panel Kadr: widok kto edytował notatkę
+- Panel Kadr: zadania zaległe w wiadomości
+- Poprawiono ikonę strony
+
+Naprawione błędy:
+- kilka związanych z Panelem Kadr
+
 0.4.2 --- 24.08.2020
 
 Nowości:

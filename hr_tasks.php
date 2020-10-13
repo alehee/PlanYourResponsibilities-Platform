@@ -44,7 +44,7 @@ $conn -> close();
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
         <title>Panel Kadr</title>
-        <link rel="stylesheet" href="style/main.css?version=0.4.2"/>
+        <link rel="stylesheet" href="style/main.css?version=0.4.3"/>
         <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -144,23 +144,31 @@ $conn -> close();
                                 $hr_task_adddate = $res["AddDate"];
                                 $hr_task_deadline = $res["Deadline"];
                                 $hr_task_info = $res["Info"];
+                                $hr_task_infoadd = $res["InfoAdd"];
                                 $hr_task_completed = $res["Completed"];
                                 $hr_task_whocompleted = $res["WhoCompleted"];
                                 $hr_task_completeddate = $res["CompletedDate"];
                                 
-                                echo "      <div class='task_job' id='$hr_task_id'><textarea data-autoresize placeholder='Notatka dnia...' class='task_job_textarea' id='textarea_$hr_task_id' style='margin-top:-10px; width:100%; border:none; padding:2px; background-color:#f2f2f2; resize:none;' rows='1' spellcheck='false' onchange='hr_tasks_updatenote($hr_task_id)'>$hr_task_info</textarea></div>";
+                                echo '      <div style="color: #006699; font-style: italic; margin-left: 20px;">RANO <span style="color:black; font-size:60%; font-style: italic; margin-left: 10px;">Ostatnia edycja: '.name_by_id($hr_task_whoadd).'</span></div>';
+                                echo "      <div class='task_job' id='$hr_task_id'><textarea data-autoresize placeholder='Notatka dnia rano...' class='task_job_textarea' id='textarea_$hr_task_id' style='margin-top:-10px; width:100%; border:none; padding:2px; background-color:#f2f2f2; resize:none;' rows='1' spellcheck='false' onchange='hr_tasks_updatenote($hr_task_id)'>$hr_task_info</textarea></div>";
+                                echo '      <div style="color: #006699; font-style: italic; margin-left: 20px;">POPO <span style="color:black; font-size:60%; font-style: italic; margin-left: 10px;">Ostatnia edycja: '.name_by_id($hr_task_whocompleted).'</span></div>';
+                                echo "      <div class='task_job' id='$hr_task_id'><textarea data-autoresize placeholder='Notatka dnia popołudnie...' class='task_job_textarea' id='textarea_add_$hr_task_id' style='margin-top:-10px; width:100%; border:none; padding:2px; background-color:#f2f2f2; resize:none;' rows='1' spellcheck='false' onchange='hr_tasks_updatenoteadd($hr_task_id)'>$hr_task_infoadd</textarea></div>";
                             }
                             /// ==========
 
                             /// WYPISANIE ZADAŃ DLA DNIA
                             $sql = "SELECT * FROM hr_tasks WHERE Deadline='$weekDay'";
                             $que = $conn -> query($sql);
+                            if(mysqli_num_rows($que)!=0){
+                                echo '     <div style="color: #006699; font-style: italic; margin-left: 20px;">ZADANIA</div>';
+                            }
                             while($res = mysqli_fetch_array($que)){
                                 $hr_task_id = $res["ID"];
                                 $hr_task_whoadd = $res["WhoAdd"];
                                 $hr_task_adddate = $res["AddDate"];
                                 $hr_task_deadline = $res["Deadline"];
                                 $hr_task_info = $res["Info"];
+                                $hr_task_infoadd = $res["InfoAdd"];
                                 $hr_task_completed = $res["Completed"];
                                 $hr_task_whocompleted = $res["WhoCompleted"];
                                 $hr_task_completeddate = $res["CompletedDate"];
@@ -192,7 +200,10 @@ $conn -> close();
                                                         $('#button_delete_$hr_task_id').css('display', 'inline');
                                                     </script>";
                                 }
-                                    echo '       </div>';
+                                echo "          <div style='clear:both;'></div>";
+                                echo "          <div class='task_job' id='$hr_task_id' style='margin-top:10px;'><textarea data-autoresize placeholder='Notatka do zadania...' class='hr_task_textarea' id='textarea_hrtask_$hr_task_id' rows='1' spellcheck='false' onchange='hr_tasks_updatenotetask($hr_task_id)'>$hr_task_infoadd</textarea></div>";
+                                echo "          <div style='clear:both;'></div>";
+                                echo '      </div>';
                             }
                             /// ==========
                             echo '  </div>';
@@ -477,6 +488,7 @@ $conn -> close();
 
         function hr_tasks_toggleDiv(task_id){
             $("#"+task_id).toggle();
+            $("#textarea_hrtask_"+task_id).blur();
             if($("#"+task_id).css("display") == "none"){
                 $("#hr_task_title_"+task_id).css("border-bottom-left-radius", "20px");
                 $("#hr_task_title_"+task_id).css("border-bottom-right-radius", "20px");
@@ -564,6 +576,28 @@ $conn -> close();
 
             $.ajax({
                 url: "additional/hr_task_processor.php?update=1&task_number="+task_id+"&new="+new_task
+            }).done(function(data) { // data what is sent back by the php page
+                $('#thrash').html(data); // display data
+            });
+        }
+
+        function hr_tasks_updatenoteadd(task_id){
+            var new_task = document.getElementById("textarea_add_"+task_id).value;
+            new_task = new_task.replace(/\n\r?/g, '\\n');
+
+            $.ajax({
+                url: "additional/hr_task_processor.php?update=2&task_number="+task_id+"&new="+new_task
+            }).done(function(data) { // data what is sent back by the php page
+                $('#thrash').html(data); // display data
+            });
+        }
+
+        function hr_tasks_updatenotetask(task_id){
+            var new_task = document.getElementById("textarea_hrtask_"+task_id).value;
+            new_task = new_task.replace(/\n\r?/g, '\\n');
+
+            $.ajax({
+                url: "additional/hr_task_processor.php?update=3&task_number="+task_id+"&new="+new_task
             }).done(function(data) { // data what is sent back by the php page
                 $('#thrash').html(data); // display data
             });

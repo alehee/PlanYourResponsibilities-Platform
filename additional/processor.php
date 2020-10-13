@@ -26,7 +26,7 @@
         <b>NOWE ZADANIE</b><br><br>
         <form method="POST" action="additional/newjob.php">
         <div class="okno" style="padding:10px;">
-            <div style="font-size:100%; text-align:center;"><b>Tytuł:</b> <input type="text" name="new_title" style="font-size:100%; width:400px;" required/> <span style="padding-left:10px;"></span> <b>Deadline:</b> <input type="date" style="font-size:100%;" name="new_deadline" required/></div>
+            <div style="font-size:100%; text-align:center;"><b>Tytuł:</b> <input id="job_textbox_title" type="text" name="new_title" style="font-size:100%; width:400px;" required/> <span style="padding-left:10px;"></span> <b>Deadline:</b> <input type="date" style="font-size:100%;" name="new_deadline" required/></div>
             <div style="font-size:100%; text-align:center;"><b>Długość zadania:</b> 
             <select name="new_length" style="font-size:100%; width:100px; margin:10px;" required>
                 <option value="3">Krótkie</option>

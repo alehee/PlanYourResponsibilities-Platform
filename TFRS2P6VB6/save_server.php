@@ -163,24 +163,32 @@ $hr_message = "";
 $hr_note = "";
 $ilosc_zadan = 0;
 
-$sql = "SELECT Info FROM hr_tasks WHERE Deadline='$hr_notedate'";
+$sql = "SELECT Info, InfoAdd FROM hr_tasks WHERE Deadline='$hr_notedate'";
 $que = $conn -> query($sql);
 while($res = mysqli_fetch_array($que)){
     $hr_note = $res["Info"];
+    $hr_note_add = $res["InfoAdd"];
 }
 
 $hr_message.="
 Notatka dnia $today:
 $hr_note
+
+$hr_note_add
+
 ";
 
-$sql = "SELECT Info FROM hr_tasks WHERE Deadline='$hr_date' AND Completed='false'";
+//$sql = "SELECT Info FROM hr_tasks WHERE Deadline='$hr_date' AND Completed='false'";
+$sql = "SELECT Info, Deadline FROM hr_tasks WHERE Deadline > '2020-08-01' AND Deadline <= '$hr_date' AND Completed='false'";
 $que = $conn -> query($sql);
 while($res = mysqli_fetch_array($que)){
     $hr_task = $res["Info"];
+    $hr_task_date = $res["Deadline"];
+    $hr_task_date_buffer = $hr_task_date[8].$hr_task_date[9].".".$hr_task_date[5].$hr_task_date[6].".".$hr_task_date[0].$hr_task_date[1].$hr_task_date[2];
+    $hr_task_date = $hr_task_date_buffer;
 
 $hr_message.="
-- $hr_task,";
+- $hr_task_date - $hr_task,";
 
 $ilosc_zadan++;
 }

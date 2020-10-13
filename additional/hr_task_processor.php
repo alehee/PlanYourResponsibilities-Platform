@@ -60,11 +60,26 @@ if(isset($_GET["delete"])){
 
 // ZMIEŃ TREŚĆ NOTATKI DNIA
 if(isset($_GET["update"])){
+
+	$sql = "";
 	$task_number = $_GET["task_number"];
 	$info = $_GET["new"];
 
-	$sql = "UPDATE hr_tasks SET Info='$info' WHERE ID='$task_number'";
+	// NOTATKA RANO
+	if($_GET["update"] == 1){
+		$sql = "UPDATE hr_tasks SET Info='$info', WhoAdd='$id' WHERE ID='$task_number'";
+	}
 
+	// NOTATKA POPO
+	else if($_GET["update"] == 2){
+		$sql = "UPDATE hr_tasks SET InfoAdd='$info', WhoCompleted='$id' WHERE ID='$task_number'";
+	}
+
+	// NOTATKA ZADANIE
+	else if($_GET["update"] == 3){
+		$sql = "UPDATE hr_tasks SET InfoAdd='$info' WHERE ID='$task_number'";
+	}
+	
 	$conn -> query($sql);
 
 	unset($_GET["task_number"]);
