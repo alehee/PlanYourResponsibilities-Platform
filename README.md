@@ -46,7 +46,7 @@ When you have your environment here's what you need to do next:
   ```
   6. Upload changes to host or run the XAMPP server, and you're good to go!
   
-To run daily mail, database autoclear, and other cool stuff you need to run *\TFRS2P6VB6\save_server.php*, I used Windows Task Scheduler and the .bat file inside the folder.
+To run daily mail, database autoclear, and other cool stuff you need to run *\TFRS2P6VB6\save_server.php*, I used Windows Task Scheduler and the .bat file inside the folder. My proposition is to plan daily *save_server.php* page opening on 6AM, script should run up to 2 minutes!
   
 ## Thank you!
 Thank you for peeking at my project!
