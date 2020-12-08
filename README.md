@@ -1,5 +1,5 @@
 # PlanYourResponsibilities-Platform (PlanDeca)
-![It's a front pic!](https://github.com/alehee/PlanYourResponsibilities-Platform/blob/master/front_github.png?raw=true)
+![It's a front pic!](https://github.com/alehee/PlanYourResponsibilities-Platform/blob/master/github_resources/front_github.png?raw=true)
 
 ## Description
 PlanYourResponsibilities-Platform is a web platform for task management, team responsibilities control and work plan capabilities. If you're manager you can schedule your employees work day. If you're an employee you have your own todo list with color information, daily e-mail messages with your 'today' list and chat to communicate with other task collaborators.
