@@ -19,7 +19,7 @@ Including:
 ![It's a pic!](https://github.com/alehee/PlanYourResponsibilities-Platform/blob/master/github_resources/list.png "Task list")
 
 ## Used technology
-Technology I used in this project:
+Technology I used for this project:
 * HTML/CSS
 * PHP
 * JS + JQuery
