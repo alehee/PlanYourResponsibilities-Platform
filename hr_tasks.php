@@ -44,7 +44,7 @@ $conn -> close();
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
         <title>Panel Kadr</title>
-        <link rel="stylesheet" href="style/main.css?version=0.4.3"/>
+        <link rel="stylesheet" href="style/main.css?version=0.4.4"/>
         <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -106,8 +106,124 @@ $conn -> close();
                 <div onclick="hr_tasks_reload()" id="done_job">ODŚWIEŻ LISTĘ</div>
                 <div style="clear:both;"></div>
             </div>
+            <div style="clear:both;"></div>
 
-            <div id="hr_list">
+            <div id="hr_list_hide" onclick="hideHrList('2021')" style="">2021</div>
+            <div id="hr_list" class="hr_list_2021">
+                <?php
+                    $weekStart = "2020-12-21";
+                    $weekEnd = "2020-12-27";
+                    $weekNumber = -1;
+
+                    /// POKAŻ WSZYSTKIE TYGODNIE
+                    $conn = connect();
+                    $conn -> query("SET CHARSET utf8");
+                    $conn -> query("SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
+                    for($i=$weekNumber; $i<52; $i++){
+                        $weekStart = date("Y-m-d" ,strtotime("+1 week",  strtotime($weekStart)));
+                        $weekEnd = date("Y-m-d" ,strtotime("+1 week",  strtotime($weekEnd)));
+                        $weekNumber++;
+
+                        echo '  <div class="hr_week" id="week_'.$weekNumber.'">
+                                    <h2>T'.$weekNumber.' <br><span style="font-size:40%">'.proper_date($weekStart).' - '.proper_date($weekEnd).'</span></h2>
+                                    <div class="hr_list" id="2003">';
+
+                        for($j=0; $j<7; $j++){
+                            $weekDay = date("Y-m-d" ,strtotime("+".$j." day",  strtotime($weekStart)));
+                            $weekDayProper = proper_date($weekDay);
+
+                            if($weekDay[0].$weekDay[1].$weekDay[2].$weekDay[3]=="2021"){
+                                echo '  <div class="hr_week_note"><h3>'.$weekDayProper.'</h3><br>';
+
+                                /// SPRAWDZENIE NOTATKI DNIA
+                                $noteWeekDay = "2031-".$weekDay[5].$weekDay[6].$weekDay[7].$weekDay[8].$weekDay[9];
+                                $noteWeekDayProper = proper_date($noteWeekDay);
+                                $noteWeekDayDisplay = substr($noteWeekDayProper, 0, 7);
+                                $sql = "SELECT * FROM hr_tasks WHERE Deadline='$noteWeekDay' LIMIT 1";
+                                $que = $conn -> query($sql);
+                                while($res = mysqli_fetch_array($que)){
+                                    $hr_task_id = $res["ID"];
+                                    $hr_task_whoadd = $res["WhoAdd"];
+                                    $hr_task_adddate = $res["AddDate"];
+                                    $hr_task_deadline = $res["Deadline"];
+                                    $hr_task_info = $res["Info"];
+                                    $hr_task_infoadd = $res["InfoAdd"];
+                                    $hr_task_completed = $res["Completed"];
+                                    $hr_task_whocompleted = $res["WhoCompleted"];
+                                    $hr_task_completeddate = $res["CompletedDate"];
+                                    
+                                    echo '      <div style="color: #006699; font-style: italic; margin-left: 20px;">RANO <span style="color:black; font-size:60%; font-style: italic; margin-left: 10px;">Ostatnia edycja: '.name_by_id($hr_task_whoadd).'</span></div>';
+                                    echo "      <div class='task_job' id='$hr_task_id'><textarea data-autoresize placeholder='Notatka dnia rano...' class='task_job_textarea' id='textarea_$hr_task_id' style='margin-top:-10px; width:100%; border:none; padding:2px; background-color:#f2f2f2; resize:none;' rows='1' spellcheck='false' onchange='hr_tasks_updatenote($hr_task_id)'>$hr_task_info</textarea></div>";
+                                    echo '      <div style="color: #006699; font-style: italic; margin-left: 20px;">POPO <span style="color:black; font-size:60%; font-style: italic; margin-left: 10px;">Ostatnia edycja: '.name_by_id($hr_task_whocompleted).'</span></div>';
+                                    echo "      <div class='task_job' id='$hr_task_id'><textarea data-autoresize placeholder='Notatka dnia popołudnie...' class='task_job_textarea' id='textarea_add_$hr_task_id' style='margin-top:-10px; width:100%; border:none; padding:2px; background-color:#f2f2f2; resize:none;' rows='1' spellcheck='false' onchange='hr_tasks_updatenoteadd($hr_task_id)'>$hr_task_infoadd</textarea></div>";
+                                }
+                                /// ==========
+
+                                /// WYPISANIE ZADAŃ DLA DNIA
+                                $sql = "SELECT * FROM hr_tasks WHERE Deadline='$weekDay'";
+                                $que = $conn -> query($sql);
+                                if(mysqli_num_rows($que)!=0){
+                                    echo '     <div style="color: #006699; font-style: italic; margin-left: 20px;">ZADANIA</div>';
+                                }
+                                while($res = mysqli_fetch_array($que)){
+                                    $hr_task_id = $res["ID"];
+                                    $hr_task_whoadd = $res["WhoAdd"];
+                                    $hr_task_adddate = $res["AddDate"];
+                                    $hr_task_deadline = $res["Deadline"];
+                                    $hr_task_info = $res["Info"];
+                                    $hr_task_infoadd = $res["InfoAdd"];
+                                    $hr_task_completed = $res["Completed"];
+                                    $hr_task_whocompleted = $res["WhoCompleted"];
+                                    $hr_task_completeddate = $res["CompletedDate"];
+
+                                    $string = $hr_task_info;
+                                    $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
+                                    $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
+
+                                    echo '  <div class="hr_task_title" id="hr_task_title_'.$hr_task_id.'" onclick="hr_tasks_toggleDiv('.$hr_task_id.')">'.$string.'</div>';
+                                    echo '      <div class="hr_task_body" id="'.$hr_task_id.'">
+                                                    <div><div style="float:left; width:80%;"><img style="float:left; height:15px; margin-left:10%; margin-right:20%;" src="icons/add.png" /><div style="float:left; color:white; height:15px; width:30%; text-align:center">'.name_by_id($hr_task_whoadd).'</div><div style="float:left; color:white; height:15px; width:30%; text-align:center">'.proper_date($hr_task_adddate).'</div></div><button class="ri_job_end_button" id="button_delete_'.$hr_task_id.'" style="background-color:#006699;" onclick="hr_tasks_delete('.$hr_task_id.')">x</button><button class="ri_job_complete_button" id="button_check_'.$hr_task_id.'" style="background-color:#006699; color:#00FF00;" onclick="hr_tasks_check('.$hr_task_id.')">✓</button></div>';
+                                    if($hr_task_completed == "true"){
+                                        echo '          <div><div style="float:left; width:80%;"><img style="float:left; height:15px; margin-left:10%; margin-right:20%;" src="icons/done.png" /><div style="float:left; color:white; height:15px; width:30%; text-align:center">'.name_by_id($hr_task_whocompleted).'</div><div style="float:left; color:white; height:15px; width:30%; text-align:center">'.proper_date($hr_task_completeddate).'</div></div></div>';
+                                        echo "          <script>
+                                                            $('#$hr_task_id').css('background-color', 'green');
+                                                            $('#hr_task_title_$hr_task_id').css('background-color', 'green');
+                                                            $('#button_check_$hr_task_id').css('color', 'gray');
+                                                            $('#button_check_$hr_task_id').css('background-color', 'green');
+                                                            $('#button_delete_$hr_task_id').css('display', 'none');
+                                                        </script>";
+                                    }
+                                    else{
+                                        echo '          <div><div style="float:left; width:80%;"><img style="float:left; height:15px; margin-left:10%; margin-right:20%;" src="icons/done.png" /><div style="float:left; color:white; height:15px; width:30%; text-align:center;">-</div><div style="float:left; color:white; height:15px; width:30%; text-align:center">-</div></div></div>';
+                                        echo "          <script>
+                                                            $('#$hr_task_id').css('background-color', '#006699');
+                                                            $('#hr_task_title_$hr_task_id').css('background-color', '#006699');
+                                                            $('#button_check_$hr_task_id').css('color', '#00FF00');
+                                                            $('#button_check_$hr_task_id').css('background-color', '#006699');
+                                                            $('#button_delete_$hr_task_id').css('display', 'inline');
+                                                        </script>";
+                                    }
+                                    echo "          <div style='clear:both;'></div>";
+                                    echo "          <div class='task_job' id='$hr_task_id' style='margin-top:10px;'><textarea data-autoresize placeholder='Notatka do zadania...' class='hr_task_textarea' id='textarea_hrtask_$hr_task_id' rows='1' spellcheck='false' onchange='hr_tasks_updatenotetask($hr_task_id)'>$hr_task_infoadd</textarea></div>";
+                                    echo "          <div style='clear:both;'></div>";
+                                    echo '      </div>';
+                                }
+                                /// ==========
+                                echo '  </div>';
+                            }
+                        }
+
+                        echo '      </div>
+                                </div>';
+                    }
+                    $conn -> close();
+                    /// ==========
+
+                ?>
+            </div>
+
+            <div id="hr_list_hide" onclick="hideHrList('2020')">2020</div>
+            <div id="hr_list" class="hr_list_2020">
                 <?php
                     $weekStart = "2020-08-10";
                     $weekEnd = "2020-08-16";
@@ -130,83 +246,85 @@ $conn -> close();
                             $weekDay = date("Y-m-d" ,strtotime("+".$j." day",  strtotime($weekStart)));
                             $weekDayProper = proper_date($weekDay);
 
-                            echo '  <div class="hr_week_note"><h3>'.$weekDayProper.'</h3><br>';
+                            if($weekDay[0].$weekDay[1].$weekDay[2].$weekDay[3]=="2020"){
+                                echo '  <div class="hr_week_note"><h3>'.$weekDayProper.'</h3><br>';
 
-                            /// SPRAWDZENIE NOTATKI DNIA
-                            $noteWeekDay = "2030-".$weekDay[5].$weekDay[6].$weekDay[7].$weekDay[8].$weekDay[9];
-                            $noteWeekDayProper = proper_date($noteWeekDay);
-                            $noteWeekDayDisplay = substr($noteWeekDayProper, 0, 7);
-                            $sql = "SELECT * FROM hr_tasks WHERE Deadline='$noteWeekDay' LIMIT 1";
-                            $que = $conn -> query($sql);
-                            while($res = mysqli_fetch_array($que)){
-                                $hr_task_id = $res["ID"];
-                                $hr_task_whoadd = $res["WhoAdd"];
-                                $hr_task_adddate = $res["AddDate"];
-                                $hr_task_deadline = $res["Deadline"];
-                                $hr_task_info = $res["Info"];
-                                $hr_task_infoadd = $res["InfoAdd"];
-                                $hr_task_completed = $res["Completed"];
-                                $hr_task_whocompleted = $res["WhoCompleted"];
-                                $hr_task_completeddate = $res["CompletedDate"];
-                                
-                                echo '      <div style="color: #006699; font-style: italic; margin-left: 20px;">RANO <span style="color:black; font-size:60%; font-style: italic; margin-left: 10px;">Ostatnia edycja: '.name_by_id($hr_task_whoadd).'</span></div>';
-                                echo "      <div class='task_job' id='$hr_task_id'><textarea data-autoresize placeholder='Notatka dnia rano...' class='task_job_textarea' id='textarea_$hr_task_id' style='margin-top:-10px; width:100%; border:none; padding:2px; background-color:#f2f2f2; resize:none;' rows='1' spellcheck='false' onchange='hr_tasks_updatenote($hr_task_id)'>$hr_task_info</textarea></div>";
-                                echo '      <div style="color: #006699; font-style: italic; margin-left: 20px;">POPO <span style="color:black; font-size:60%; font-style: italic; margin-left: 10px;">Ostatnia edycja: '.name_by_id($hr_task_whocompleted).'</span></div>';
-                                echo "      <div class='task_job' id='$hr_task_id'><textarea data-autoresize placeholder='Notatka dnia popołudnie...' class='task_job_textarea' id='textarea_add_$hr_task_id' style='margin-top:-10px; width:100%; border:none; padding:2px; background-color:#f2f2f2; resize:none;' rows='1' spellcheck='false' onchange='hr_tasks_updatenoteadd($hr_task_id)'>$hr_task_infoadd</textarea></div>";
-                            }
-                            /// ==========
-
-                            /// WYPISANIE ZADAŃ DLA DNIA
-                            $sql = "SELECT * FROM hr_tasks WHERE Deadline='$weekDay'";
-                            $que = $conn -> query($sql);
-                            if(mysqli_num_rows($que)!=0){
-                                echo '     <div style="color: #006699; font-style: italic; margin-left: 20px;">ZADANIA</div>';
-                            }
-                            while($res = mysqli_fetch_array($que)){
-                                $hr_task_id = $res["ID"];
-                                $hr_task_whoadd = $res["WhoAdd"];
-                                $hr_task_adddate = $res["AddDate"];
-                                $hr_task_deadline = $res["Deadline"];
-                                $hr_task_info = $res["Info"];
-                                $hr_task_infoadd = $res["InfoAdd"];
-                                $hr_task_completed = $res["Completed"];
-                                $hr_task_whocompleted = $res["WhoCompleted"];
-                                $hr_task_completeddate = $res["CompletedDate"];
-
-                                $string = $hr_task_info;
-                                $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
-                                $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
-
-                                echo '  <div class="hr_task_title" id="hr_task_title_'.$hr_task_id.'" onclick="hr_tasks_toggleDiv('.$hr_task_id.')">'.$string.'</div>';
-                                echo '      <div class="hr_task_body" id="'.$hr_task_id.'">
-                                                <div><div style="float:left; width:80%;"><img style="float:left; height:15px; margin-left:10%; margin-right:20%;" src="icons/add.png" /><div style="float:left; color:white; height:15px; width:30%; text-align:center">'.name_by_id($hr_task_whoadd).'</div><div style="float:left; color:white; height:15px; width:30%; text-align:center">'.proper_date($hr_task_adddate).'</div></div><button class="ri_job_end_button" id="button_delete_'.$hr_task_id.'" style="background-color:#006699;" onclick="hr_tasks_delete('.$hr_task_id.')">x</button><button class="ri_job_complete_button" id="button_check_'.$hr_task_id.'" style="background-color:#006699; color:#00FF00;" onclick="hr_tasks_check('.$hr_task_id.')">✓</button></div>';
-                                if($hr_task_completed == "true"){
-                                    echo '          <div><div style="float:left; width:80%;"><img style="float:left; height:15px; margin-left:10%; margin-right:20%;" src="icons/done.png" /><div style="float:left; color:white; height:15px; width:30%; text-align:center">'.name_by_id($hr_task_whocompleted).'</div><div style="float:left; color:white; height:15px; width:30%; text-align:center">'.proper_date($hr_task_completeddate).'</div></div></div>';
-                                    echo "          <script>
-                                                        $('#$hr_task_id').css('background-color', 'green');
-                                                        $('#hr_task_title_$hr_task_id').css('background-color', 'green');
-                                                        $('#button_check_$hr_task_id').css('color', 'gray');
-                                                        $('#button_check_$hr_task_id').css('background-color', 'green');
-                                                        $('#button_delete_$hr_task_id').css('display', 'none');
-                                                    </script>";
+                                /// SPRAWDZENIE NOTATKI DNIA
+                                $noteWeekDay = "2030-".$weekDay[5].$weekDay[6].$weekDay[7].$weekDay[8].$weekDay[9];
+                                $noteWeekDayProper = proper_date($noteWeekDay);
+                                $noteWeekDayDisplay = substr($noteWeekDayProper, 0, 7);
+                                $sql = "SELECT * FROM hr_tasks WHERE Deadline='$noteWeekDay' LIMIT 1";
+                                $que = $conn -> query($sql);
+                                while($res = mysqli_fetch_array($que)){
+                                    $hr_task_id = $res["ID"];
+                                    $hr_task_whoadd = $res["WhoAdd"];
+                                    $hr_task_adddate = $res["AddDate"];
+                                    $hr_task_deadline = $res["Deadline"];
+                                    $hr_task_info = $res["Info"];
+                                    $hr_task_infoadd = $res["InfoAdd"];
+                                    $hr_task_completed = $res["Completed"];
+                                    $hr_task_whocompleted = $res["WhoCompleted"];
+                                    $hr_task_completeddate = $res["CompletedDate"];
+                                    
+                                    echo '      <div style="color: #006699; font-style: italic; margin-left: 20px;">RANO <span style="color:black; font-size:60%; font-style: italic; margin-left: 10px;">Ostatnia edycja: '.name_by_id($hr_task_whoadd).'</span></div>';
+                                    echo "      <div class='task_job' id='$hr_task_id'><textarea data-autoresize placeholder='Notatka dnia rano...' class='task_job_textarea' id='textarea_$hr_task_id' style='margin-top:-10px; width:100%; border:none; padding:2px; background-color:#f2f2f2; resize:none;' rows='1' spellcheck='false' onchange='hr_tasks_updatenote($hr_task_id)'>$hr_task_info</textarea></div>";
+                                    echo '      <div style="color: #006699; font-style: italic; margin-left: 20px;">POPO <span style="color:black; font-size:60%; font-style: italic; margin-left: 10px;">Ostatnia edycja: '.name_by_id($hr_task_whocompleted).'</span></div>';
+                                    echo "      <div class='task_job' id='$hr_task_id'><textarea data-autoresize placeholder='Notatka dnia popołudnie...' class='task_job_textarea' id='textarea_add_$hr_task_id' style='margin-top:-10px; width:100%; border:none; padding:2px; background-color:#f2f2f2; resize:none;' rows='1' spellcheck='false' onchange='hr_tasks_updatenoteadd($hr_task_id)'>$hr_task_infoadd</textarea></div>";
                                 }
-                                else{
-                                    echo '          <div><div style="float:left; width:80%;"><img style="float:left; height:15px; margin-left:10%; margin-right:20%;" src="icons/done.png" /><div style="float:left; color:white; height:15px; width:30%; text-align:center;">-</div><div style="float:left; color:white; height:15px; width:30%; text-align:center">-</div></div></div>';
-                                    echo "          <script>
-                                                        $('#$hr_task_id').css('background-color', '#006699');
-                                                        $('#hr_task_title_$hr_task_id').css('background-color', '#006699');
-                                                        $('#button_check_$hr_task_id').css('color', '#00FF00');
-                                                        $('#button_check_$hr_task_id').css('background-color', '#006699');
-                                                        $('#button_delete_$hr_task_id').css('display', 'inline');
-                                                    </script>";
+                                /// ==========
+
+                                /// WYPISANIE ZADAŃ DLA DNIA
+                                $sql = "SELECT * FROM hr_tasks WHERE Deadline='$weekDay'";
+                                $que = $conn -> query($sql);
+                                if(mysqli_num_rows($que)!=0){
+                                    echo '     <div style="color: #006699; font-style: italic; margin-left: 20px;">ZADANIA</div>';
                                 }
-                                echo "          <div style='clear:both;'></div>";
-                                echo "          <div class='task_job' id='$hr_task_id' style='margin-top:10px;'><textarea data-autoresize placeholder='Notatka do zadania...' class='hr_task_textarea' id='textarea_hrtask_$hr_task_id' rows='1' spellcheck='false' onchange='hr_tasks_updatenotetask($hr_task_id)'>$hr_task_infoadd</textarea></div>";
-                                echo "          <div style='clear:both;'></div>";
-                                echo '      </div>';
+                                while($res = mysqli_fetch_array($que)){
+                                    $hr_task_id = $res["ID"];
+                                    $hr_task_whoadd = $res["WhoAdd"];
+                                    $hr_task_adddate = $res["AddDate"];
+                                    $hr_task_deadline = $res["Deadline"];
+                                    $hr_task_info = $res["Info"];
+                                    $hr_task_infoadd = $res["InfoAdd"];
+                                    $hr_task_completed = $res["Completed"];
+                                    $hr_task_whocompleted = $res["WhoCompleted"];
+                                    $hr_task_completeddate = $res["CompletedDate"];
+
+                                    $string = $hr_task_info;
+                                    $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
+                                    $string = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">$0</a>', $string);
+
+                                    echo '  <div class="hr_task_title" id="hr_task_title_'.$hr_task_id.'" onclick="hr_tasks_toggleDiv('.$hr_task_id.')">'.$string.'</div>';
+                                    echo '      <div class="hr_task_body" id="'.$hr_task_id.'">
+                                                    <div><div style="float:left; width:80%;"><img style="float:left; height:15px; margin-left:10%; margin-right:20%;" src="icons/add.png" /><div style="float:left; color:white; height:15px; width:30%; text-align:center">'.name_by_id($hr_task_whoadd).'</div><div style="float:left; color:white; height:15px; width:30%; text-align:center">'.proper_date($hr_task_adddate).'</div></div><button class="ri_job_end_button" id="button_delete_'.$hr_task_id.'" style="background-color:#006699;" onclick="hr_tasks_delete('.$hr_task_id.')">x</button><button class="ri_job_complete_button" id="button_check_'.$hr_task_id.'" style="background-color:#006699; color:#00FF00;" onclick="hr_tasks_check('.$hr_task_id.')">✓</button></div>';
+                                    if($hr_task_completed == "true"){
+                                        echo '          <div><div style="float:left; width:80%;"><img style="float:left; height:15px; margin-left:10%; margin-right:20%;" src="icons/done.png" /><div style="float:left; color:white; height:15px; width:30%; text-align:center">'.name_by_id($hr_task_whocompleted).'</div><div style="float:left; color:white; height:15px; width:30%; text-align:center">'.proper_date($hr_task_completeddate).'</div></div></div>';
+                                        echo "          <script>
+                                                            $('#$hr_task_id').css('background-color', 'green');
+                                                            $('#hr_task_title_$hr_task_id').css('background-color', 'green');
+                                                            $('#button_check_$hr_task_id').css('color', 'gray');
+                                                            $('#button_check_$hr_task_id').css('background-color', 'green');
+                                                            $('#button_delete_$hr_task_id').css('display', 'none');
+                                                        </script>";
+                                    }
+                                    else{
+                                        echo '          <div><div style="float:left; width:80%;"><img style="float:left; height:15px; margin-left:10%; margin-right:20%;" src="icons/done.png" /><div style="float:left; color:white; height:15px; width:30%; text-align:center;">-</div><div style="float:left; color:white; height:15px; width:30%; text-align:center">-</div></div></div>';
+                                        echo "          <script>
+                                                            $('#$hr_task_id').css('background-color', '#006699');
+                                                            $('#hr_task_title_$hr_task_id').css('background-color', '#006699');
+                                                            $('#button_check_$hr_task_id').css('color', '#00FF00');
+                                                            $('#button_check_$hr_task_id').css('background-color', '#006699');
+                                                            $('#button_delete_$hr_task_id').css('display', 'inline');
+                                                        </script>";
+                                    }
+                                    echo "          <div style='clear:both;'></div>";
+                                    echo "          <div class='task_job' id='$hr_task_id' style='margin-top:10px;'><textarea data-autoresize placeholder='Notatka do zadania...' class='hr_task_textarea' id='textarea_hrtask_$hr_task_id' rows='1' spellcheck='false' onchange='hr_tasks_updatenotetask($hr_task_id)'>$hr_task_infoadd</textarea></div>";
+                                    echo "          <div style='clear:both;'></div>";
+                                    echo '      </div>';
+                                }
+                                /// ==========
+                                echo '  </div>';
                             }
-                            /// ==========
-                            echo '  </div>';
                         }
 
                         echo '      </div>
@@ -217,6 +335,7 @@ $conn -> close();
 
                 ?>
             </div>
+
         </div>
 
     </div>
@@ -460,6 +579,8 @@ $conn -> close();
 
         $('textarea').blur(); //DZIĘKI TEMU TEXTAREA SIĘ NAPRAWIĄ
 
+        $(".hr_list_2020").toggle(); // UKRYJ STARY ROK
+
         // OBSŁUGA ENTERÓW W TEXTAREA
         var shiftDown = false;
         $(window).keydown(function(evt) {
@@ -601,6 +722,10 @@ $conn -> close();
             }).done(function(data) { // data what is sent back by the php page
                 $('#thrash').html(data); // display data
             });
+        }
+
+        function hideHrList(year){
+            $(".hr_list_"+year).toggle();
         }
 
         /// ==========

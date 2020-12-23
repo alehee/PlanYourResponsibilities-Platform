@@ -1660,6 +1660,29 @@ p{
     resize:none;
 }
 
+#hr_list_hide{
+    color: white;
+    background-color: #0082C3;
+    height: 50px;
+    width: 90%;
+    border-radius: 20px;
+    padding-top: 5px;
+    text-align: center;
+    margin: 10px 5%;
+    cursor: pointer;
+    font-size: 30px;
+    font-style: italic;
+    font-weight: 800;
+    border: #0082C3 2px solid;
+    transition: 0.1s;
+}
+
+#hr_list_hide:hover{
+    color: #0082C3;
+    background-color: white;
+    transition: 0.1s;
+}
+
 
 
 #main_link_button{

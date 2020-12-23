@@ -158,7 +158,9 @@ Wygenerowano: ".date("Y-m-d G:i:s");
 /// WYSYŁANIE MAILI DO KADR Z INFORMACJĄ O DZISIEJSZYCH OBOWIĄZKACH
 
 $hr_date = date("Y-m-d");
-$hr_notedate = "2030-".date("m-d");
+$hr_notedate = "2030-".date("m-d",strtotime("-1 days"));
+if(date("Y",strtotime("-1 days"))=="2021")
+    $hr_notedate = "2031-".date("m-d",strtotime("-1 days"));
 $hr_message = "";
 $hr_note = "";
 $ilosc_zadan = 0;
@@ -171,14 +173,15 @@ while($res = mysqli_fetch_array($que)){
 }
 
 $hr_message.="
-Notatka dnia $today:
+Notatka z wczoraj:
+RANO:
 $hr_note
 
+POPO:
 $hr_note_add
 
-";
+ZADANIA:";
 
-//$sql = "SELECT Info FROM hr_tasks WHERE Deadline='$hr_date' AND Completed='false'";
 $sql = "SELECT Info, Deadline FROM hr_tasks WHERE Deadline > '2020-08-01' AND Deadline <= '$hr_date' AND Completed='false'";
 $que = $conn -> query($sql);
 while($res = mysqli_fetch_array($que)){
@@ -188,7 +191,7 @@ while($res = mysqli_fetch_array($que)){
     $hr_task_date = $hr_task_date_buffer;
 
 $hr_message.="
-- $hr_task_date - $hr_task,";
+- $hr_task_date - $hr_task";
 
 $ilosc_zadan++;
 }
@@ -198,7 +201,7 @@ $hr_message.="
 Zaloguj się na plandeca.pl i sprawdź szczegóły!
 Wygenerowano: ".date("Y-m-d G:i:s");
 
-// WYŚLIJ JEŚLI SĄ ZADANIA
+// WYŚLIJ JEŚLI SĄ ZADANIA I JEST NOTATKA
 if($ilosc_zadan > 0 || $hr_note != ""){
     $sql = "SELECT Email FROM users WHERE Rola='kadr' OR ID='6'";
     $que = $conn -> query($sql);
