@@ -603,7 +603,7 @@ $conn -> close();
 
         // DZIĘKI TEMU PRZESUWA SIĘ SKRYPT DO BIEŻĄCEGO TYGODNIA
         $(document).ready(function() {
-            $("#hr_list").scrollLeft($(<?php echo '"#week_'.date("W").'"' ?>).offset().left - 20);
+            $(".hr_list_2021").scrollLeft($(<?php echo '"#week_'.intval(date("W")).'"' ?>).offset().left - 20);
         });
 
 
@@ -661,7 +661,7 @@ $conn -> close();
         }
 
         function hr_tasks_weekFocus(){
-            $("#hr_list").scrollLeft($(<?php echo '"#week_'.date("W").'"' ?>).offset().left - 20);
+            $(".hr_list_2021").scrollLeft($(<?php echo '"#week_'.intval(date("W")).'"' ?>).offset().left - 20);
         }
 
         function hr_tasks_reload(){
